@@ -2,143 +2,248 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="theme-color"
-        content="#003b6f"
-    >
-
-    <title>Medalha Mérito Santos-Dumont</title>
+    <title>Portal do Agraciado</title>
 
     <link
         rel="stylesheet"
-        href="css/portal.css"
-    >
+        href="css/style.css">
+
 </head>
 
 <body>
 
-    <main class="container pagina-inicial">
+<div class="container">
 
-        <!-- Banner temporário de teste -->
-        <section class="banner" id="secao-banner">
+<div class="pagina">
 
-            <img
-                id="imagem-capa"
-                src="https://picsum.photos/1400/500"
-                alt="Imagem da solenidade"
-            >
+<header class="topo">
 
-        </section>
+<h1 id="titulo">
 
+Carregando...
 
-        <!-- Informações principais -->
-        <section class="card card-principal">
+</h1>
 
-            <header class="cabecalho-solenidade">
+<p id="subtitulo">
 
-                <h1 id="titulo-solenidade">
-                    Medalha Mérito Santos-Dumont
-                </h1>
+</p>
 
-                <p
-                    id="data-solenidade"
-                    class="informacao-solenidade"
-                >
-                    14 de julho de 2026
-                </p>
+</header>
 
-                <p
-                    id="local-solenidade"
-                    class="informacao-solenidade"
-                >
-                    Pátio de Solenidades da Base Aérea de Brasília
-                </p>
+<div id="imagemPrincipal">
 
-            </header>
+</div>
 
+<div id="mensagemGeral">
 
-            <nav
-                class="acoes-principais"
-                aria-label="Opções da solenidade"
-            >
+</div>
 
-                <a
-                    class="botao botao-principal"
-                    href="presenca.html"
-                >
+<div
+    style="
+    margin-top:30px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    ">
 
-                    <span class="titulo">
-                        REGISTRAR PRESENÇA
-                    </span>
+<a
+href="presenca.html"
+class="botao-principal"
+style="
+text-decoration:none;
+text-align:center;
+">
 
-                    <span class="subtitulo">
-                        Confira sua posição no dispositivo
-                    </span>
+REGISTRAR PRESENÇA
 
-                </a>
+</a>
 
+<a
+href="#"
+id="botaoLivreto"
+class="botao-secundario">
 
-                <!-- Temporário. Será ocultado quando não houver link na planilha. -->
-                <a
-                    class="botao botao-secundario"
-                    id="botao-livreto"
-                    href="#"
-                >
+LIVRETO DIGITAL
 
-                    <span class="titulo">
-                        Programa Oficial
-                    </span>
+</a>
 
-                    <span class="subtitulo">
-                        Consulte as informações da solenidade
-                    </span>
+</div>
 
-                </a>
+</div>
 
-            </nav>
+</div>
 
-        </section>
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
 
+<script>
 
-        <!-- Temporário. Será ocultado quando não houver patrocinadores. -->
-        <section
-            class="patrocinadores"
-            id="secao-patrocinadores"
-        >
+window.addEventListener(
 
-            <h2 id="titulo-patrocinadores">
-                APOIO
-            </h2>
+"load",
 
-            <div class="logos">
+iniciar
 
-                <img
-                    src="https://dummyimage.com/220x70/ffffff/888888&text=LOGO+1"
-                    alt="Patrocinador 1"
-                >
+);
 
-                <img
-                    src="https://dummyimage.com/220x70/ffffff/888888&text=LOGO+2"
-                    alt="Patrocinador 2"
-                >
+async function iniciar(){
 
-                <img
-                    src="https://dummyimage.com/220x70/ffffff/888888&text=LOGO+3"
-                    alt="Patrocinador 3"
-                >
+    try{
 
-            </div>
+        const dados =
 
-        </section>
+            await apiGet(
 
-    </main>
+                "dados"
+
+            );
+
+        carregarConfiguracoes(
+
+            dados.config
+
+        );
+
+    }
+
+    catch(e){
+
+        console.error(e);
+
+    }
+
+}
+
+function carregarConfiguracoes(config){
+
+    document.getElementById(
+
+        "titulo"
+
+    ).textContent =
+
+    config.Titulo ||
+
+    "";
+
+    document.getElementById(
+
+        "subtitulo"
+
+    ).textContent =
+
+    config.Subtitulo ||
+
+    "";
+
+        document.getElementById(
+        "titulo"
+    ).textContent =
+    config.Titulo || "";
+
+    document.getElementById(
+        "subtitulo"
+    ).textContent =
+    config.Subtitulo || "";
+
+    // -------------------------
+    // IMAGEM PRINCIPAL
+    // -------------------------
+
+    if(config.Imagem_Principal){
+
+        document.getElementById(
+            "imagemPrincipal"
+        ).innerHTML =
+
+        "<img src='" +
+
+        config.Imagem_Principal +
+
+        "' style='width:100%;border-radius:12px;margin-bottom:25px;'>";
+
+    }
+
+    // -------------------------
+    // MENSAGENS GERAIS
+    // -------------------------
+
+    let html = "";
+
+    Object.keys(config)
+
+    .filter(chave=>
+
+        chave.startsWith(
+
+            "Mensagem_Geral"
+
+        )
+
+    )
+
+    .sort()
+
+    .forEach(chave=>{
+
+        if(config[chave]){
+
+            html +=
+
+            "<div class='mensagem card-azul'>" +
+
+            config[chave] +
+
+            "</div>";
+
+        }
+
+    });
+
+    document.getElementById(
+
+        "mensagemGeral"
+
+    ).innerHTML = html;
+
+    // -------------------------
+    // LIVRETO
+    // -------------------------
+
+    const botaoLivreto =
+
+        document.getElementById(
+
+            "botaoLivreto"
+
+        );
+
+    if(config.Livreto){
+
+        botaoLivreto.href =
+
+        config.Livreto;
+
+    }
+
+    else{
+
+        botaoLivreto.style.display =
+
+        "none";
+
+    }
+
+}
+
+</script>
 
 </body>
 
