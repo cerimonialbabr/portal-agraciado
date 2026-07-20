@@ -264,4 +264,210 @@ function preencherPosicao(dados) {
 
 }
 
+    /**
+ * ==========================================================
+ * MODAL
+ * ==========================================================
+ */
+
+function abrirModal() {
+
+    if (!dadosRegistro) return;
+
+    if (dadosRegistro.presente) return;
+
+    document.getElementById(
+        "modalConfirmacao"
+    ).hidden = false;
+
+}
+
+
+
+function fecharModal() {
+
+    document.getElementById(
+        "modalConfirmacao"
+    ).hidden = true;
+
+}
+
+    /**
+ * ==========================================================
+ * CONFIRMAÇÃO
+ * ==========================================================
+ */
+
+async function confirmarPresenca() {
+
+    const botao =
+
+        document.getElementById(
+            "btnConfirmar"
+        );
+
+    try {
+
+        botao.disabled = true;
+
+        botao.textContent =
+            "Registrando...";
+
+
+        const resposta =
+
+            await API.confirmarPresenca(
+
+                dadosRegistro.id
+
+            );
+
+
+        fecharModal();
+
+
+        dadosRegistro.presente = true;
+
+        dadosRegistro.dataHora =
+            resposta.dataHora;
+
+
+        atualizarEstadoConfirmacao(
+            dadosRegistro
+        );
+
+    }
+
+    catch (erro) {
+
+        alert(
+
+            erro.message ||
+
+            "Erro ao registrar presença."
+
+        );
+
+    }
+
+    finally {
+
+        botao.disabled = false;
+
+        botao.textContent =
+            "Sim, confirmar";
+
+    }
+
+}
+
+    /**
+ * ==========================================================
+ * ESTADO DA TELA
+ * ==========================================================
+ */
+
+function atualizarEstadoConfirmacao(dados) {
+
+    const botao =
+
+        document.getElementById(
+            "btnRegistrar"
+        );
+
+
+    const cartao =
+
+        document.getElementById(
+            "cartaoConfirmado"
+        );
+
+
+    if (!dados.presente) {
+
+        botao.hidden = false;
+
+        cartao.hidden = true;
+
+        return;
+
+    }
+
+
+    botao.hidden = true;
+
+    cartao.hidden = false;
+
+
+    const hora =
+
+        document.getElementById(
+            "horaConfirmacao"
+        );
+
+
+    if (hora) {
+
+        hora.textContent =
+            dados.dataHora || "";
+
+    }
+
+}
+
+    /**
+ * ==========================================================
+ * LOADING
+ * ==========================================================
+ */
+
+function mostrarCarregando(visivel) {
+
+    document.getElementById(
+        "estadoCarregando"
+    ).hidden = !visivel;
+
+
+    document.getElementById(
+        "conteudoPagina"
+    ).hidden = visivel;
+
+
+    document.getElementById(
+        "estadoErro"
+    ).hidden = true;
+
+}
+
+    /**
+ * ==========================================================
+ * ERRO
+ * ==========================================================
+ */
+
+function mostrarErro(mensagem) {
+
+    document.getElementById(
+        "estadoCarregando"
+    ).hidden = true;
+
+
+    document.getElementById(
+        "conteudoPagina"
+    ).hidden = true;
+
+
+    document.getElementById(
+        "estadoErro"
+    ).hidden = false;
+
+
+    document.getElementById(
+        "textoErro"
+    ).textContent = mensagem;
+
+}
+
+    
+
   
