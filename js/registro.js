@@ -17,6 +17,7 @@ async function iniciarRegistro() {
   try {
     dadosRegistro = await apiObterDados();
     configurarBanner(dadosRegistro.config || {});
+    document.querySelector('[data-banner]')?.classList.remove('oculto');
 
     agraciadoAtual = (dadosRegistro.agraciados || []).find(
       item => texto(item.ID) === texto(idAgraciado)
