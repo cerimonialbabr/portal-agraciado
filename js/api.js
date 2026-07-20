@@ -1,210 +1,68 @@
-/**
- * =====================================================
- * CONFIGURAÇÃO
- * =====================================================
- */
+// ===========================================
+// API
+// ===========================================
 
-const API = (() => {
+const API_URL =
+"https://script.google.com/macros/s/AKfycby_Oeki-w1mFC8VPSPuszOpsRvPVfZ1fuCyvvz1cYkXogwll6jO051eh0R9y3ibWr8A/exec";
 
-    /**
-     * URL do Apps Script
-     * (substituir após o deploy)
-     */
-    const BASE_URL = "https://script.google.com/macros/s/AKfycby_Oeki-w1mFC8VPSPuszOpsRvPVfZ1fuCyvvz1cYkXogwll6jO051eh0R9y3ibWr8A/exec";
+async function apiGet(action, parametros = {}) {
 
+    const url = new URL(API_URL);
 
+    url.searchParams.set("action", action);
 
-    /**
-     * =====================================================
-     * MÉTODO PRIVADO
-     * =====================================================
-     */
+    Object.keys(parametros).forEach(chave => {
 
-    async function requisicao(
+        url.searchParams.set(chave, parametros[chave]);
 
-        acao,
+    });
 
-        parametros = {}
+    url.searchParams.set("_", Date.now());
 
-    ) {
+    const resposta = await fetch(url, {
 
-        const dados = {
+        cache: "no-store"
 
-            acao,
+    });
 
-            ...parametros
+    if (!resposta.ok) {
 
-        };
-
-
-        const resposta = await fetch(
-
-            BASE_URL,
-
-            {
-
-                method: "POST",
-
-                headers: {
-
-                    "Content-Type":
-                        "application/json"
-
-                },
-
-                body: JSON.stringify(dados)
-
-            }
-
-        );
-
-
-        if (!resposta.ok) {
-
-            throw new Error(
-
-                "Erro de comunicação."
-
-            );
-
-        }
-
-
-        const json =
-            await resposta.json();
-
-
-        if (json.erro) {
-
-            throw new Error(
-
-                json.erro
-
-            );
-
-        }
-
-
-        return json;
+        throw new Error("Erro ao consultar API.");
 
     }
 
+    return await resposta.json();
 
+}
 
-    /**
-     * =====================================================
-     * REGISTRO
-     * =====================================================
-     */
+async function apiPost(action, dados = {}) {
 
-    async function buscarRegistro(id) {
+    const resposta = await fetch(API_URL, {
 
-        return await requisicao(
+        method: "POST",
 
-            "buscarRegistro",
+        headers: {
 
-            {
+            "Content-Type": "text/plain;charset=utf-8"
 
-                id
+        },
 
-            }
+        body: JSON.stringify({
 
-        );
+            action,
 
-    }
+            ...dados
 
+        })
 
+    });
 
-    async function confirmarPresenca(id) {
+    if (!resposta.ok) {
 
-        return await requisicao(
-
-            "confirmarPresenca",
-
-            {
-
-                id
-
-            }
-
-        );
+        throw new Error("Erro ao enviar dados.");
 
     }
 
+    return await resposta.json();
 
-
-    /**
-     * =====================================================
-     * DASHBOARD
-     * =====================================================
-     */
-
-    async function buscarDashboard() {
-
-        return await requisicao(
-
-            "dashboard"
-
-        );
-
-    }
-
-
-
-    /**
-     * =====================================================
-     * CONFIGURAÇÃO
-     * =====================================================
-     */
-
-    async function buscarConfiguracao() {
-
-        return await requisicao(
-
-            "config"
-
-        );
-
-    }
-
-
-
-    /**
-     * =====================================================
-     * LISTA DE AGRACIADOS
-     * =====================================================
-     */
-
-    async function buscarAgraciados() {
-
-        return await requisicao(
-
-            "agraciados"
-
-        );
-
-    }
-
-
-
-    /**
-     * =====================================================
-     * EXPORTAÇÃO
-     * =====================================================
-     */
-
-    return {
-
-        buscarRegistro,
-
-        confirmarPresenca,
-
-        buscarDashboard,
-
-        buscarConfiguracao,
-
-        buscarAgraciados
-
-    };
-
-})();
+}
