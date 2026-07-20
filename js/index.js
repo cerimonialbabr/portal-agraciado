@@ -59,6 +59,7 @@ function configurarPatrocinadores(config) {
 
   for (const patrocinador of patrocinadores) {
     const imagem = document.createElement('img');
+    console.log(patrocinador.imagem);
     imagem.src = patrocinador.imagem;
     imagem.alt = `Patrocinador ${patrocinador.indice}`;
     imagem.loading = 'lazy';
