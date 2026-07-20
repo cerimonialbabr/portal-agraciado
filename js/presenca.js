@@ -13,6 +13,7 @@ async function iniciarPresenca() {
   try {
     const dados = await apiObterDados();
     configurarBanner(dados.config || {});
+    document.querySelector('[data-banner]')?.classList.remove('oculto');
 
     agraciados = (dados.agraciados || [])
       .filter(item => texto(item.ID) && texto(item.Nome))
