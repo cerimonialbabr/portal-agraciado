@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Orientações do Agraciado</title>
+
+    <link
+        rel="stylesheet"
+        href="css/portal.css"
+    >
+</head>
+
+<body>
+
+    <main class="container pagina-presenca">
+
+        <header class="topo-pagina">
+
+            <a
+                class="botao-voltar"
+                href="presenca.html"
+            >
+                <span class="seta-voltar">
+                    ‹
+                </span>
+
+                <span>
+                    Voltar
+                </span>
+            </a>
+
+        </header>
+
+
+        <section class="card card-presenca">
+
+            <header class="cabecalho-pagina">
+
+                <h1>
+                    Agraciado selecionado
+                </h1>
+
+                <p>
+                    Esta página será construída na próxima etapa.
+                </p>
+
+                <p id="identificador-agraciado"></p>
+
+            </header>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const parametros = new URLSearchParams(
+            window.location.search
+        );
+
+        const id = parametros.get("id");
+
+        document.getElementById(
+            "identificador-agraciado"
+        ).textContent = id
+            ? `Identificador recebido: ${id}`
+            : "Nenhum identificador foi recebido.";
+
+    </script>
+
+</body>
+
+</html>
