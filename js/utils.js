@@ -52,17 +52,25 @@ function configurarBanner(config) {
   if (!banner) return;
 
   const imagem = urlImagem(config?.Imagem_Capa);
+
   const img = banner.querySelector('img');
   const fallback = banner.querySelector('.banner-fallback');
+
+  if (!img || !fallback) {
+    console.error('Banner inválido.', banner);
+    return;
+  }
 
   if (imagem) {
     img.src = imagem;
     img.hidden = false;
     fallback.hidden = true;
+
     img.addEventListener('error', () => {
       img.hidden = true;
       fallback.hidden = false;
-    }, {once: true});
+    }, { once: true });
+
   } else {
     img.hidden = true;
     fallback.hidden = false;
