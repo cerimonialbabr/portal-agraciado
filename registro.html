@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
 
@@ -9,52 +8,35 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="theme-color"
-        content="#003b6f"
-    >
+    <title>Registro de Presença</title>
 
-    <title>Orientações do Agraciado</title>
+    <!-- CSS geral que já existe no portal -->
+    <link rel="stylesheet" href="css/portal.css">
 
-    <link
-        rel="stylesheet"
-        href="css/portal.css"
-    >
+    <!-- CSS específico desta página, que criaremos depois -->
+    <link rel="stylesheet" href="css/registro.css">
 </head>
 
 <body>
 
-    <main class="container pagina-registro">
+    <main class="registro-container">
 
-        <header class="topo-pagina">
-
-            <a
-                class="botao-voltar"
-                href="presenca.html"
-                aria-label="Voltar para a lista de agraciados"
-            >
-                <span
-                    class="seta-voltar"
-                    aria-hidden="true"
-                >
-                    ‹
-                </span>
-
-                <span>
-                    Escolher outro agraciado
-                </span>
-            </a>
-
-        </header>
+        <!-- VOLTAR PARA A BUSCA DE NOMES -->
+        <a
+            href="presenca.html"
+            class="registro-voltar"
+            aria-label="Voltar para a lista de agraciados"
+        >
+            ← Voltar
+        </a>
 
 
-        <!-- Carregamento -->
+        <!-- CARREGAMENTO -->
         <section
-            id="estado-carregamento"
-            class="card card-registro carregamento-registro"
+            id="estadoCarregando"
+            class="registro-card carregando-card"
             aria-live="polite"
         >
-
             <div class="skeleton skeleton-nome"></div>
 
             <div class="skeleton skeleton-texto"></div>
@@ -64,164 +46,162 @@
             <div class="skeleton skeleton-botao"></div>
 
             <div class="skeleton skeleton-dispositivo"></div>
-
         </section>
 
 
-        <!-- Erro -->
+        <!-- ERRO AO CARREGAR -->
         <section
-            id="estado-erro"
-            class="card card-registro estado-erro"
+            id="estadoErro"
+            class="registro-card estado-mensagem"
             hidden
         >
+            <h1>Não foi possível carregar os dados</h1>
 
-            <h1>
-                Não foi possível localizar o agraciado
-            </h1>
-
-            <p id="mensagem-erro">
-                Retorne à lista e selecione novamente o seu nome.
+            <p id="textoErro">
+                Atualize a página ou procure a equipe de cerimonial.
             </p>
 
             <a
-                class="botao botao-principal"
                 href="presenca.html"
+                class="botao-secundario"
             >
-                <span class="titulo">
-                    VOLTAR PARA A LISTA
-                </span>
+                Voltar para a lista
             </a>
-
         </section>
 
 
-        <!-- Conteúdo principal -->
-        <article
-            id="conteudo-registro"
-            class="card card-registro"
+        <!-- CONTEÚDO PRINCIPAL -->
+        <section
+            id="conteudoRegistro"
             hidden
         >
 
-            <!-- Identificação -->
-            <header class="identificacao-agraciado">
+            <!-- NOME COMPLETO -->
+            <section class="registro-card identidade-card">
 
-                <h1 id="nome-agraciado"></h1>
+                <h1
+                    id="nomeAgraciado"
+                    class="nome-agraciado"
+                ></h1>
 
-            </header>
+            </section>
 
 
-            <!-- Posição -->
-            <section
-                class="secao-posicao"
-                aria-labelledby="titulo-posicao"
-            >
+            <!-- POSIÇÃO -->
+            <section class="registro-card posicao-card">
 
-                <h2 id="titulo-posicao">
+                <p class="rotulo-posicao">
                     SUA POSIÇÃO
-                </h2>
+                </p>
 
                 <div
-                    id="posicao-agraciado"
+                    id="posicaoAgraciado"
                     class="numero-posicao"
                 ></div>
 
             </section>
 
 
-            <!-- Ação de presença -->
+            <!-- REGISTRO DE PRESENÇA -->
             <section
-                id="area-presenca"
-                class="area-presenca"
-                aria-live="polite"
+                id="areaPresenca"
+                class="registro-card presenca-card"
             >
 
+                <!-- BOTÃO ANTES DA CONFIRMAÇÃO -->
                 <button
-                    id="botao-registrar-presenca"
-                    class="botao-registro-presenca"
+                    id="botaoRegistrar"
+                    class="botao-confirmar"
                     type="button"
                 >
                     REGISTRAR PRESENÇA
                 </button>
 
 
+                <!-- CARTÃO DEPOIS DA CONFIRMAÇÃO -->
                 <div
-                    id="cartao-presenca-registrada"
-                    class="cartao-presenca-registrada"
+                    id="cartaoConfirmado"
+                    class="cartao-confirmado"
                     hidden
                 >
 
                     <div
-                        class="icone-presenca-registrada"
+                        class="icone-confirmado"
                         aria-hidden="true"
                     >
                         ✓
                     </div>
 
-                    <div class="titulo-presenca-registrada">
+                    <div class="titulo-confirmado">
                         PRESENÇA REGISTRADA
                     </div>
 
                     <div
-                        id="data-presenca-registrada"
-                        class="data-presenca-registrada"
+                        id="dataConfirmacao"
+                        class="data-confirmacao"
                     ></div>
 
                     <div
-                        id="hora-presenca-registrada"
-                        class="hora-presenca-registrada"
+                        id="horaConfirmacao"
+                        class="hora-confirmacao"
                     ></div>
 
                 </div>
+
+
+                <!-- ERRO SOMENTE DA CONFIRMAÇÃO -->
+                <p
+                    id="erroConfirmacao"
+                    class="erro-confirmacao"
+                    hidden
+                ></p>
 
             </section>
 
 
-            <!-- Dispositivo -->
-            <section
-                id="secao-dispositivo"
-                class="mini-dispositivo-card"
-                aria-labelledby="titulo-dispositivo"
-            >
+            <!-- DISPOSITIVO -->
+            <section class="registro-card dispositivo-card">
 
-                <h2
-                    id="titulo-dispositivo"
-                    class="mini-titulo"
-                >
+                <div class="dispositivo-titulo">
                     DISPOSITIVO
-                </h2>
+                </div>
+
 
                 <div
-                    id="referencia-superior"
-                    class="mini-referencia"
+                    id="tituloSuperior"
+                    class="dispositivo-referencia"
                 >
                     TRIBUNA
                 </div>
 
-                <div class="mini-area">
+
+                <div class="dispositivo-area">
 
                     <div
-                        id="grade-dispositivo"
-                        class="mini-grade"
+                        id="gradeDispositivo"
+                        class="dispositivo-grade"
                     ></div>
 
                 </div>
 
+
                 <div
-                    id="referencia-inferior"
-                    class="mini-referencia"
+                    id="tituloInferior"
+                    class="dispositivo-referencia"
                 >
                     TROPA
                 </div>
 
-                <div class="mini-legenda">
+
+                <div class="dispositivo-legenda">
 
                     <span>
-                        <i class="mini-bolinha normal"></i>
+                        <i class="legenda-bolinha normal"></i>
                         Demais posições
                     </span>
 
                     <span>
-                        <i class="mini-bolinha destaque"></i>
+                        <i class="legenda-bolinha destaque"></i>
                         Sua posição
                     </span>
 
@@ -230,99 +210,81 @@
             </section>
 
 
-            <!-- Mensagem individual -->
+            <!-- MENSAGEM INDIVIDUAL -->
             <section
-                id="secao-mensagem-individual"
+                id="blocoMensagemIndividual"
                 class="mensagem-individual"
                 hidden
             >
 
-                <div id="mensagem-individual"></div>
+                <div id="mensagemIndividual"></div>
 
             </section>
 
 
-            <!-- Mensagens gerais -->
-            <section
-                id="secao-orientacoes"
-                class="secao-orientacoes"
-                hidden
-            >
+            <!-- MENSAGENS GERAIS -->
+            <section id="mensagensGerais"></section>
 
-                <h2
-                    id="titulo-orientacoes"
-                    class="titulo-orientacoes"
-                >
-                    ORIENTAÇÕES
-                </h2>
-
-                <div id="mensagens-gerais"></div>
-
-            </section>
-
-        </article>
+        </section>
 
     </main>
 
 
-    <!-- Modal de confirmação -->
+    <!-- MODAL DE CONFIRMAÇÃO -->
     <div
-        id="modal-registro-presenca"
-        class="modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="titulo-modal-presenca"
+        id="modalConfirmacao"
+        class="modal-fundo"
         hidden
     >
 
         <div
-            class="modal-fundo"
-            data-fechar-modal-presenca
-        ></div>
+            class="modal-caixa"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="tituloModal"
+        >
 
-        <section class="modal-conteudo">
-
-            <h2 id="titulo-modal-presenca">
-                Registrar presença
+            <h2 id="tituloModal">
+                Registrar presença?
             </h2>
 
             <p>
-                Deseja realmente registrar sua presença?
+                Confirme somente se este é o seu nome e você já está
+                presente no local da solenidade.
             </p>
 
-            <p
-                id="nome-confirmacao-presenca"
-                class="nome-selecionado"
-            ></p>
 
-            <div class="acoes-modal">
+            <div class="modal-acoes">
 
                 <button
-                    id="botao-cancelar-registro"
-                    class="botao-modal botao-cancelar"
+                    id="botaoCancelarModal"
+                    class="botao-modal secundario"
                     type="button"
                 >
-                    Cancelar
+                    CANCELAR
                 </button>
 
                 <button
-                    id="botao-confirmar-registro"
-                    class="botao-modal botao-continuar"
+                    id="botaoConfirmarModal"
+                    class="botao-modal principal"
                     type="button"
                 >
-                    Registrar
+                    CONFIRMAR
                 </button>
 
             </div>
 
-        </section>
+        </div>
 
     </div>
 
 
+    <!-- ARQUIVOS JAVASCRIPT -->
+    <script src="js/api.js"></script>
+
     <script src="js/dispositivo.js"></script>
+
     <script src="js/registro.js"></script>
 
 </body>
-
 </html>
