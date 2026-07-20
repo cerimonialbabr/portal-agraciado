@@ -225,4 +225,8 @@ button, input { font: inherit; }
   .nome-link { padding: 9px 11px; font-size: 14px; }
   .dispositivo-grade { --tamanho: clamp(14px, calc((92vw - (var(--quantidade-blocos) - 1) * 14px) / (var(--quantidade-blocos) * var(--max-colunas))), 25px); }
   .dispositivo-fileira { gap: 14px; }
+
+  .banner.oculto {
+  display: none;
+}
 }
