@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b33">
+  <title>Portal do Agraciado</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="pagina">
+    <section class="banner" data-banner aria-label="Banner da solenidade">
+      <img alt="Banner da solenidade" hidden>
+      <div class="banner-fallback"><strong>Portal do Agraciado</strong></div>
+    </section>
+
+    <div id="carregando" class="estado-carregando">Carregando informações...</div>
+    <div id="erro" class="estado-erro" hidden></div>
+
+    <div id="conteudo" hidden>
+      <section class="card card-principal">
+        <h1 id="solenidade" class="solenidade"></h1>
+        <div class="dados-evento">
+          <p id="data"></p>
+          <p id="local"></p>
+        </div>
+
+        <div class="acoes">
+          <a class="botao-grande" href="presenca.html">
+            <strong>REGISTRAR PRESENÇA</strong>
+            <span>Confira sua posição no dispositivo</span>
+          </a>
+
+          <a id="botaoLivreto" class="botao-grande" href="#" target="_blank" rel="noopener noreferrer">
+            <strong id="tituloLivreto">Programa Oficial</strong>
+            <span>Consulte as informações da solenidade</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="areaPatrocinadores" class="patrocinadores-area" hidden>
+        <h2 id="tituloPatrocinadores">APOIO</h2>
+        <div id="patrocinadores" class="patrocinadores"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b33">
+  <title>Registrar Presença</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="pagina">
+    <section class="banner" data-banner aria-label="Banner da solenidade">
+      <img alt="Banner da solenidade" hidden>
+      <div class="banner-fallback"><strong>Registro de Presença</strong></div>
+    </section>
+
+    <a class="voltar-topo" href="index.html">← Voltar</a>
+
+    <div id="carregando" class="estado-carregando">Carregando lista...</div>
+    <div id="erro" class="estado-erro" hidden></div>
+
+    <section id="conteudo" class="card card-principal" hidden>
+      <header class="cabecalho-pagina">
+        <h1>Registro de Presença</h1>
+        <p>Prezado agraciado, parabéns pela conquista! Por gentileza, procure o seu nome na lista abaixo, registre a sua presença e verifique sua posição e as orientações apresentadas pelo aplicativo.</p>
+      </header>
+
+      <label for="busca" class="rotulo-posicao" style="display:block;text-align:left;margin-bottom:8px">PROCURE SEU NOME</label>
+      <input id="busca" class="busca" type="search" placeholder="Digite seu nome..." autocomplete="off" spellcheck="false">
+      <div id="contador" class="contador"></div>
+      <div id="listaAgraciados" class="lista-nomes"></div>
+    </section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/presenca.js"></script>
+</body>
+</html>

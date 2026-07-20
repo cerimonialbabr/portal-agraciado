@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b33">
+  <title>Registro de Presença</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="pagina">
+    <section class="banner" data-banner aria-label="Banner da solenidade">
+      <img alt="Banner da solenidade" hidden>
+      <div class="banner-fallback"><strong>Registro de Presença</strong></div>
+    </section>
+
+    <a class="voltar-topo" href="presenca.html">← Voltar</a>
+
+    <div id="carregando" class="estado-carregando">Carregando informações...</div>
+    <div id="erro" class="estado-erro" hidden></div>
+
+    <article id="conteudo" class="card registro-card" hidden>
+      <section class="secao-registro">
+        <h1 id="nomeAgraciado" class="nome-agraciado"></h1>
+      </section>
+
+      <section class="secao-registro">
+        <p class="rotulo-posicao">SUA POSIÇÃO</p>
+        <div id="posicaoAgraciado" class="numero-posicao"></div>
+      </section>
+
+      <section class="secao-registro">
+        <button id="botaoConfirmar" class="botao-confirmar" type="button">REGISTRAR PRESENÇA</button>
+        <div id="confirmacaoCard" class="confirmacao" aria-live="polite" hidden>
+          <strong>✓ PRESENÇA REGISTRADA</strong>
+          <span id="confirmacaoData"></span>
+        </div>
+        <p id="erroAcao" class="erro-acao" hidden></p>
+      </section>
+
+      <section class="secao-registro">
+        <h2 class="titulo-secao">DISPOSITIVO</h2>
+        <div id="tituloSuperior" class="referencia-dispositivo">TRIBUNA</div>
+        <div class="dispositivo-scroll">
+          <div id="gradeDispositivo" class="dispositivo-grade"></div>
+        </div>
+        <div id="tituloInferior" class="referencia-dispositivo">TELÃO</div>
+        <div class="legenda-dispositivo">
+          <span><i class="legenda-bola"></i> Demais posições</span>
+          <span><i class="legenda-bola selecionada"></i> Sua posição</span>
+        </div>
+      </section>
+
+      <section id="secaoMensagemIndividual" class="secao-registro" hidden>
+        <h2 class="titulo-secao">MENSAGEM INDIVIDUAL</h2>
+        <div id="mensagemIndividual" class="mensagem-individual"></div>
+      </section>
+
+      <section id="secaoMensagensGerais" class="secao-registro" hidden>
+        <h2 class="titulo-secao">ORIENTAÇÕES GERAIS</h2>
+        <ul id="mensagensGerais" class="mensagens-gerais"></ul>
+      </section>
+    </article>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/dispositivo.js"></script>
+  <script src="js/registro.js"></script>
+</body>
+</html>
