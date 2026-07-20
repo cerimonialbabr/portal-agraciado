@@ -8,6 +8,8 @@ async function iniciarIndex() {
     const config = dados.config || {};
 
     configurarBanner(config);
+    document.querySelector('[data-banner]')?.classList.remove('oculto');
+    
     definirTexto('solenidade', config.Solenidade);
     definirTexto('data', config.Data);
     definirTexto('local', config.Local);
