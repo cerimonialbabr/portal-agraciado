@@ -96,11 +96,79 @@ button, input { font: inherit; }
 .botao-grande strong { font-size: 20px; }
 .botao-grande span { font-size: 16px; }
 
-.patrocinadores-area { padding: 54px 0 10px; text-align: center; }
-.patrocinadores-area h2 { margin: 0 0 22px; color: var(--texto-suave); font-size: 17px; letter-spacing: .12em; }
-.patrocinadores { display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; }
-.patrocinadores a, .patrocinadores > div { width: min(190px, 29vw); min-width: 130px; height: 86px; display: grid; place-items: center; padding: 10px; }
-.patrocinadores img { max-width: 100%; max-height: 66px; object-fit: contain; }
+.patrocinadores-area{
+
+    padding:28px 0 8px;
+
+    text-align:center;
+
+}
+
+.patrocinadores-area h2{
+
+    margin:0 0 14px;
+
+    color:var(--texto-suave);
+
+    font-size:15px;
+
+    letter-spacing:.15em;
+
+}
+
+.patrocinadores{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:22px;
+
+}
+
+.patrocinadores a,
+
+.patrocinadores > div{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:auto;
+
+    height:auto;
+
+    padding:0;
+
+    background:transparent;
+
+    border:none;
+
+    box-shadow:none;
+
+}
+
+.patrocinadores img{
+
+    display:block;
+
+    max-width:220px;
+
+    max-height:80px;
+
+    width:auto;
+
+    height:auto;
+
+    object-fit:contain;
+
+}
 
 .voltar-topo { display: inline-flex; margin: 22px 0 12px; color: var(--azul); font-weight: 800; text-decoration: none; }
 .voltar-topo:hover { text-decoration: underline; }
