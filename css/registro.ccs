@@ -1,0 +1,524 @@
+:root{
+    --azul:#0B3A75;
+    --azul-claro:#EEF4FB;
+    --verde:#188038;
+    --verde-claro:#ECF8EF;
+    --amarelo:#FFF8E6;
+    --cinza:#F5F6F8;
+    --texto:#243447;
+    --borda:#D8E2EC;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:var(--cinza);
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--texto);
+}
+
+.registro-container{
+    width:100%;
+    max-width:760px;
+    margin:auto;
+    padding:20px;
+}
+
+.registro-voltar{
+    display:inline-block;
+    margin-bottom:15px;
+    text-decoration:none;
+    color:var(--azul);
+    font-weight:bold;
+    font-size:15px;
+}
+
+.registro-card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 5px 16px rgba(0,0,0,.08);
+}
+
+.nome-agraciado{
+    margin:0;
+    text-align:center;
+    font-size:28px;
+    line-height:1.35;
+    font-weight:bold;
+}
+
+.rotulo-posicao{
+    margin:0;
+    text-align:center;
+    font-size:14px;
+    letter-spacing:2px;
+    color:#666;
+}
+
+.numero-posicao{
+    margin-top:8px;
+    text-align:center;
+    color:var(--azul);
+    font-size:72px;
+    font-weight:bold;
+}
+
+.botao-confirmar{
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:var(--verde);
+    color:white;
+    padding:16px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.botao-confirmar:hover{
+    transform:translateY(-1px);
+    opacity:.95;
+}
+
+.botao-confirmar:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
+.cartao-confirmado{
+
+    background:var(--verde-claro);
+
+    border:2px solid #A5D6B3;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    padding:20px;
+
+}
+
+.icone-confirmado{
+
+    width:48px;
+    height:48px;
+
+    margin:auto auto 10px;
+
+    border-radius:50%;
+
+    background:var(--verde);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.titulo-confirmado{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:var(--verde);
+
+}
+
+.data-confirmacao{
+
+    margin-top:12px;
+
+    font-size:15px;
+
+}
+
+.hora-confirmacao{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
+
+.erro-confirmacao{
+
+    color:#C62828;
+
+    margin-top:12px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+.dispositivo-titulo{
+
+    text-align:center;
+
+    font-size:20px;
+
+    color:var(--azul);
+
+    font-weight:bold;
+
+    margin-bottom:14px;
+
+}
+
+.dispositivo-referencia{
+
+    width:170px;
+
+    margin:auto;
+
+    margin-bottom:15px;
+
+    border:1px solid var(--borda);
+
+    border-radius:8px;
+
+    padding:8px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+.dispositivo-area{
+
+    overflow:auto;
+
+}
+
+.dispositivo-grade{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:15px;
+
+}
+
+.dispositivo-legenda{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    font-size:13px;
+
+}
+
+.legenda-bolinha{
+
+    display:inline-block;
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+    margin-right:5px;
+
+}
+
+.normal{
+
+    background:#BFD8FF;
+
+}
+
+.destaque{
+
+    background:#16A34A;
+
+}
+
+.mensagem-individual{
+
+    background:var(--amarelo);
+
+    border-left:5px solid #E6A400;
+
+    padding:18px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    line-height:1.5;
+
+}
+
+.mensagem-geral{
+
+    background:var(--azul-claro);
+
+    border-left:5px solid var(--azul);
+
+    padding:18px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    line-height:1.5;
+
+}
+
+.modal-fundo{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+.modal-caixa{
+
+    background:white;
+
+    border-radius:14px;
+
+    max-width:420px;
+
+    width:100%;
+
+    padding:24px;
+
+}
+
+.modal-caixa h2{
+
+    margin-top:0;
+
+    text-align:center;
+
+    color:var(--azul);
+
+}
+
+.modal-caixa p{
+
+    text-align:center;
+
+    line-height:1.5;
+
+}
+
+.modal-acoes{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-top:20px;
+
+}
+
+.botao-modal{
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.principal{
+
+    background:var(--verde);
+
+    color:white;
+
+}
+
+.secundario{
+
+    background:#E5E7EB;
+
+}
+
+.estado-mensagem{
+
+    text-align:center;
+
+}
+
+.botao-secundario{
+
+    display:block;
+
+    margin-top:20px;
+
+    background:#555;
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+}
+
+.skeleton{
+
+    background:linear-gradient(
+        90deg,
+        #E7E7E7 25%,
+        #F6F6F6 50%,
+        #E7E7E7 75%
+    );
+
+    background-size:200%;
+
+    animation:skeleton 1.2s infinite;
+
+    border-radius:8px;
+
+}
+
+.skeleton-nome{
+
+    width:80%;
+
+    height:28px;
+
+    margin:auto;
+
+    margin-bottom:25px;
+
+}
+
+.skeleton-texto{
+
+    width:40%;
+
+    height:14px;
+
+    margin:auto;
+
+    margin-bottom:12px;
+
+}
+
+.skeleton-posicao{
+
+    width:90px;
+
+    height:70px;
+
+    margin:auto;
+
+    margin-bottom:25px;
+
+}
+
+.skeleton-botao{
+
+    height:52px;
+
+    margin-bottom:25px;
+
+}
+
+.skeleton-dispositivo{
+
+    height:240px;
+
+}
+
+@keyframes skeleton{
+
+    from{
+
+        background-position:200%;
+
+    }
+
+    to{
+
+        background-position:-200%;
+
+    }
+
+}
+
+[hidden]{
+
+    display:none !important;
+
+}
+
+@media(max-width:700px){
+
+    .registro-container{
+
+        padding:12px;
+
+    }
+
+    .nome-agraciado{
+
+        font-size:23px;
+
+    }
+
+    .numero-posicao{
+
+        font-size:60px;
+
+    }
+
+    .modal-acoes{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
