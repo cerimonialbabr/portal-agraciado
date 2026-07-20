@@ -139,9 +139,9 @@ button, input { font: inherit; }
 
     align-items:center;
 
-    flex:0 0 auto;
+    flex:0 1 calc(50% - 12px);
 
-    min-width:180px;
+    max-width:180px;
 
     min-height:80px;
 
@@ -220,11 +220,31 @@ button, input { font: inherit; }
   .botao-grande { min-height: 88px; border-radius: 13px; }
   .botao-grande strong { font-size: 18px; }
   .patrocinadores-area { padding-top: 35px; }
+
+  .patrocinadores {
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .patrocinadores a,
+  .patrocinadores > div {
+    flex: 0 1 calc(50% - 6px);
+    max-width: 160px;
+    min-width: 0;
+  }
+
+  .patrocinadores img {
+    max-width: 100%;
+  }
+
   .registro-card { border-radius: 16px; }
   .secao-registro { padding: 21px 14px; }
   .nome-link { padding: 9px 11px; font-size: 14px; }
-  .dispositivo-grade { --tamanho: clamp(14px, calc((92vw - (var(--quantidade-blocos) - 1) * 14px) / (var(--quantidade-blocos) * var(--max-colunas))), 25px); }
+  .dispositivo-grade {
+    --tamanho: clamp(14px, calc((92vw - (var(--quantidade-blocos) - 1) * 14px) / (var(--quantidade-blocos) * var(--max-colunas))), 25px);
+  }
   .dispositivo-fileira { gap: 14px; }
+}
 
   .banner.oculto {
   display: none;
