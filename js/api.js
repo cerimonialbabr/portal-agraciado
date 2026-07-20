@@ -10,7 +10,7 @@ const API = (() => {
      * URL do Apps Script
      * (substituir após o deploy)
      */
-    const BASE_URL = "COLE_AQUI_SUA_URL_DO_APPS_SCRIPT";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycby_Oeki-w1mFC8VPSPuszOpsRvPVfZ1fuCyvvz1cYkXogwll6jO051eh0R9y3ibWr8A/exec";
 
 
 
