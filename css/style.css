@@ -71,7 +71,7 @@ button, input { font: inherit; }
 .estado-erro { color: #a51d2d; }
 
 .solenidade { margin: 0; text-align: center; font-size: clamp(18px, 4vw, 30px); line-height: 1.11; }
-.dados-evento { margin: 20px 0 32px; text-align: center; color: var(--texto-suave); font-size: clamp(12px, 2vw, 11px); line-height: 1.0; }
+.dados-evento { margin: 20px 0 32px; text-align: center; color: var(--texto-suave); font-size: clamp(16px, 2vw, 14px); line-height: 1.1; }
 .dados-evento p { margin: 3px 0; }
 
 .acoes { display: grid; gap: 20px; }
@@ -98,7 +98,7 @@ button, input { font: inherit; }
 
 .patrocinadores-area{
 
-    padding:28px 0 8px;
+    padding:20px 0 8px;
 
     text-align:center;
 
@@ -213,7 +213,7 @@ button, input { font: inherit; }
 .mensagens-gerais li::before { content: '•'; position: absolute; left: 18px; top: 12px; color: var(--azul); font-size: 22px; font-weight: 900; }
 
 @media (max-width: 600px) {
-  .pagina { padding: 0 12px 28px; }
+  .pagina { padding: 0 12px 20px; }
   .banner { border-radius: 0 0 16px 16px; }
   .banner img { height: 190px; }
   .card-principal { margin-top: 18px; padding: 22px 16px; border-radius: 16px; }
