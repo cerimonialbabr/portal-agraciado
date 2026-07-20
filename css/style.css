@@ -70,7 +70,7 @@ button, input { font: inherit; }
 }
 .estado-erro { color: #a51d2d; }
 
-.solenidade { margin: 0; text-align: center; font-size: clamp(20px, 4vw, 20px); line-height: 1.1; }
+.solenidade { margin: 0; text-align: center; font-size: clamp(20px, 3vw, 16px); line-height: 1.1; }
 .dados-evento { margin: 20px 0 32px; text-align: center; color: var(--texto-suave); font-size: clamp(18px, 2vw, 14px); line-height: 1.1; }
 .dados-evento p { margin: 3px 0; }
 
