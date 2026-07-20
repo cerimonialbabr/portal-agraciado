@@ -1,129 +1,79 @@
-/**
- * ==========================================================
- * registro.js
- * Página individual do agraciado
- * ==========================================================
- */
+let dados = null;
+let agraciado = null;
 
-let dadosRegistro = null;
+window.addEventListener(
 
-document.addEventListener(
+    "load",
 
-    "DOMContentLoaded",
-
-    iniciarPagina
+    iniciar
 
 );
 
+async function iniciar(){
 
-
-async function iniciarPagina() {
-
-    try {
-
-        mostrarCarregando(true);
-
+    try{
 
         const parametros =
-            new URLSearchParams(
-                window.location.search
-            );
 
+            new URLSearchParams(
+
+                location.search
+
+            );
 
         const id =
+
             parametros.get("id");
 
+        if(!id){
 
-        if (!id) {
+            mostrarErro(
 
-            throw new Error(
                 "Agraciado não informado."
+
             );
+
+            return;
 
         }
 
+        dados = await apiGet(
 
-        configurarEventos();
+            "dados"
 
-
-        dadosRegistro =
-            await API.buscarRegistro(id);
-
-
-        preencherTela(
-            dadosRegistro
         );
 
+        agraciado =
 
-        mostrarCarregando(false);
+            dados.agraciados.find(item=>{
+
+                return item.ID===id;
+
+            });
+
+        if(!agraciado){
+
+            mostrarErro(
+
+                "Agraciado não encontrado."
+
+            );
+
+            return;
+
+        }
+
+        preencherPagina();
 
     }
 
-    catch (erro) {
+    catch(e){
 
-        console.error(erro);
+        console.error(e);
 
         mostrarErro(
-            erro.message
-        );
 
-    }
-
-  function configurarEventos() {
-
-    const botao =
-
-        document.getElementById(
-            "btnRegistrar"
-        );
-
-    if (botao) {
-
-        botao.addEventListener(
-
-            "click",
-
-            abrirModal
-
-        );
-
-    }
-
-
-
-    const cancelar =
-
-        document.getElementById(
-            "btnCancelar"
-        );
-
-    if (cancelar) {
-
-        cancelar.addEventListener(
-
-            "click",
-
-            fecharModal
-
-        );
-
-    }
-
-
-
-    const confirmar =
-
-        document.getElementById(
-            "btnConfirmar"
-        );
-
-    if (confirmar) {
-
-        confirmar.addEventListener(
-
-            "click",
-
-            confirmarPresenca
+            "Erro ao carregar informações."
 
         );
 
@@ -131,343 +81,193 @@ async function iniciarPagina() {
 
 }
 
-  function preencherTela(dados) {
-
-    preencherNome(dados);
-
-    preencherPosicao(dados);
-
-    preencherMensagens(dados);
-
-    desenharDispositivo(dados);
-
-    atualizarEstadoConfirmacao(dados);
-
-}
-
-  function preencherNome(dados) {
+function preencherPagina(){
 
     document.getElementById(
-        "nomeAgraciado"
+
+        "nome"
+
     ).textContent =
-        dados.nome;
 
-}
-
-
-
-function preencherPosicao(dados) {
+    agraciado.Nome;
 
     document.getElementById(
-        "numeroPosicao"
+
+        "posicao"
+
     ).textContent =
-        dados.posicao;
+
+    numero(
+
+        agraciado.Posicao
+
+    );
+
+    carregarMensagem();
+
+    carregarDispositivo();
+
+    verificarStatus();
 
 }
+function carregarMensagem(){
 
-  function preencherMensagens(dados) {
-
-    const individual =
+    const caixa =
 
         document.getElementById(
+
             "mensagemIndividual"
+
         );
 
-    if (
+    if(
 
-        dados.mensagemIndividual
+        agraciado.Mensagem_Individual &&
 
-    ) {
+        agraciado.Mensagem_Individual.trim()!==""
 
-        individual.hidden = false;
+    ){
 
-        individual.innerHTML =
-            dados.mensagemIndividual;
+        caixa.innerHTML=
+
+        "<div class='mensagem card-amarelo'>"+
+
+        agraciado.Mensagem_Individual+
+
+        "</div>";
 
     }
 
-    else {
+    else{
 
-        individual.hidden = true;
+        caixa.innerHTML="";
 
     }
 
+}
 
+function carregarDispositivo(){
 
-    const container =
+    const div =
 
         document.getElementById(
-            "mensagensGerais"
+
+            "dispositivo"
+
         );
 
-    container.innerHTML = "";
+    renderizarDispositivo(
 
+        div,
 
-    (
+        dados.agraciados,
 
-        dados.mensagensGerais || []
+        numero(
 
-    ).forEach(texto => {
+            agraciado.Posicao
 
-        const div =
-            document.createElement(
-                "div"
-            );
+        )
 
-        div.className =
-            "mensagem-geral";
+    );
 
-        div.innerHTML =
-            texto;
+}function verificarStatus(){
 
-        container.appendChild(div);
+    if(
 
-    });
+        agraciado.Status==="PRESENTE"
 
-}
+    ){
 
-  function desenharDispositivo(dados) {
+        mostrarConfirmado();
 
-    Dispositivo.renderizar({
-
-        grade:
-
-            document.getElementById(
-                "gradeDispositivo"
-            ),
-
-        tituloSuperior:
-
-            document.getElementById(
-                "tituloSuperior"
-            ),
-
-        tituloInferior:
-
-            document.getElementById(
-                "tituloInferior"
-            ),
-
-        config:
-            dados.config,
-
-        layout:
-            dados.layout,
-
-        total:
-            dados.total,
-
-        posicaoSelecionada:
-            dados.posicao
-
-    });
+    }
 
 }
 
-    /**
- * ==========================================================
- * MODAL
- * ==========================================================
- */
-
-function abrirModal() {
-
-    if (!dadosRegistro) return;
-
-    if (dadosRegistro.presente) return;
+function mostrarConfirmado(){
 
     document.getElementById(
-        "modalConfirmacao"
-    ).hidden = false;
 
-}
+        "confirmar"
 
-
-
-function fecharModal() {
+    ).style.display="none";
 
     document.getElementById(
-        "modalConfirmacao"
-    ).hidden = true;
 
-}
+        "confirmado"
 
-    /**
- * ==========================================================
- * CONFIRMAÇÃO
- * ==========================================================
- */
+    ).style.display="block";
 
-async function confirmarPresenca() {
+async function confirmarPresenca(){
 
     const botao =
 
         document.getElementById(
-            "btnConfirmar"
+
+            "confirmar"
+
         );
 
-    try {
+    botao.disabled=true;
 
-        botao.disabled = true;
+    botao.textContent=
 
-        botao.textContent =
-            "Registrando...";
+    "Registrando...";
 
+    try{
 
-        const resposta =
+        await apiPost(
 
-            await API.confirmarPresenca(
+            "checkin",
 
-                dadosRegistro.id
+            {
 
-            );
+                id:
 
+                agraciado.ID
 
-        fecharModal();
+            }
 
-
-        dadosRegistro.presente = true;
-
-        dadosRegistro.dataHora =
-            resposta.dataHora;
-
-
-        atualizarEstadoConfirmacao(
-            dadosRegistro
         );
+
+        mostrarConfirmado();
 
     }
 
-    catch (erro) {
+    catch(e){
+
+        console.error(e);
 
         alert(
 
-            erro.message ||
-
-            "Erro ao registrar presença."
+            "Não foi possível registrar a presença."
 
         );
 
-    }
+        botao.disabled=false;
 
-    finally {
+        botao.textContent=
 
-        botao.disabled = false;
-
-        botao.textContent =
-            "Sim, confirmar";
+        "CONFIRMAR PRESENÇA";
 
     }
 
-}
+function mostrarErro(texto){
 
-    /**
- * ==========================================================
- * ESTADO DA TELA
- * ==========================================================
- */
+    document.body.innerHTML=
 
-function atualizarEstadoConfirmacao(dados) {
+    "<div class='container'>"+
 
-    const botao =
+    "<div class='pagina'>"+
 
-        document.getElementById(
-            "btnRegistrar"
-        );
+    "<div class='erro'>"+
 
+    texto+
 
-    const cartao =
+    "</div>"+
 
-        document.getElementById(
-            "cartaoConfirmado"
-        );
+    "</div>"+
 
-
-    if (!dados.presente) {
-
-        botao.hidden = false;
-
-        cartao.hidden = true;
-
-        return;
-
-    }
-
-
-    botao.hidden = true;
-
-    cartao.hidden = false;
-
-
-    const hora =
-
-        document.getElementById(
-            "horaConfirmacao"
-        );
-
-
-    if (hora) {
-
-        hora.textContent =
-            dados.dataHora || "";
-
-    }
+    "</div>";
 
 }
-
-    /**
- * ==========================================================
- * LOADING
- * ==========================================================
- */
-
-function mostrarCarregando(visivel) {
-
-    document.getElementById(
-        "estadoCarregando"
-    ).hidden = !visivel;
-
-
-    document.getElementById(
-        "conteudoPagina"
-    ).hidden = visivel;
-
-
-    document.getElementById(
-        "estadoErro"
-    ).hidden = true;
-
-}
-
-    /**
- * ==========================================================
- * ERRO
- * ==========================================================
- */
-
-function mostrarErro(mensagem) {
-
-    document.getElementById(
-        "estadoCarregando"
-    ).hidden = true;
-
-
-    document.getElementById(
-        "conteudoPagina"
-    ).hidden = true;
-
-
-    document.getElementById(
-        "estadoErro"
-    ).hidden = false;
-
-
-    document.getElementById(
-        "textoErro"
-    ).textContent = mensagem;
-
-}
-
-    
-
-  
