@@ -16,10 +16,8 @@ async function iniciarIndex() {
     configurarPatrocinadores(config);
 
    document.getElementById('carregando').hidden = true;
-
-document.getElementById('banner').hidden = false;
-
-document.getElementById('conteudo').hidden = false;
+   document.getElementById('conteudo').hidden = false;
+    
   } catch (erro) {
     console.error(erro);
     document.getElementById('carregando').hidden = true;
