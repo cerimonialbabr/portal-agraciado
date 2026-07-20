@@ -16,7 +16,15 @@ async function iniciarPresenca() {
 
     agraciados = (dados.agraciados || [])
       .filter(item => texto(item.ID) && texto(item.Nome))
-      .sort((a, b) => texto(a.Nome).localeCompare(texto(b.Nome), 'pt-BR'));
+      agraciados.sort(
+
+    (a,b)=>
+
+    Number(a["Posição"]) -
+
+    Number(b["Posição"])
+
+);
 
     renderizarLista(agraciados);
     document.getElementById('carregando').hidden = true;
