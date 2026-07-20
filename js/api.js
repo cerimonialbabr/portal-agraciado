@@ -1,29 +1,210 @@
-//====================================================
-// CONFIGURAÇÃO
-//====================================================
+/**
+ * =====================================================
+ * CONFIGURAÇÃO
+ * =====================================================
+ */
 
-// COLE AQUI O MESMO WEB APP DO SISTEMA ANTIGO
+const API = (() => {
 
-const API_URL =
-"https://SEU_APPS_SCRIPT/exec";
+    /**
+     * URL do Apps Script
+     * (substituir após o deploy)
+     */
+    const BASE_URL = "COLE_AQUI_SUA_URL_DO_APPS_SCRIPT";
 
 
-//====================================================
-// BUSCAR CONFIGURAÇÃO
-//====================================================
 
-async function carregarConfiguracao(){
+    /**
+     * =====================================================
+     * MÉTODO PRIVADO
+     * =====================================================
+     */
 
-    const resposta = await fetch(API_URL);
+    async function requisicao(
 
-    if(!resposta.ok){
+        acao,
 
-        throw new Error("Erro ao acessar a API.");
+        parametros = {}
+
+    ) {
+
+        const dados = {
+
+            acao,
+
+            ...parametros
+
+        };
+
+
+        const resposta = await fetch(
+
+            BASE_URL,
+
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify(dados)
+
+            }
+
+        );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+
+                "Erro de comunicação."
+
+            );
+
+        }
+
+
+        const json =
+            await resposta.json();
+
+
+        if (json.erro) {
+
+            throw new Error(
+
+                json.erro
+
+            );
+
+        }
+
+
+        return json;
 
     }
 
-    const dados = await resposta.json();
 
-    return dados;
 
-}
+    /**
+     * =====================================================
+     * REGISTRO
+     * =====================================================
+     */
+
+    async function buscarRegistro(id) {
+
+        return await requisicao(
+
+            "buscarRegistro",
+
+            {
+
+                id
+
+            }
+
+        );
+
+    }
+
+
+
+    async function confirmarPresenca(id) {
+
+        return await requisicao(
+
+            "confirmarPresenca",
+
+            {
+
+                id
+
+            }
+
+        );
+
+    }
+
+
+
+    /**
+     * =====================================================
+     * DASHBOARD
+     * =====================================================
+     */
+
+    async function buscarDashboard() {
+
+        return await requisicao(
+
+            "dashboard"
+
+        );
+
+    }
+
+
+
+    /**
+     * =====================================================
+     * CONFIGURAÇÃO
+     * =====================================================
+     */
+
+    async function buscarConfiguracao() {
+
+        return await requisicao(
+
+            "config"
+
+        );
+
+    }
+
+
+
+    /**
+     * =====================================================
+     * LISTA DE AGRACIADOS
+     * =====================================================
+     */
+
+    async function buscarAgraciados() {
+
+        return await requisicao(
+
+            "agraciados"
+
+        );
+
+    }
+
+
+
+    /**
+     * =====================================================
+     * EXPORTAÇÃO
+     * =====================================================
+     */
+
+    return {
+
+        buscarRegistro,
+
+        confirmarPresenca,
+
+        buscarDashboard,
+
+        buscarConfiguracao,
+
+        buscarAgraciados
+
+    };
+
+})();
