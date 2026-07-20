@@ -9,6 +9,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="theme-color"
+        content="#003b6f"
+    >
+
     <title>Orientações do Agraciado</title>
 
     <link
@@ -19,62 +24,304 @@
 
 <body>
 
-    <main class="container pagina-presenca">
+    <main class="container pagina-registro">
 
         <header class="topo-pagina">
 
             <a
                 class="botao-voltar"
                 href="presenca.html"
+                aria-label="Voltar para a lista de agraciados"
             >
-                <span class="seta-voltar">
+                <span
+                    class="seta-voltar"
+                    aria-hidden="true"
+                >
                     ‹
                 </span>
 
                 <span>
-                    Voltar
+                    Escolher outro agraciado
                 </span>
             </a>
 
         </header>
 
 
-        <section class="card card-presenca">
+        <!-- Carregamento -->
+        <section
+            id="estado-carregamento"
+            class="card card-registro carregamento-registro"
+            aria-live="polite"
+        >
 
-            <header class="cabecalho-pagina">
+            <div class="skeleton skeleton-nome"></div>
 
-                <h1>
-                    Agraciado selecionado
-                </h1>
+            <div class="skeleton skeleton-texto"></div>
 
-                <p>
-                    Esta página será construída na próxima etapa.
-                </p>
+            <div class="skeleton skeleton-posicao"></div>
 
-                <p id="identificador-agraciado"></p>
+            <div class="skeleton skeleton-botao"></div>
+
+            <div class="skeleton skeleton-dispositivo"></div>
+
+        </section>
+
+
+        <!-- Erro -->
+        <section
+            id="estado-erro"
+            class="card card-registro estado-erro"
+            hidden
+        >
+
+            <h1>
+                Não foi possível localizar o agraciado
+            </h1>
+
+            <p id="mensagem-erro">
+                Retorne à lista e selecione novamente o seu nome.
+            </p>
+
+            <a
+                class="botao botao-principal"
+                href="presenca.html"
+            >
+                <span class="titulo">
+                    VOLTAR PARA A LISTA
+                </span>
+            </a>
+
+        </section>
+
+
+        <!-- Conteúdo principal -->
+        <article
+            id="conteudo-registro"
+            class="card card-registro"
+            hidden
+        >
+
+            <!-- Identificação -->
+            <header class="identificacao-agraciado">
+
+                <h1 id="nome-agraciado"></h1>
 
             </header>
 
-        </section>
+
+            <!-- Posição -->
+            <section
+                class="secao-posicao"
+                aria-labelledby="titulo-posicao"
+            >
+
+                <h2 id="titulo-posicao">
+                    SUA POSIÇÃO
+                </h2>
+
+                <div
+                    id="posicao-agraciado"
+                    class="numero-posicao"
+                ></div>
+
+            </section>
+
+
+            <!-- Ação de presença -->
+            <section
+                id="area-presenca"
+                class="area-presenca"
+                aria-live="polite"
+            >
+
+                <button
+                    id="botao-registrar-presenca"
+                    class="botao-registro-presenca"
+                    type="button"
+                >
+                    REGISTRAR PRESENÇA
+                </button>
+
+
+                <div
+                    id="cartao-presenca-registrada"
+                    class="cartao-presenca-registrada"
+                    hidden
+                >
+
+                    <div
+                        class="icone-presenca-registrada"
+                        aria-hidden="true"
+                    >
+                        ✓
+                    </div>
+
+                    <div class="titulo-presenca-registrada">
+                        PRESENÇA REGISTRADA
+                    </div>
+
+                    <div
+                        id="data-presenca-registrada"
+                        class="data-presenca-registrada"
+                    ></div>
+
+                    <div
+                        id="hora-presenca-registrada"
+                        class="hora-presenca-registrada"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Dispositivo -->
+            <section
+                id="secao-dispositivo"
+                class="mini-dispositivo-card"
+                aria-labelledby="titulo-dispositivo"
+            >
+
+                <h2
+                    id="titulo-dispositivo"
+                    class="mini-titulo"
+                >
+                    DISPOSITIVO
+                </h2>
+
+                <div
+                    id="referencia-superior"
+                    class="mini-referencia"
+                >
+                    TRIBUNA
+                </div>
+
+                <div class="mini-area">
+
+                    <div
+                        id="grade-dispositivo"
+                        class="mini-grade"
+                    ></div>
+
+                </div>
+
+                <div
+                    id="referencia-inferior"
+                    class="mini-referencia"
+                >
+                    TROPA
+                </div>
+
+                <div class="mini-legenda">
+
+                    <span>
+                        <i class="mini-bolinha normal"></i>
+                        Demais posições
+                    </span>
+
+                    <span>
+                        <i class="mini-bolinha destaque"></i>
+                        Sua posição
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- Mensagem individual -->
+            <section
+                id="secao-mensagem-individual"
+                class="mensagem-individual"
+                hidden
+            >
+
+                <div id="mensagem-individual"></div>
+
+            </section>
+
+
+            <!-- Mensagens gerais -->
+            <section
+                id="secao-orientacoes"
+                class="secao-orientacoes"
+                hidden
+            >
+
+                <h2
+                    id="titulo-orientacoes"
+                    class="titulo-orientacoes"
+                >
+                    ORIENTAÇÕES
+                </h2>
+
+                <div id="mensagens-gerais"></div>
+
+            </section>
+
+        </article>
 
     </main>
 
 
-    <script>
+    <!-- Modal de confirmação -->
+    <div
+        id="modal-registro-presenca"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal-presenca"
+        hidden
+    >
 
-        const parametros = new URLSearchParams(
-            window.location.search
-        );
+        <div
+            class="modal-fundo"
+            data-fechar-modal-presenca
+        ></div>
 
-        const id = parametros.get("id");
+        <section class="modal-conteudo">
 
-        document.getElementById(
-            "identificador-agraciado"
-        ).textContent = id
-            ? `Identificador recebido: ${id}`
-            : "Nenhum identificador foi recebido.";
+            <h2 id="titulo-modal-presenca">
+                Registrar presença
+            </h2>
 
-    </script>
+            <p>
+                Deseja realmente registrar sua presença?
+            </p>
+
+            <p
+                id="nome-confirmacao-presenca"
+                class="nome-selecionado"
+            ></p>
+
+            <div class="acoes-modal">
+
+                <button
+                    id="botao-cancelar-registro"
+                    class="botao-modal botao-cancelar"
+                    type="button"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    id="botao-confirmar-registro"
+                    class="botao-modal botao-continuar"
+                    type="button"
+                >
+                    Registrar
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="js/dispositivo.js"></script>
+    <script src="js/registro.js"></script>
 
 </body>
 
