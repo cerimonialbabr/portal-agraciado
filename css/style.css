@@ -170,7 +170,7 @@ button, input { font: inherit; }
 
 .cabecalho-pagina { text-align: center; margin-bottom: 24px; }
 .cabecalho-pagina h1 { margin: 0 0 10px; font-size: clamp(27px, 4vw, 38px); }
-.cabecalho-pagina p { max-width: 720px; margin: 0 auto; color: var(--texto-suave); line-height: 1.55; font-size: 16px; }
+.cabecalho-pagina p { max-width: 720px; margin: 0 auto; color: var(--texto-suave); line-height: 1.55; font-size: 20px; }
 
 .busca { width: 100%; height: 54px; padding: 0 18px; border: 1px solid #cbd5e1; border-radius: 12px; background: white; color: var(--texto); font-size: 17px; }
 .busca:focus { outline: 3px solid rgba(8,71,127,.15); border-color: var(--azul); }
