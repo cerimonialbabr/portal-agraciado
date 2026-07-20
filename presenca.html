@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#003b6f"
+    >
+
+    <title>Registrar Presença</title>
+
+    <link
+        rel="stylesheet"
+        href="css/portal.css"
+    >
+</head>
+
+<body>
+
+    <main class="container pagina-presenca">
+
+        <!-- Navegação superior -->
+        <header class="topo-pagina">
+
+            <a
+                class="botao-voltar"
+                href="index.html"
+                aria-label="Voltar para a página inicial"
+            >
+                <span class="seta-voltar" aria-hidden="true">
+                    ‹
+                </span>
+
+                <span>
+                    Voltar
+                </span>
+            </a>
+
+        </header>
+
+
+        <!-- Apresentação -->
+        <section class="card card-presenca">
+
+            <header class="cabecalho-pagina">
+
+                <h1>
+                    Registrar presença
+                </h1>
+
+                <p>
+                    Prezado agraciado, procure o seu nome na lista abaixo e
+                    registre sua presença.
+                </p>
+
+                <p>
+                    Após o registro, consulte atentamente as orientações
+                    apresentadas.
+                </p>
+
+            </header>
+
+
+            <!-- Pesquisa -->
+            <div class="area-pesquisa">
+
+                <label
+                    class="rotulo-pesquisa"
+                    for="campo-pesquisa"
+                >
+                    Pesquisar agraciado
+                </label>
+
+                <div class="campo-pesquisa-container">
+
+                    <input
+                        id="campo-pesquisa"
+                        class="campo-pesquisa"
+                        type="search"
+                        placeholder="Digite seu posto ou nome"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+
+                    <button
+                        id="botao-limpar-pesquisa"
+                        class="botao-limpar-pesquisa"
+                        type="button"
+                        aria-label="Limpar pesquisa"
+                        hidden
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+                <p
+                    id="contador-resultados"
+                    class="contador-resultados"
+                    aria-live="polite"
+                ></p>
+
+            </div>
+
+
+            <!-- Lista preenchida pelo JavaScript -->
+            <section
+                id="lista-agraciados"
+                class="lista-agraciados"
+                aria-label="Lista de agraciados"
+            ></section>
+
+
+            <!-- Mensagem exibida quando não houver resultado -->
+            <section
+                id="sem-resultados"
+                class="sem-resultados"
+                hidden
+            >
+
+                <h2>
+                    Nenhum nome encontrado
+                </h2>
+
+                <p>
+                    Verifique a escrita ou pesquise apenas uma parte do nome.
+                </p>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <!-- Modal de confirmação -->
+    <div
+        id="modal-confirmacao"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal"
+        hidden
+    >
+
+        <div
+            class="modal-fundo"
+            data-fechar-modal
+        ></div>
+
+        <section class="modal-conteudo">
+
+            <h2 id="titulo-modal">
+                Confirme sua seleção
+            </h2>
+
+            <p>
+                Você selecionou:
+            </p>
+
+            <p
+                id="nome-selecionado"
+                class="nome-selecionado"
+            ></p>
+
+            <p class="aviso-modal">
+                Verifique se este é realmente o seu nome antes de continuar.
+            </p>
+
+            <div class="acoes-modal">
+
+                <button
+                    id="botao-cancelar"
+                    class="botao-modal botao-cancelar"
+                    type="button"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    id="botao-continuar"
+                    class="botao-modal botao-continuar"
+                    type="button"
+                >
+                    Continuar
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="js/presenca.js"></script>
+
+</body>
+
+</html>
