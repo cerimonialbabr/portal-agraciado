@@ -1,0 +1,2070 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SGCES — Organização</title>
+  <style>
+:root{
+  --bg:#f5f7fb;
+  --panel:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --line:#dbe1ea;
+  --primary:#173f74;
+  --primary-2:#275c9f;
+  --soft:#eaf1fb;
+  --success:#0f766e;
+  --warning:#a16207;
+  --danger:#b42318;
+  --shadow:0 8px 24px rgba(15,23,42,.08);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--primary-2);text-decoration:none}
+img{max-width:100%;display:block}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.nowrap{white-space:nowrap}
+.text-right{text-align:right}
+
+/* shell organização */
+.app-shell{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+.sidebar{background:#102d52;color:#fff;padding:22px 16px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{padding:6px 10px 22px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:16px}
+.brand-logo{display:block;width:100%;max-width:210px;height:auto;object-fit:contain;margin:0 0 8px}
+.brand h1{font-size:2.05rem;line-height:1.05;margin:0 0 7px;font-weight:800;letter-spacing:.02em}
+.brand p{margin:0;color:#cdd9e8;font-size:.82rem;line-height:1.35}
+.nav{display:grid;gap:5px}
+.nav button{width:100%;border:0;border-radius:10px;background:transparent;color:#d9e6f4;text-align:left;padding:11px 12px;font-weight:600}
+.nav button:hover,.nav button.active{background:rgba(255,255,255,.12);color:#fff}
+.sidebar-footer{font-size:.75rem;color:#9fb5cf;margin:28px 10px 0}
+.main{min-width:0}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.topbar-left,.topbar-right{display:flex;align-items:center;gap:10px;min-width:0}
+.active-event-label{font-size:.85rem;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;white-space:nowrap}.active-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:6px;vertical-align:1px}
+.content{padding:26px;max-width:1500px;margin:0 auto}
+.page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+.page-heading h2{font-size:2.3rem;line-height:1.15;margin:0 0 6px;font-weight:800;letter-spacing:-.02em}
+.page-heading p{margin:0;color:var(--muted)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.card h3{margin:0 0 12px;font-size:1.12rem}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+.stat strong{display:block;font-size:1.6rem;margin-top:3px}
+.stat span{font-size:.78rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+
+.btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:9px 13px;border-radius:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:normal;text-align:center;line-height:1.15;min-height:38px}
+.btn:hover{filter:brightness(.98)}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn-soft{background:var(--soft);border-color:#cbdaf0;color:var(--primary)}
+.btn-danger{background:#fff3f2;border-color:#f0c5c1;color:var(--danger)}
+.btn-success{background:#ecfdf5;border-color:#a7f3d0;color:#047857}
+.btn-sm{padding:6px 9px;font-size:.84rem;border-radius:8px}
+.btn-lg{padding:12px 16px;font-size:1rem}
+.icon-btn{width:38px;height:38px;padding:0;border-radius:10px}
+
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.field{display:grid;gap:6px}
+.field label{font-size:.8rem;font-weight:800;color:#445064;text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select,.field textarea,.search-input{width:100%;border:1px solid #cfd7e3;border-radius:10px;padding:10px 11px;background:#fff;color:var(--text);outline:none}
+.field textarea{min-height:90px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus,.search-input:focus{border-color:#759aca;box-shadow:0 0 0 3px rgba(39,92,159,.11)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.section-actions{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:10px 11px;border-bottom:1px solid #e8edf4;text-align:left;vertical-align:middle}
+th{background:#f8fafc;color:#4b5563;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0;z-index:1}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:#fbfdff}
+.badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:800;background:#edf2f7;color:#475569}
+.badge.success{background:#dcfce7;color:#166534}
+.badge.warning{background:#fef3c7;color:#92400e}
+.badge.danger{background:#fee2e2;color:#991b1b}
+.badge.info{background:#dbeafe;color:#1d4ed8}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.48);z-index:100;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal{background:#fff;width:min(840px,96vw);max-height:92vh;overflow:auto;border-radius:18px;box-shadow:0 25px 60px rgba(15,23,42,.25)}
+.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+.modal-head h3{margin:0;font-size:1.35rem}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+
+.toast-wrap{position:fixed;right:18px;bottom:18px;z-index:500;display:grid;gap:9px;max-width:380px}
+.toast{background:#111827;color:#fff;padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);font-weight:650}
+.toast.error{background:#8d1f18}
+.toast.success{background:#065f46}
+.loading{opacity:.55;pointer-events:none}
+.spinner{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;display:inline-block;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* croqui */
+.floor-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.floor-zoom-controls{display:flex;gap:6px;align-items:center}.floor-zoom-controls .btn{min-width:38px}.floor-pan-hint{font-size:.75rem;color:var(--muted)}
+.floor-wrap{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:0;overflow:hidden;touch-action:none}
+.floor{position:relative;width:100%;min-width:0;aspect-ratio:16/9;background-color:#f8fafc;background-image:linear-gradient(90deg,#eef2f7 1px,transparent 1px),linear-gradient(#eef2f7 1px,transparent 1px);background-size:25px 25px;background-position:center;background-repeat:repeat;border:0;border-radius:15px;overflow:hidden;transform-origin:center center;will-change:transform}
+.floor-table{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;text-align:center;background:#eef4fb;border:2px solid #7d9fc8;color:#183b68;font-weight:800;user-select:none;touch-action:none;box-shadow:0 5px 14px rgba(15,23,42,.08);cursor:grab}
+.floor-table.round{border-radius:50%}
+.floor-table.rect{border-radius:9px}
+.floor-table.u{border:0!important;border-radius:0;background:transparent!important;box-shadow:none;overflow:visible;color:#183b68}
+.floor-table.u::before{content:"";position:absolute;inset:0;border:6px solid currentColor;border-top:0;border-radius:0 0 10px 10px;pointer-events:none;box-sizing:border-box}
+.floor-table.u>div{position:relative;z-index:1;background:rgba(255,255,255,.9);border-radius:8px;padding:5px 8px}
+.floor-table.dragging{cursor:grabbing;z-index:10;box-shadow:0 12px 28px rgba(15,23,42,.18)}
+.floor-table .floor-table-label{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;max-width:92%;line-height:1.04;text-align:center}
+.floor-table .floor-table-name{font-weight:800;display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.floor-table .occ{display:block;font-size:.72rem;font-weight:700;margin-top:2px;color:#52708f;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.floor-table.highlight{outline:5px solid rgba(22,163,74,.25);background:#dcfce7 !important;border-color:#16a34a !important;color:#14532d !important}
+.floor-table.u.highlight{background:transparent!important;border-color:transparent!important;color:#16a34a!important}
+.floor-table.full{background:#fff1f2;border-color:#e11d48;color:#881337}
+.floor-table.u.full{background:transparent!important;border-color:transparent!important;color:#e11d48!important}
+.floor-table.locked{opacity:.58;cursor:not-allowed;filter:grayscale(.25)}
+.floor-table.selectable{cursor:pointer}.floor-table.selectable:hover{outline:4px solid rgba(23,63,116,.18)}
+.floor-table .resize-handle{position:absolute;right:-7px;bottom:-7px;width:17px;height:17px;border-radius:50%;background:#173f74;border:2px solid #fff;box-shadow:0 2px 5px rgba(15,23,42,.25);cursor:nwse-resize;z-index:4}
+.floor-table.round .resize-handle{right:2px;bottom:2px}
+
+/* composição das mesas */
+.seating-stage{position:relative;min-height:540px;background:#fbfdff;border:1px solid var(--line);border-radius:16px;overflow:auto;padding:10px}
+.seating-canvas{position:relative;margin:0 auto;transform-origin:top left}
+.table-shape{position:absolute;background:#f1f5f9;border:3px solid #64748b;box-sizing:border-box}
+.table-shape.round{border-radius:50%}
+.table-shape.rect{border-radius:8px}
+.table-shape.u{border:20px solid #64748b;border-top:0;background:transparent;border-radius:0 0 12px 12px}
+.seat{position:absolute;transform:translate(-50%,-50%);border:1px solid #cbd5e1;background:#fff;border-radius:9px;text-align:center;font-size:.74rem;box-shadow:0 3px 9px rgba(15,23,42,.06);display:flex;align-items:center;justify-content:center;box-sizing:border-box;overflow:hidden;z-index:2}
+.seat.horizontal{width:170px;min-height:46px;height:auto;padding:7px 9px}
+.seat.vertical{width:48px;height:150px;padding:0}
+.seat .seat-text{font-weight:800;line-height:1.12;overflow-wrap:anywhere}
+.seat.horizontal .seat-text{width:100%;white-space:normal;transform:none}
+.seat.vertical .seat-text{white-space:nowrap;transform:rotate(-90deg);transform-origin:center;width:var(--seat-label-length,136px);line-height:1;overflow:visible;text-overflow:clip}
+.seat.empty{opacity:.25;background:#f8fafc;border-style:dashed;box-shadow:none}
+.seat.empty .seat-text{visibility:hidden}
+.seat.manual{cursor:grab;touch-action:manipulation;transition:box-shadow .12s,border-color .12s,opacity .12s}
+.seat.manual:hover{border-color:#6f94c3;box-shadow:0 5px 13px rgba(23,63,116,.14)}
+.seat.manual.selected{outline:3px solid rgba(37,99,235,.28);border-color:#2563eb;z-index:4}
+.seat.manual.drop-target{border-style:dashed;border-color:#2563eb;background:#eff6ff}
+.seat.manual.empty{opacity:.72}
+.seat.manual.empty .seat-text{visibility:visible;color:#8290a4;font-size:.64rem}
+.seating-fit{position:relative;margin:0 auto}
+.cerimonial-grid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:16px}
+.cerimonial-table-list{max-height:72vh;overflow:auto}
+.manual-seat-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.manual-seat-hint{font-size:.8rem;color:var(--muted);line-height:1.35}
+.unseated-tray{display:flex;gap:7px;flex-wrap:wrap;padding:10px;border:1px dashed #cbd5e1;border-radius:12px;background:#f8fafc;margin-top:10px}
+.unseated-chip{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:6px 9px;font-size:.78rem;font-weight:750;cursor:grab;touch-action:manipulation}
+.unseated-chip.selected{outline:3px solid rgba(37,99,235,.22);border-color:#2563eb}
+.member-list{display:grid;gap:6px;max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:8px}
+.member-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:9px;align-items:center;padding:8px;border-bottom:1px solid #eef2f7}
+.member-row:last-child{border-bottom:0}
+.overview-card{margin-bottom:16px}
+.cerimonial-overview-wrap{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;touch-action:none;cursor:grab}
+.cerimonial-overview-wrap.is-panning{cursor:grabbing}
+.cerimonial-overview-floor{position:relative;width:100%;aspect-ratio:16/9;min-width:0;background-color:#f8fafc;background-image:linear-gradient(90deg,#eef2f7 1px,transparent 1px),linear-gradient(#eef2f7 1px,transparent 1px);background-size:25px 25px;background-position:center;background-repeat:repeat;transform-origin:center center;will-change:transform}
+.overview-table-shape{position:absolute;transform:translate(-50%,-50%);background:#eef4fb;border:2px solid #7d9fc8;color:#183b68;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;border-radius:8px;box-sizing:border-box;z-index:1;transition:box-shadow .12s,border-color .12s,filter .12s}
+.overview-table-shape:hover{box-shadow:0 0 0 4px rgba(37,99,235,.14),0 8px 20px rgba(15,23,42,.12);filter:brightness(1.01)}
+.overview-table-shape.round{border-radius:50%}
+.overview-table-shape.u{background:transparent;border:0;border-radius:0}
+.overview-table-shape.u::before{content:"";position:absolute;inset:0;border:4px solid #7d9fc8;border-top:0;border-radius:0 0 8px 8px}
+.overview-table-shape.u:hover::before{border-color:#557faf}
+.overview-table-name{position:relative;z-index:2;background:rgba(255,255,255,.9);padding:2px 5px;border-radius:5px;font-size:clamp(8px,.72vw,11px);max-width:92%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none}
+.overview-table-meta{display:block;font-size:.66em;font-weight:750;color:#5b6b7f;margin-top:1px}
+.overview-direction-tag{position:absolute;left:50%;top:calc(100% + 5px);z-index:7;display:flex;align-items:center;gap:4px;max-width:220px;padding:3px 7px;border:1px solid #bfd0e3;border-radius:999px;background:rgba(255,255,255,.96);box-shadow:0 2px 7px rgba(15,23,42,.09);font-size:9px;line-height:1.15;font-weight:850;color:#173f74;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.overview-direction-tag.principal{border-color:#9ed6c8;background:#ecfdf5;color:#0f766e}.orientation-info{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:.79rem;color:#334155}.orientation-arrow{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:24px;padding:0 6px;border-radius:999px;background:#e8f0fb;color:#173f74;font-size:1rem;font-weight:900}.orientation-star{background:#ecfdf5;color:#0f766e}
+.overview-table-shape.clickable{cursor:pointer}
+.overview-inline-seat{position:absolute;z-index:4;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.96);border:1px solid #cbd5e1;border-radius:5px;box-shadow:0 2px 5px rgba(15,23,42,.08);font-weight:800;font-size:9px;line-height:1;color:#1f2937;overflow:hidden;pointer-events:none;opacity:0;visibility:hidden;transform-origin:center center;transition:opacity .12s ease,border-color .12s ease,background .12s ease}
+.overview-inline-seat.visible{opacity:1;visibility:visible}
+.overview-inline-seat.host{border-color:#0f766e;background:#ecfdf5}
+.overview-inline-seat.rank1{border-color:#2563eb;background:#eff6ff}
+.overview-inline-seat.horizontal{height:21px;padding:2px 5px}
+.overview-inline-seat.vertical{width:23px;padding:2px 1px;overflow:visible}
+.overview-inline-seat .overview-inline-seat-text{display:block;width:100%;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.overview-inline-seat.vertical .overview-inline-seat-text{transform:rotate(-90deg);transform-origin:center;width:var(--overview-seat-label-length,70px);max-width:none;overflow:visible;text-overflow:clip}
+.overview-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:.78rem;color:var(--muted)}
+.overview-overflow-note{font-size:.76rem;color:var(--muted)}
+
+/* popup da composição na visão geral */
+.overview-table-popover{position:fixed;z-index:260;width:min(860px,calc(100vw - 28px));max-height:min(78vh,700px);background:#fff;border:1px solid #cbd5e1;border-radius:16px;box-shadow:0 22px 60px rgba(15,23,42,.28);overflow:hidden;display:flex;flex-direction:column}
+.overview-table-popover.hidden{display:none}
+.overview-popover-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);background:#fbfdff}
+.overview-popover-head h4{margin:0;font-size:1.02rem}
+.overview-popover-head .small{margin-top:2px}
+.overview-popover-actions{display:flex;gap:7px;align-items:center;flex-wrap:nowrap}
+.overview-popup-stage{padding:8px;overflow:auto;background:#fff;min-height:220px;max-height:560px}
+.overview-popup-stage .seating-fit{margin:0 auto}
+.overview-popup-empty{padding:22px;text-align:center;color:var(--muted)}
+
+/* organização dos comandos do Cerimonial */
+.cerimonial-header-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.cerimonial-action-cluster{display:flex;gap:7px;align-items:center;flex-wrap:nowrap}
+.cerimonial-action-cluster+.cerimonial-action-cluster{padding-left:10px;border-left:1px solid var(--line)}
+.cerimonial-action-groups{display:grid;gap:8px;margin:10px 0 12px}
+.cerimonial-action-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cerimonial-action-buttons{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:760px){
+  .cerimonial-header-actions{justify-content:flex-start;width:100%}
+  .cerimonial-action-cluster{flex-wrap:wrap}
+  .cerimonial-action-cluster+.cerimonial-action-cluster{border-left:0;padding-left:0}
+  .cerimonial-action-row{align-items:flex-start}
+  .overview-table-popover{width:calc(100vw - 16px);max-height:82vh}
+}
+.photo-upload-box{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center;border:1px dashed #cbd5e1;border-radius:12px;padding:10px}
+.photo-preview{width:86px;height:86px;border-radius:12px;background:#eef2f7;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#7c899b;font-size:.72rem;font-weight:800;text-align:center}
+.photo-preview img{width:100%;height:100%;object-fit:cover}
+.nominata-editor{display:block}
+.nom-item{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff}
+.nom-item .section-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:14px;align-items:center;margin-bottom:0}
+.nom-item .actions{width:100%;justify-content:flex-end}
+.upload-frame{display:block;width:100%;height:76px;border:0;background:transparent;overflow:hidden}
+.photo-upload-box>div:last-child{min-width:0;flex:1}
+.nom-item.message{background:#f8fafc;border-style:dashed}
+@media(max-width:900px){.nominata-editor{grid-template-columns:1fr}}
+
+/* recepção */
+.public-shell{min-height:100vh;background:var(--bg)}
+.public-header{background:#102d52;color:#fff;padding:18px 22px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.public-header h1{font-size:1.85rem;margin:0;line-height:1.05}
+.public-header p{margin:4px 0 0;color:#cdd9e8;font-size:.83rem}
+.public-main{max-width:1180px;margin:0 auto;padding:22px}
+.reception-search{font-size:1.05rem;padding:13px 14px}
+.person-card{display:grid;grid-template-columns:84px 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}
+.avatar{width:84px;height:84px;border-radius:12px;background:#e9eef5;object-fit:cover;display:flex;align-items:center;justify-content:center;color:#7c899b;font-weight:800;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.person-card h3{margin:0 0 4px;font-size:1.05rem}
+.person-card p{margin:2px 0;color:var(--muted);font-size:.88rem}
+.nominata-list{display:grid;gap:8px}
+.nominata-item{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+
+/* convidado */
+.guest-page{min-height:100vh;background:#f7f8fb}
+.guest-hero{background:#102d52;color:#fff;min-height:210px;display:flex;align-items:flex-end;background-size:cover;background-position:center;position:relative}
+.guest-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(3,18,38,.85),rgba(3,18,38,.15))}
+.guest-hero-inner{position:relative;z-index:1;max-width:980px;width:100%;margin:0 auto;padding:30px 22px}
+.guest-hero h1{font-size:2.15rem;margin:0 0 8px;line-height:1.05}
+.guest-main{max-width:980px;margin:0 auto;padding:22px}
+.guest-table-callout{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center;box-shadow:var(--shadow)}
+.guest-table-callout .number{font-size:3rem;font-weight:900;color:var(--primary);line-height:1}
+.content-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.content-link{display:flex;gap:10px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px;font-weight:750}
+.sponsor-row{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;padding:14px}
+.sponsor-row a,.sponsor-row span{display:block}
+.sponsor-row img{max-width:130px;max-height:70px;object-fit:contain}
+
+/* TV */
+.tv-page{min-height:100vh;background:#eef2f7;padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:14px}
+.tv-header{background:#102d52;color:#fff;border-radius:18px;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.tv-header h1{font-size:2.15rem;margin:0;line-height:1.05}
+.tv-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:14px;min-height:0}
+.tv-panel{background:#fff;border-radius:18px;border:1px solid var(--line);padding:16px;overflow:hidden}
+.tv-floor{position:relative;width:100%;height:100%;min-height:520px;background:#fbfdff;border-radius:12px;border:1px solid #e2e8f0}
+.tv-arrivals{display:grid;gap:8px}
+.tv-arrival{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #edf0f4;padding:8px 0;font-size:1.02rem}
+.tv-sponsors{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;min-height:86px;display:flex;justify-content:center;align-items:center}
+
+@media (max-width:1200px){
+  .cerimonial-grid{grid-template-columns:1fr}
+  .cerimonial-table-list{max-height:none;display:flex;gap:7px;overflow:auto}
+  .cerimonial-table-list .btn{min-width:180px;margin-bottom:0!important}
+}
+@media (max-width:1100px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:820px){
+  .app-shell{grid-template-columns:1fr}
+  .sidebar{position:relative;height:auto;padding:14px}
+  .nav{grid-template-columns:repeat(4,minmax(0,1fr));overflow:auto}
+  .nav button{text-align:center;font-size:.8rem;padding:9px 7px}
+  .brand{padding:3px 5px 14px}.brand-logo{max-width:190px}.brand h1{font-size:1.65rem}
+  .topbar{position:relative;padding:10px 14px;align-items:flex-start;flex-direction:column}
+  .content{padding:16px}
+  .page-heading h2{font-size:1.9rem}
+  .grid-2,.grid-3,.grid-4,.form-grid,.form-grid-3{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .person-card{grid-template-columns:62px 1fr}.person-card .actions{grid-column:1/-1}
+  .nom-item .section-actions{grid-template-columns:1fr}.nom-item .actions{justify-content:flex-start}.upload-frame{height:116px}
+  .avatar{width:62px;height:62px}
+  .tv-grid{grid-template-columns:1fr}.tv-page{display:block}.tv-panel{margin-bottom:12px}
+  .content-links{grid-template-columns:1fr}
+  .seating-stage{min-height:420px;padding:6px}
+  .seat.horizontal{width:150px}
+  .manual-seat-toolbar .btn{flex:1 1 auto}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr 1fr}.stat strong{font-size:1.35rem}
+  .public-header{padding:14px}.public-header h1{font-size:1.55rem}.public-main{padding:14px}
+  .guest-hero h1{font-size:1.8rem}.guest-main{padding:14px}
+}
+
+  </style>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="brand-logo" src="icone_sgces.png" alt="SGCES">
+      <p>Sistema de Gerenciamento de Cerimonial em Eventos Sociais</p>
+    </div>
+    <nav class="nav" id="mainNav">
+      <button class="active" data-view="dashboard">Dashboard</button>
+      <button data-view="evento">Evento</button>
+      <button data-view="convidados">Convidados</button>
+      <button data-view="mesas">Mesas</button>
+      <button data-view="croqui">Croqui</button>
+      <button data-view="cerimonial">Cerimonial</button>
+      <button data-view="nominata">Nominata</button>
+      <button data-view="conteudos">Conteúdos</button>
+      <button data-view="acessos">Acessos</button>
+    </nav>
+    <div class="sidebar-footer">SGCES v1.5.5</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="small muted" style="font-weight:800;margin-bottom:4px">EVENTO EM EDIÇÃO</div>
+          <select id="eventSelect" class="search-input" style="min-width:300px"></select>
+        </div>
+        <div id="activeEventLabel" class="active-event-label"><span class="muted">Nenhum evento ativo</span></div>
+      </div>
+      <div class="topbar-right">
+        <span id="syncStatus" class="small muted">Pronto</span>
+        <button id="refreshBtn" class="btn btn-sm">Atualizar</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <section data-section="dashboard"></section>
+      <section data-section="evento" class="hidden"></section>
+      <section data-section="convidados" class="hidden"></section>
+      <section data-section="mesas" class="hidden"></section>
+      <section data-section="croqui" class="hidden"></section>
+      <section data-section="cerimonial" class="hidden"></section>
+      <section data-section="nominata" class="hidden"></section>
+      <section data-section="conteudos" class="hidden"></section>
+      <section data-section="acessos" class="hidden"></section>
+    </div>
+  </main>
+</div>
+<script src="config.js"></script>
+
+
+
+
+<script>
+(function(){
+  let seq = 0;
+  let bridgeFrame = null;
+  let bridgeReadyPromise = null;
+  let bridgeSeq = 0;
+  const bridgePending = new Map();
+
+  function readyApi(){
+    const u = String(window.SGCES_CONFIG && window.SGCES_CONFIG.API_URL || '');
+    return /^https:\/\/script\.google\.com\//.test(u) || /^https:\/\/script\.googleusercontent\.com\//.test(u);
+  }
+
+  function callOnce(action,payload,timeoutMs){
+    payload=payload||{};
+    timeoutMs=timeoutMs||45000;
+    if(!readyApi())return Promise.reject(new Error('Configure a URL do Web App em config.js.'));
+    return new Promise((resolve,reject)=>{
+      const id='sgces_cb_'+Date.now()+'_'+(++seq);
+      const script=document.createElement('script');
+      let done=false;
+      const timer=setTimeout(()=>finish(new Error('Tempo esgotado ao consultar a API.')),timeoutMs);
+      function finish(err,data){
+        if(done)return;done=true;clearTimeout(timer);
+        try{delete window[id];}catch(e){window[id]=undefined;}
+        if(script.parentNode)script.parentNode.removeChild(script);
+        if(err)reject(err);else resolve(data);
+      }
+      window[id]=function(response){
+        if(!response||response.ok!==true)return finish(new Error(response&&response.error?response.error:'Falha na API.'));
+        finish(null,response.data);
+      };
+      const qs=new URLSearchParams();
+      qs.set('action',action);qs.set('payload',JSON.stringify(payload));qs.set('callback',id);qs.set('_',Date.now());
+      script.src=window.SGCES_CONFIG.API_URL+(window.SGCES_CONFIG.API_URL.includes('?')?'&':'?')+qs.toString();
+      script.onerror=()=>finish(new Error('Não foi possível carregar a API do SGCES.'));
+      document.head.appendChild(script);
+    });
+  }
+
+  async function call(action,payload,timeoutMs){
+    const safeRetry=['ping','bootstrap','receptionData','tvData','guestSearch','guestGroup','tableGuests','publicConfig','seatingOverview'];
+    try{
+      return await callOnce(action,payload,timeoutMs||45000);
+    }catch(err){
+      const retry=safeRetry.includes(String(action||''))&&/(tempo esgotado|carregar a api|network|failed)/i.test(String(err&&err.message||err));
+      if(!retry)throw err;
+      await new Promise(r=>setTimeout(r,700));
+      return callOnce(action,payload,Math.max(timeoutMs||45000,65000));
+    }
+  }
+
+  function ensureBridge(){
+    if(bridgeReadyPromise) return bridgeReadyPromise;
+    if(!readyApi()) return Promise.reject(new Error('Configure a URL do Web App em config.js.'));
+    bridgeReadyPromise = new Promise((resolve,reject)=>{
+      const frame=document.createElement('iframe');
+      frame.style.cssText='position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;left:-20px;top:-20px';
+      frame.setAttribute('aria-hidden','true');
+      const timer=setTimeout(()=>{bridgeReadyPromise=null;try{frame.remove();}catch(e){};reject(new Error('Não foi possível iniciar o canal de upload. Verifique a nova implantação do Apps Script.'));},20000);
+      const onMessage=ev=>{
+        const m=ev.data||{};
+        if(m.type==='SGCES_BRIDGE_READY'){
+          clearTimeout(timer);
+          bridgeFrame=frame;
+          window.removeEventListener('message',onMessage);
+          resolve(frame);
+        }
+      };
+      window.addEventListener('message',onMessage);
+      const sep=window.SGCES_CONFIG.API_URL.includes('?')?'&':'?';
+      frame.src=window.SGCES_CONFIG.API_URL+sep+'bridge=1&origin='+encodeURIComponent(location.origin)+'&_='+Date.now();
+      document.body.appendChild(frame);
+    });
+    return bridgeReadyPromise;
+  }
+
+  window.addEventListener('message',ev=>{
+    const m=ev.data||{};
+    if(m.type!=='SGCES_BRIDGE_RESULT' || !m.id) return;
+    const item=bridgePending.get(m.id);
+    if(!item)return;
+    bridgePending.delete(m.id);
+    clearTimeout(item.timer);
+    if(!m.ok) return item.reject(new Error(m.error||'Falha no upload.'));
+    try{
+      const env=JSON.parse(m.raw||'{}');
+      if(!env.ok) throw new Error(env.error||'Falha no upload.');
+      item.resolve(env.data);
+    }catch(e){item.reject(e);}
+  });
+
+  async function callBridge(action,payload,timeoutMs){
+    timeoutMs=timeoutMs||90000;
+    const frame=await ensureBridge();
+    return new Promise((resolve,reject)=>{
+      const id='sgces_bridge_'+Date.now()+'_'+(++bridgeSeq);
+      const timer=setTimeout(()=>{bridgePending.delete(id);reject(new Error('Tempo esgotado durante o upload.'));},timeoutMs);
+      bridgePending.set(id,{resolve,reject,timer});
+      frame.contentWindow.postMessage({type:'SGCES_BRIDGE_CALL',id,action,payload:payload||{}},'*');
+    });
+  }
+
+  function uploaderUrl(kind,targetId){
+    if(!readyApi()) return '';
+    const qs=new URLSearchParams();
+    qs.set('uploader','1');qs.set('kind',String(kind||''));qs.set('targetId',String(targetId||''));qs.set('origin',location.origin);qs.set('_',Date.now());
+    return window.SGCES_CONFIG.API_URL+(window.SGCES_CONFIG.API_URL.includes('?')?'&':'?')+qs.toString();
+  }
+
+  window.SGCES_API = { call, callBridge, uploaderUrl, readyApi };
+})();
+
+</script>
+<script>
+(function(){
+  const $ = (sel,root=document)=>root.querySelector(sel);
+  const $$ = (sel,root=document)=>Array.from(root.querySelectorAll(sel));
+  const esc = s=>String(s==null?'':s).replace(/[&<>'"]/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;' }[c]));
+  const yes = v=>['SIM','S','YES','TRUE','1'].includes(String(v||'').toUpperCase()) || v===true || v===1;
+  const num = (v,d=0)=>{ const n=Number(v); return Number.isFinite(n)?n:d; };
+  const dateInputValue = v=>{
+    if(!v) return '';
+    const s=String(v).trim();
+    let m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if(m) return `${m[1]}-${m[2]}-${m[3]}`;
+    m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if(m) return `${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`;
+    const d=new Date(v);
+    if(Number.isNaN(d.getTime())) return '';
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  };
+  const fmtDate = v=>{
+    const iso=dateInputValue(v);
+    if(!iso) return String(v||'');
+    const [y,m,d]=iso.split('-');
+    return `${d}/${m}/${y}`;
+  };
+  const timeInputValue = v=>{
+    if(!v) return '';
+    const s=String(v).trim();
+    let m=s.match(/(?:^|T)(\d{1,2}):(\d{2})/);
+    if(m) return `${String(m[1]).padStart(2,'0')}:${m[2]}`;
+    m=s.match(/^(\d{1,2})[hH:](\d{2})$/);
+    return m?`${String(m[1]).padStart(2,'0')}:${m[2]}`:'';
+  };
+  const fmtTime = v=>{
+    if(!v) return '';
+    const simple=timeInputValue(v);
+    if(simple) return simple;
+    const d = new Date(v);
+    if(Number.isNaN(d.getTime())) return String(v).slice(0,5);
+    return new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',hour12:false}).format(d);
+  };
+  const normalize = s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  const byPrecedence = (a,b)=>{
+    const pa=num(a.ORDEM_PRECEDENCIA,999999)||999999;
+    const pb=num(b.ORDEM_PRECEDENCIA,999999)||999999;
+    return pa-pb || String(a.NOME_COMPLETO||'').localeCompare(String(b.NOME_COMPLETO||''),'pt-BR');
+  };
+  const displayName = g=>[g.POSTO_GRAD,g.NOME_GUERRA||g.NOME_COMPLETO].filter(Boolean).join(' ').trim();
+  const tableName = t=>t ? (t.NOME || ('Mesa '+t.NUMERO)) : 'Sem mesa';
+
+  function driveImage(url){
+    url=String(url||'').trim();
+    if(!url) return '';
+    const m=url.match(/\/d\/([A-Za-z0-9_-]+)/) || url.match(/[?&]id=([A-Za-z0-9_-]+)/);
+    if(m && /drive\.google\.com/.test(url)) return 'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w1200';
+    return url;
+  }
+
+  function toast(msg,type){
+    let wrap=$('.toast-wrap');
+    if(!wrap){ wrap=document.createElement('div'); wrap.className='toast-wrap'; document.body.appendChild(wrap); }
+    const el=document.createElement('div'); el.className='toast '+(type||''); el.textContent=msg; wrap.appendChild(el);
+    setTimeout(()=>el.remove(),3600);
+  }
+
+  function setBusy(el,busy,label){
+    if(!el) return;
+    if(busy){
+      if(!el.dataset.original) el.dataset.original=el.innerHTML;
+      el.disabled=true; el.innerHTML='<span class="spinner"></span> '+(label||'Aguarde');
+    }else{
+      el.disabled=false; if(el.dataset.original){el.innerHTML=el.dataset.original; delete el.dataset.original;}
+    }
+  }
+
+  function modal(title, bodyHtml, footerHtml){
+    const bd=document.createElement('div'); bd.className='modal-backdrop';
+    bd.innerHTML=`<div class="modal"><div class="modal-head"><h3>${esc(title)}</h3><button class="btn icon-btn" data-close>&times;</button></div><div class="modal-body">${bodyHtml}</div><div class="modal-foot">${footerHtml||'<button class="btn" data-close>Fechar</button>'}</div></div>`;
+    bd.addEventListener('click',e=>{ if(e.target===bd || e.target.closest('[data-close]')) bd.remove(); });
+    document.body.appendChild(bd); return bd;
+  }
+
+  function badgeStatus(v){
+    const s=String(v||'').toUpperCase();
+    let cls='';
+    if(['PRESENTE','CONFIRMADO','SIM','ATIVO'].includes(s)) cls='success';
+    else if(['PENDENTE','RASCUNHO'].includes(s)) cls='warning';
+    else if(['NÃO COMPARECERÁ','NAO COMPARECERA','ARQUIVADO','CANCELADO','NAO'].includes(s)) cls='danger';
+    return `<span class="badge ${cls}">${esc(v||'—')}</span>`;
+  }
+
+  function fitTextToBox_(node,min,max,step){
+    if(!node)return;
+    min=num(min,8);max=num(max,14);step=num(step,.4);
+    node.style.fontSize=max+'px';
+    let size=max,guard=0;
+    while(size>min&&guard++<24&&(node.scrollWidth>node.clientWidth+1||node.scrollHeight>node.clientHeight+1)){
+      size-=step;node.style.fontSize=size+'px';
+    }
+  }
+
+  function fitFloorTableContent_(el){
+    if(!el)return;
+    const label=el.querySelector('.floor-table-label');
+    const name=el.querySelector('.floor-table-name');
+    const occ=el.querySelector('.occ');
+    if(!label||!name)return;
+    const shape=String(el.dataset.shape||'REDONDA').toUpperCase();
+    const w=el.clientWidth||0,h=el.clientHeight||0;
+    if(shape==='REDONDA'){
+      const size=Math.max(9,Math.min(18,Math.min(w,h)*0.17));
+      name.style.fontSize=size+'px';
+      if(occ)occ.style.fontSize=Math.max(8,Math.min(13,size*.72))+'px';
+    }else if(shape==='U'){
+      const size=Math.max(9,Math.min(17,Math.min(w,h)*0.15));
+      name.style.fontSize=size+'px';
+      if(occ)occ.style.fontSize=Math.max(8,Math.min(12,size*.72))+'px';
+    }else{
+      const size=Math.max(9,Math.min(17,Math.min(w*.09,h*.42)));
+      name.style.fontSize=size+'px';
+      if(occ)occ.style.fontSize=Math.max(8,Math.min(12,size*.72))+'px';
+    }
+    fitTextToBox_(name,7.5,parseFloat(name.style.fontSize)||12,.35);
+    if(occ)fitTextToBox_(occ,7,parseFloat(occ.style.fontSize)||10,.35);
+  }
+
+  function renderFloor(container,tables,opts){
+    opts=opts||{};
+    container.innerHTML='';
+    container.classList.add(opts.tv?'tv-floor':'floor');
+    const bg=String(opts.backgroundUrl||'').trim();
+    if(bg){
+      container.style.backgroundImage=`url("${driveImage(bg).replace(/"/g,'%22')}")`;
+      container.style.backgroundSize='contain';
+      container.style.backgroundPosition='center';
+      container.style.backgroundRepeat='no-repeat';
+    }else{
+      container.style.backgroundImage='';
+      container.style.backgroundSize='';
+      container.style.backgroundPosition='';
+      container.style.backgroundRepeat='';
+    }
+    const highlighted=String(opts.highlightTableId||'');
+    const ratio=(container.clientWidth&&container.clientHeight)?container.clientWidth/container.clientHeight:(16/9);
+    (tables||[]).forEach(t=>{
+      const el=document.createElement('div');
+      const shape=String(t.FORMATO||'REDONDA').toUpperCase();
+      el.className='floor-table '+(shape==='RETANGULAR'?'rect':shape==='U'?'u':'round');
+      if(String(t.ID_MESA)===highlighted)el.classList.add('highlight');
+      const locked=typeof opts.isLocked==='function'?!!opts.isLocked(t):false;
+      const selectable=typeof opts.isSelectable==='function'?!!opts.isSelectable(t):false;
+      if(locked)el.classList.add('locked');
+      if(selectable)el.classList.add('selectable');
+      if(!locked&&num(t.VAGAS,1)<=0&&num(t.CAPACIDADE)>0)el.classList.add('full');
+      el.dataset.id=t.ID_MESA;el.dataset.shape=shape;el.dataset.rot=num(t.ROTACAO,0);if(t.OBS)el.title=String(t.OBS);
+      const w=num(t.W,shape==='RETANGULAR'?18:10);
+      const h=shape==='REDONDA'?w*ratio:num(t.H,shape==='RETANGULAR'?8:10);
+      el.style.left=num(t.X,50)+'%';el.style.top=num(t.Y,50)+'%';el.style.width=w+'%';el.style.height=h+'%';
+      el.style.transform=`translate(-50%,-50%) rotate(${num(t.ROTACAO,0)}deg)`;
+      let occ='';
+      if(typeof opts.occupancyLabel==='function'){
+        const label=opts.occupancyLabel(t);
+        if(label!==null&&typeof label!=='undefined'&&String(label)!=='')occ=`<span class="occ">${esc(label)}</span>`;
+      }else if(typeof t.OCUPACAO!=='undefined'){
+        occ=`<span class="occ">${num(t.OCUPACAO)}/${num(t.CAPACIDADE)}${typeof t.VAGAS!=='undefined'?' • '+num(t.VAGAS)+' vaga(s)':''}</span>`;
+      }
+      el.innerHTML=`<div class="floor-table-label"><span class="floor-table-name">${esc(t.NOME||('Mesa '+t.NUMERO))}</span>${occ}</div>${opts.editor?'<span class="resize-handle" title="Redimensionar"></span>':''}`;
+      if(opts.onClick)el.addEventListener('click',ev=>{if(locked)return;opts.onClick(t,el,ev);});
+      container.appendChild(el);fitFloorTableContent_(el);
+    });
+    if(typeof ResizeObserver!=='undefined'){
+      try{container._sgcesFloorRO&&container._sgcesFloorRO.disconnect();}catch(err){}
+      const ro=new ResizeObserver(()=>{container.querySelectorAll('.floor-table').forEach(fitFloorTableContent_);});
+      ro.observe(container);container._sgcesFloorRO=ro;
+    }
+  }
+
+  function seatCodesForTable(table,total){
+    const format=String(table.FORMATO||'REDONDA').toUpperCase();
+    total=Math.max(1,total||num(table.CAPACIDADE,8));
+    if(format==='REDONDA') return Array.from({length:total},(_,i)=>'R'+i);
+    if(format==='U') return Array.from({length:total},(_,i)=>'U'+(i+1));
+    const heads=yes(table.CABECEIRAS);
+    let side=total-(heads?2:0),top=Math.ceil(side/2),bottom=Math.floor(side/2),codes=[];
+    for(let i=0;i<top;i++)codes.push('T'+i);
+    if(heads)codes.push('R');
+    for(let i=0;i<bottom;i++)codes.push('B'+i);
+    if(heads)codes.push('L');
+    return codes;
+  }
+
+  function seatingMetrics(table,total){
+    const format=String(table.FORMATO||'REDONDA').toUpperCase();
+    total=Math.max(1,total||num(table.CAPACIDADE,8));
+    if(format==='REDONDA'){
+      const cardW=150,gap=10;
+      const radius=Math.max(190,((cardW+gap)*total)/(2*Math.PI));
+      const pad=82,canvasW=Math.ceil(radius*2+cardW+pad),canvasH=Math.ceil(radius*2+128);
+      const diameter=Math.max(220,Math.min(340,radius*1.08));
+      return{format,canvasW,canvasH,cx:canvasW/2,cy:canvasH/2,radius,tableW:diameter,tableH:diameter};
+    }
+    if(format==='U'){
+      const baseCount=Math.max(1,Math.min(total,num(table.U_CABECEIRA_QTD,5)));
+      const internal=yes(table.U_CADEIRAS_INTERNAS),rem=Math.max(0,total-baseCount),perLevel=internal?4:2;
+      const levels=Math.max(1,Math.ceil(rem/perLevel));
+      const baseSpacing=92,innerW=Math.max(470,(baseCount-1)*baseSpacing+150);
+      const canvasW=innerW+430,baseY=Math.max(410,190+levels*92),canvasH=baseY+155;
+      return{format,canvasW,canvasH,cx:canvasW/2,baseCount,baseSpacing,internal,levels,leftX:(canvasW-innerW)/2,rightX:(canvasW+innerW)/2,topY:80,baseY,tableW:innerW,tableH:baseY-80};
+    }
+    const heads=yes(table.CABECEIRAS),side=Math.max(1,total-(heads?2:0));
+    const top=Math.ceil(side/2),bottom=Math.floor(side/2),longCount=Math.max(top,bottom),spacing=86;
+    const tableW=Math.max(470,(Math.max(1,longCount)-1)*spacing+180),tableH=150;
+    const canvasW=tableW+420,canvasH=540,cx=canvasW/2,cy=canvasH/2;
+    return{format:'RETANGULAR',canvasW,canvasH,cx,cy,heads,top,bottom,tableW,tableH};
+  }
+
+  function seatOrientation(table,seatCode,total){
+    const format=String(table.FORMATO||'REDONDA').toUpperCase(),code=String(seatCode||'');
+    if(format==='REDONDA')return'horizontal';
+    if(format==='U'){
+      const baseCount=Math.max(1,Math.min(total,num(table.U_CABECEIRA_QTD,5)));
+      const pos=Math.max(1,num(code.replace('U',''),1));
+      return pos<=baseCount?'vertical':'horizontal';
+    }
+    return(code==='L'||code==='R')?'horizontal':'vertical';
+  }
+
+  function seatCoordinates(table, seatCode, total){
+    total=Math.max(1,total||num(table.CAPACIDADE,8));
+    const m=seatingMetrics(table,total),format=m.format,code=String(seatCode||'');
+    if(format==='REDONDA'){
+      const i=num(code.replace('R',''),0),angle=(-90)+(360*i/total);
+      return{x:m.cx+Math.cos(angle*Math.PI/180)*m.radius,y:m.cy+Math.sin(angle*Math.PI/180)*m.radius};
+    }
+    if(format==='U'){
+      const pos=Math.max(1,num(code.replace('U',''),1));
+      if(pos<=m.baseCount){
+        const side=Math.ceil((pos-1)/2),dir=pos===1?0:(pos%2===0?1:-1);
+        return{x:m.cx+(dir*side*m.baseSpacing),y:m.baseY+72};
+      }
+      const k=pos-m.baseCount;
+      if(m.internal){
+        const level=Math.floor((k-1)/4),slot=(k-1)%4,y=m.baseY-66-level*92;
+        const xs=[m.rightX+108,m.leftX-108,m.rightX-108,m.leftX+108];
+        return{x:xs[slot],y};
+      }
+      const level=Math.floor((k-1)/2),right=((k-1)%2===0);
+      return{x:right?m.rightX+108:m.leftX-108,y:m.baseY-66-level*92};
+    }
+    if(code==='L')return{x:m.cx-m.tableW/2-112,y:m.cy};
+    if(code==='R')return{x:m.cx+m.tableW/2+112,y:m.cy};
+    const left=m.cx-m.tableW/2+72,right=m.cx+m.tableW/2-72;
+    if(code.startsWith('T')){
+      const i=num(code.slice(1));return{x:m.top<=1?m.cx:left+i*((right-left)/(m.top-1)),y:m.cy-m.tableH/2-82};
+    }
+    if(code.startsWith('B')){
+      const i=num(code.slice(1));return{x:m.bottom<=1?m.cx:left+i*((right-left)/(m.bottom-1)),y:m.cy+m.tableH/2+82};
+    }
+    return{x:m.cx,y:m.cy-m.tableH/2-82};
+  }
+
+  function fitSeatText_(seat){
+    const text=seat&&seat.querySelector('.seat-text');if(!text)return;
+    let size=parseFloat(getComputedStyle(text).fontSize)||12,min=9,guard=0;
+    while(size>min&&guard++<12&&(text.scrollWidth>text.clientWidth+1||text.scrollHeight>text.clientHeight+1)){
+      size-=.5;text.style.fontSize=size+'px';
+    }
+  }
+
+  function renderSeating(container,table,guests,opts){
+    opts=opts||{};
+    container.innerHTML='<div class="seating-fit"><div class="seating-canvas"></div></div>';
+    const fit=container.firstElementChild,canvas=fit.firstElementChild,format=String(table.FORMATO||'REDONDA').toUpperCase();
+    const explicitSeats=(guests||[]).map(g=>String(g.ASSENTO||'')).filter(Boolean);
+    const detectedTotal=explicitSeats.reduce((mx,code)=>{
+      if(/^R\d+$/.test(code))return Math.max(mx,parseInt(code.slice(1),10)+1);
+      if(/^U\d+$/.test(code))return Math.max(mx,parseInt(code.slice(1),10));
+      return mx;
+    },0);
+    const total=Math.max(1,num(table.CAPACIDADE,0),detectedTotal,(guests||[]).length||0),m=seatingMetrics(table,total);
+    canvas.style.width=m.canvasW+'px';canvas.style.height=m.canvasH+'px';
+    const shape=document.createElement('div');shape.className='table-shape '+(format==='RETANGULAR'?'rect':format==='U'?'u':'round');
+    if(format==='REDONDA'){
+      shape.style.width=m.tableW+'px';shape.style.height=m.tableH+'px';shape.style.left=(m.cx-m.tableW/2)+'px';shape.style.top=(m.cy-m.tableH/2)+'px';
+    }else if(format==='U'){
+      shape.style.width=m.tableW+'px';shape.style.height=m.tableH+'px';shape.style.left=m.leftX+'px';shape.style.top=m.topY+'px';
+    }else{
+      shape.style.width=m.tableW+'px';shape.style.height=m.tableH+'px';shape.style.left=(m.cx-m.tableW/2)+'px';shape.style.top=(m.cy-m.tableH/2)+'px';
+    }
+    canvas.appendChild(shape);
+    const assigned={};(guests||[]).filter(g=>g.ASSENTO).forEach(g=>{assigned[String(g.ASSENTO)]=g;});
+    seatCodesForTable(table,total).forEach(code=>{
+      const g=assigned[code],p=seatCoordinates(table,code,total),orientation=seatOrientation(table,code,total);
+      const s=document.createElement('div');s.className='seat '+orientation+(g?'':' empty')+(opts.editor?' manual':'')+(g&&String(opts.selectedGuestId||'')===String(g.ID_CONVIDADO)?' selected':'');
+      s.style.left=p.x+'px';s.style.top=p.y+'px';s.dataset.seat=code;
+      if(format==='REDONDA'&&orientation==='horizontal')s.style.width='150px';
+      if(!g){
+        s.title=opts.editor?'Assento '+code:'Assento vazio';s.innerHTML=`<div class="seat-text">${opts.editor?esc(code):''}</div>`;
+      }else{
+        const nome=[g.POSTO_GRAD,g.NOME_GUERRA||g.NOME_COMPLETO].filter(Boolean).join(' ');
+        s.title=[nome,g.NOME_COMPLETO].filter(Boolean).join(' • ');s.dataset.guest=String(g.ID_CONVIDADO||'');
+        const fontSize=nome.length>32?'.64rem':nome.length>26?'.68rem':nome.length>20?'.72rem':'.76rem';
+        if(orientation==='vertical'){const approx=Math.max(136,Math.min(260,30+nome.length*6.2));s.style.height=Math.max(150,approx+14)+'px';s.style.setProperty('--seat-label-length',approx+'px');}
+        s.innerHTML=`<div class="seat-text" style="font-size:${fontSize}">${esc(nome)}</div>`;
+        if(opts.editor){
+          s.draggable=true;
+          s.addEventListener('dragstart',ev=>{try{ev.dataTransfer.setData('text/plain',String(g.ID_CONVIDADO));ev.dataTransfer.effectAllowed='move';}catch(e){}});
+        }
+      }
+      if(opts.editor){
+        s.addEventListener('dragover',ev=>{ev.preventDefault();s.classList.add('drop-target');});
+        s.addEventListener('dragleave',()=>s.classList.remove('drop-target'));
+        s.addEventListener('drop',ev=>{ev.preventDefault();s.classList.remove('drop-target');let gid='';try{gid=ev.dataTransfer.getData('text/plain');}catch(e){}if(gid&&typeof opts.onSeatTarget==='function')opts.onSeatTarget(gid,code);});
+        s.addEventListener('click',()=>{
+          if(opts.selectedGuestId&&String(opts.selectedGuestId)!==String(g&&g.ID_CONVIDADO||'')){if(typeof opts.onSeatTarget==='function')opts.onSeatTarget(String(opts.selectedGuestId),code);return;}
+          if(g&&typeof opts.onSelectGuest==='function')opts.onSelectGuest(String(g.ID_CONVIDADO));
+        });
+      }
+      canvas.appendChild(s);fitSeatText_(s);
+    });
+    if(container.isConnected&&!opts.noFit){
+      const applyFit=()=>{
+        const avail=Math.max(280,(container.clientWidth||m.canvasW)-20),minScale=avail<520?.82:avail<820?.76:.68,scale=Math.min(1,Math.max(minScale,avail/m.canvasW));
+        canvas.style.transform=`scale(${scale})`;canvas.style.transformOrigin='top left';fit.style.width=(m.canvasW*scale)+'px';fit.style.height=(m.canvasH*scale)+'px';
+      };
+      applyFit();
+      if(typeof ResizeObserver!=='undefined'){
+        const ro=new ResizeObserver(()=>{if(!container.isConnected){try{ro.disconnect();}catch(e){}return;}applyFit();});
+        ro.observe(container);
+      }
+    }else{fit.style.width=m.canvasW+'px';fit.style.height=m.canvasH+'px';}
+    return canvas;
+  }
+
+  function enablePanZoom(wrap,floor,opts){
+    if(!wrap||!floor)return null;
+    opts=opts||{};
+    let scale=num(opts.initialScale,1),tx=0,ty=0,pan=null;
+    const minScale=num(opts.minScale,.35),maxScale=num(opts.maxScale,4);
+    const emit=()=>{floor.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`;if(typeof opts.onChange==='function')opts.onChange({scale,tx,ty});};
+    const zoomBy=factor=>{
+      scale=Math.max(minScale,Math.min(maxScale,scale*factor));
+      if(Math.abs(scale-1)<0.001){scale=1;tx=0;ty=0;}
+      emit();
+    };
+    const reset=()=>{scale=1;tx=0;ty=0;emit();};
+    wrap.addEventListener('pointerdown',e=>{
+      if(e.target.closest('.floor-table')||e.target.closest('.overview-table-shape')||e.target.closest('.floor-zoom-controls'))return;
+      pan={x:e.clientX,y:e.clientY,tx,ty};
+      try{wrap.setPointerCapture(e.pointerId);}catch(err){}
+      wrap.classList.add('is-panning');
+    });
+    wrap.addEventListener('pointermove',e=>{
+      if(!pan||Math.abs(scale-1)<0.001)return;
+      tx=pan.tx+(e.clientX-pan.x);ty=pan.ty+(e.clientY-pan.y);emit();
+    });
+    const end=()=>{pan=null;wrap.classList.remove('is-panning');};
+    wrap.addEventListener('pointerup',end);wrap.addEventListener('pointercancel',end);wrap.addEventListener('pointerleave',end);
+    wrap.addEventListener('wheel',e=>{
+      if(!e.ctrlKey && !opts.wheelZoom)return;
+      e.preventDefault();
+      zoomBy(e.deltaY<0?1.12:1/1.12);
+    },{passive:false});
+    emit();
+    return{zoomIn:()=>zoomBy(1.2),zoomOut:()=>zoomBy(1/1.2),reset,getScale:()=>scale};
+  }
+
+  window.SGCES_UI={$, $$, esc, yes, num, fmtDate, fmtTime, dateInputValue, timeInputValue, normalize, byPrecedence, displayName, tableName, driveImage, toast, setBusy, modal, badgeStatus, renderFloor, renderSeating, seatCodesForTable, seatCoordinates, seatOrientation, enablePanZoom};
+})();
+
+</script>
+<script>
+(function(){
+  const U=window.SGCES_UI, A=window.SGCES_API;
+  const state={events:[],eventId:'',activeEventId:'',postos:[],openEventCount:0,maxOpenEvents:10,data:{event:null,guests:[],tables:[],contents:[],sponsors:[],stats:{}},view:'dashboard',selectedCerimonialTable:'',manualSeatMode:false,manualSeatGuestId:'',cerimonialOverviewOpen:false};
+  let eventLoadPromise=null,eventLoadId='';
+
+  document.addEventListener('DOMContentLoaded',init);
+
+  async function init(){
+    bindShell();
+    bindUploadMessages();
+    await bootstrap();
+  }
+
+  function bindUploadMessages(){
+    window.addEventListener('message',async ev=>{
+      const m=ev.data||{};
+      if(m.type==='SGCES_UPLOAD_ERROR'){
+        U.toast(m.error||'Falha no upload.','error');
+        return;
+      }
+      if(m.type!=='SGCES_UPLOAD_DONE')return;
+      try{
+        if(m.kind==='FOTO'){
+          const preview=U.$('#gPhotoPreview');
+          if(preview && m.data && m.data.url) preview.innerHTML=`<img src="${U.esc(U.driveImage(m.data.url))}" alt="Foto">`;
+          await loadEvent();
+          U.toast('Foto salva.','success');
+        }else if(m.kind==='CROQUI'){
+          await loadEvent();
+          if(state.view==='croqui')renderCroqui();
+          U.toast('Croqui salvo.','success');
+        }else if(m.kind==='BANNER'){
+          await loadEvent();
+          if(state.view==='conteudos')renderConteudos();
+          U.toast('Banner salvo.','success');
+        }else if(m.kind==='CONTEUDO'){
+          const input=U.$('#cUrl');if(input&&m.data&&m.data.url)input.value=m.data.url;
+          U.toast('Arquivo enviado. Clique em Salvar.','success');
+        }else if(m.kind==='LOGO'){
+          const input=U.$('#sLogo');
+          if(input&&m.data&&m.data.url)input.value=m.data.url;
+          const preview=U.$('#sLogoPreview');
+          if(preview&&m.data&&m.data.url){
+            preview.innerHTML=`<img src="${U.esc(U.driveImage(m.data.url))}" alt="Logo enviada" style="max-width:150px;max-height:72px;object-fit:contain"><span class="small" style="color:#047857;font-weight:800">Logo enviada</span>`;
+          }
+          const save=U.$('[data-save-sponsor]');if(save)save.disabled=false;
+          U.toast('Logo enviada.','success');
+        }else if(m.kind==='QR'){
+          const input=U.$('#cUrl');if(input&&m.data&&m.data.url)input.value=m.data.url;
+          U.toast('QR enviado. Clique em Salvar.','success');
+        }
+      }catch(err){U.toast(err.message||String(err),'error');}
+    });
+  }
+
+  function bindShell(){
+    U.$$('#mainNav button').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+    U.$('#refreshBtn').addEventListener('click',refresh);
+    U.$('#eventSelect').addEventListener('change',async e=>{
+      const id=e.target.value;
+      state.eventId=id;
+      try{ localStorage.setItem('sgces_selected_event',id||''); }catch(err){}
+      if(!id){ state.data={event:null,guests:[],tables:[],contents:[],sponsors:[],stats:{}}; updateEventIndicator(); renderAll(); return; }
+      await runBusy(async()=>{ await loadEvent(); });
+    });
+  }
+
+  function showView(view){
+    state.view=view;
+    U.$$('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+    U.$$('[data-section]').forEach(s=>s.classList.toggle('hidden',s.dataset.section!==view));
+    renderView(view);
+  }
+
+  async function bootstrap(){
+    await runBusy(async()=>{
+      let remembered='';
+      try{ remembered=localStorage.getItem('sgces_selected_event')||''; }catch(err){}
+      const b=await A.call('bootstrap',{eventId:state.eventId||remembered});
+      state.events=b.events||[];
+      state.activeEventId=b.activeEventId||'';
+      state.postos=b.postos||[];state.openEventCount=U.num(b.openEventCount);state.maxOpenEvents=U.num(b.maxOpenEvents,10);
+      const valid=id=>id&&state.events.some(e=>String(e.ID_EVENTO)===String(id));
+      state.eventId=valid(state.eventId)?state.eventId:(valid(remembered)?remembered:(b.selectedEventId||state.activeEventId||''));
+      try{ localStorage.setItem('sgces_selected_event',state.eventId||''); }catch(err){}
+      fillEventSelect();
+      if(state.eventId) await loadEvent(); else renderAll();
+    },'Conectando');
+  }
+
+  async function refresh(){
+    await runBusy(async()=>{
+      const b=await A.call('bootstrap',{eventId:state.eventId});
+      state.events=b.events||[];
+      state.activeEventId=b.activeEventId||'';
+      state.postos=b.postos||state.postos||[];state.openEventCount=U.num(b.openEventCount);state.maxOpenEvents=U.num(b.maxOpenEvents,10);
+      if(!state.eventId) state.eventId=b.selectedEventId||state.activeEventId||'';
+      fillEventSelect();
+      if(state.eventId) await loadEvent(); else renderAll();
+    });
+  }
+
+  async function loadEvent(render=true){
+    if(!state.eventId)return;
+    const requestedId=String(state.eventId);
+    if(eventLoadPromise&&eventLoadId===requestedId)return eventLoadPromise;
+    eventLoadId=requestedId;
+    eventLoadPromise=(async()=>{
+      const data=await A.call('eventData',{eventId:requestedId},60000);
+      if(String(state.eventId)!==requestedId)return data;
+      state.data=data;
+      state.data.guests=(state.data.guests||[]).sort(U.byPrecedence);
+      if(render)renderView(state.view);
+      return data;
+    })();
+    try{return await eventLoadPromise;}finally{if(eventLoadId===requestedId){eventLoadPromise=null;eventLoadId='';}}
+  }
+
+  function fillEventSelect(){
+    const sel=U.$('#eventSelect');
+    sel.innerHTML='<option value="">Selecione um evento</option>'+state.events.map(e=>{const st=String(e.STATUS||'').toUpperCase();const suffix=String(e.ID_EVENTO)===String(state.activeEventId)?' • ATIVO':(['ARQUIVADO','CANCELADO'].includes(st)?' • '+st:'');return `<option value="${U.esc(e.ID_EVENTO)}" ${String(e.ID_EVENTO)===String(state.eventId)?'selected':''}>${U.esc(e.NOME+suffix)}</option>`;}).join('');
+    updateEventIndicator();
+  }
+
+  function updateEventIndicator(){
+    const el=U.$('#activeEventLabel'); if(!el)return;
+    const active=state.events.find(e=>String(e.ID_EVENTO)===String(state.activeEventId));
+    el.innerHTML=active?`<span class="active-dot"></span> Evento ativo: <strong>${U.esc(active.NOME)}</strong>`:'<span class="muted">Nenhum evento ativo</span>';
+  }
+
+  function renderAll(){
+    // Renderização sob demanda: somente a tela visível é montada.
+    // Isso evita criar todos os painéis e disparar consultas extras a cada atualização.
+    renderView(state.view);
+  }
+  function renderView(v){
+    const fn={dashboard:renderDashboard,evento:renderEvento,convidados:renderConvidados,mesas:renderMesas,croqui:renderCroqui,cerimonial:renderCerimonial,nominata:renderNominata,conteudos:renderConteudos,acessos:renderAcessos}[v];
+    if(fn) fn();
+  }
+
+  function heading(title,subtitle,actions){
+    const sub=String(subtitle||'').trim();
+    return `<div class="page-heading"><div><h2>${U.esc(title)}</h2>${sub?`<p>${U.esc(sub)}</p>`:''}</div><div class="actions">${actions||''}</div></div>`;
+  }
+  function requireEvent(container,title){
+    if(state.data.event) return false;
+    container.innerHTML=heading(title,'Nenhum evento selecionado.')+`<div class="card"><p>Crie o primeiro evento para iniciar o SGCES.</p><button class="btn btn-primary" data-new-event>Criar evento</button></div>`;
+    container.querySelector('[data-new-event]').addEventListener('click',()=>eventModal());
+    return true;
+  }
+
+  function renderDashboard(){
+    const c=U.$('[data-section="dashboard"]');
+    if(requireEvent(c,'Dashboard')) return;
+    const s=state.data.stats||{}, latest=(state.data.guests||[]).filter(g=>String(g.CHECKIN).toUpperCase()==='PRESENTE'&&g.HORARIO_CHECKIN).sort((a,b)=>String(b.HORARIO_CHECKIN).localeCompare(String(a.HORARIO_CHECKIN))).slice(0,6);
+    c.innerHTML=heading('Dashboard',state.data.event.NOME,`<button class="btn btn-soft" data-open-reception>Recepção</button><button class="btn btn-soft" data-open-tv>TV</button>`)+`
+      <div class="stats">
+        ${stat('Convidados',s.totalGuests)}${stat('Confirmados',s.confirmed)}${stat('Presentes',s.present)}${stat('Autoridades',s.authorities)}${stat('Nominata',s.nominata)}${stat('Vagas livres',s.freeSeats)}
+      </div>
+      <div class="grid grid-2">
+        <div class="card"><h3>Croqui geral</h3><div class="floor-wrap"><div class="floor" id="dashFloor"></div></div></div>
+        <div class="card"><h3>Últimas chegadas</h3>${latest.length?`<div class="table-wrap"><table><thead><tr><th>Horário</th><th>Convidado</th><th>Mesa</th></tr></thead><tbody>${latest.map(g=>`<tr><td>${U.fmtTime(g.HORARIO_CHECKIN)}</td><td>${U.esc(U.displayName(g))}</td><td>${U.esc(tableFor(g.MESA_ID)?.NOME||'—')}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Ainda não há check-ins.</p>'}</div>
+      </div>`;
+    U.renderFloor(U.$('#dashFloor'),state.data.tables||[],{backgroundUrl:state.data.event&&state.data.event.CROQUI_URL});
+    c.querySelector('[data-open-reception]').onclick=()=>window.open('recepcao.html?evento='+encodeURIComponent(state.eventId),'_blank');
+    c.querySelector('[data-open-tv]').onclick=()=>window.open('tv.html?evento='+encodeURIComponent(state.eventId),'_blank');
+  }
+  function stat(label,value){return `<div class="stat"><span>${U.esc(label)}</span><strong>${U.num(value)}</strong></div>`;}
+
+  function renderEvento(){
+    const c=U.$('[data-section="evento"]'),e=state.data.event;
+    const atLimit=state.openEventCount>=state.maxOpenEvents;
+    c.innerHTML=heading('Evento','',`<button class="btn btn-primary" data-new ${atLimit?'disabled':''}>Novo evento</button>${e?'<button class="btn" data-edit>Editar evento</button>':''}`)+(!e?
+      `<div class="card"><p>Nenhum evento selecionado.</p>${atLimit?`<p class="small muted">Limite de ${state.maxOpenEvents} eventos em trabalho atingido.</p>`:''}</div>`:
+      `<div class="grid grid-2">
+        <div class="card"><h3>${U.esc(e.NOME)}</h3>${e.SUBTITULO?`<p class="muted">${U.esc(e.SUBTITULO)}</p>`:''}
+          <div class="table-wrap"><table><tbody>
+            <tr><th>Data</th><td>${U.esc(U.fmtDate(e.DATA)||'—')}</td></tr>
+            <tr><th>Horário</th><td>${U.esc(U.fmtTime(e.HORARIO)||'—')}</td></tr>
+            <tr><th>Local</th><td>${U.esc(e.LOCAL||'—')}</td></tr>
+            <tr><th>Modo</th><td>${U.esc(e.MODO_PADRAO||'—')}</td></tr>
+            <tr><th>Status</th><td>${U.badgeStatus(e.STATUS)}</td></tr>
+          </tbody></table></div>
+          <div class="actions" style="margin-top:12px">
+            ${String(e.ID_EVENTO)===String(state.activeEventId)?'<span class="badge success">EVENTO ATIVO</span>':
+              (!['ARQUIVADO','CANCELADO'].includes(String(e.STATUS||'').toUpperCase())?'<button class="btn btn-success" data-activate>Ativar este evento</button>':'')}
+            ${!['ARQUIVADO','CANCELADO'].includes(String(e.STATUS||'').toUpperCase())?'<button class="btn" data-archive>Arquivar</button><button class="btn btn-danger" data-cancel>Cancelar evento</button>':''}
+          </div>
+        </div>
+        <div class="card"><h3>Banner</h3>${e.BANNER_URL?`<img src="${U.esc(U.driveImage(e.BANNER_URL))}" alt="Banner" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;background:#f8fafc">`:'<p class="muted">Nenhum banner.</p>'}
+          ${e.OBSERVACOES?`<h3 style="margin-top:18px">Observações</h3><p>${U.esc(e.OBSERVACOES)}</p>`:''}
+        </div>
+      </div>`);
+    const add=c.querySelector('[data-new]');if(add)add.onclick=()=>eventModal();
+    if(!e)return;
+    c.querySelector('[data-edit]').onclick=()=>eventModal(e);
+    const activate=c.querySelector('[data-activate]');if(activate)activate.onclick=()=>runBusy(async()=>{await A.call('setActiveEvent',{eventId:e.ID_EVENTO});state.activeEventId=e.ID_EVENTO;await bootstrap();U.toast('Evento ativado.','success');});
+    const ar=c.querySelector('[data-archive]');if(ar)ar.onclick=()=>{if(confirm('Arquivar este evento?'))runBusy(async()=>{await A.call('archiveEvent',{eventId:e.ID_EVENTO});await bootstrap();U.toast('Evento arquivado.','success');});};
+    const ca=c.querySelector('[data-cancel]');if(ca)ca.onclick=()=>{if(confirm('Cancelar este evento? Ele permanecerá registrado, mas não poderá ser ativado.'))runBusy(async()=>{await A.call('cancelEvent',{eventId:e.ID_EVENTO});await bootstrap();U.toast('Evento cancelado.','success');});};
+  }
+
+  function eventModal(e){
+    e=e||{};
+    if(!e.ID_EVENTO&&state.openEventCount>=state.maxOpenEvents){U.toast(`Limite de ${state.maxOpenEvents} eventos em trabalho atingido.`,'error');return;}
+    const m=U.modal(e.ID_EVENTO?'Editar evento':'Novo evento',`
+      <div class="form-grid">
+        ${field('Nome','evNome',e.NOME,'text',true)}${field('Subtítulo','evSub',e.SUBTITULO)}
+        ${field('Data','evData',U.dateInputValue(e.DATA),'date')}${field('Horário','evHorario',U.timeInputValue(e.HORARIO),'time')}
+        ${field('Local','evLocal',e.LOCAL)}${selectField('Modo padrão','evModo',['PLANEJADA','RESERVA','LIVRE','HÍBRIDO'],e.MODO_PADRAO||'HÍBRIDO')}
+        <div class="field"><label>Status</label><div style="padding:10px 0">${U.badgeStatus(e.STATUS||'RASCUNHO')}</div></div>
+        <div class="field" style="grid-column:1/-1"><label>URL do banner</label><input id="evBanner" value="${U.esc(e.BANNER_URL||'')}"></div>
+        <div class="field" style="grid-column:1/-1"><label>Observações</label><textarea id="evObs">${U.esc(e.OBSERVACOES||'')}</textarea></div>
+      </div>`,
+      `<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Salvar</button>`);
+    m.querySelector('[data-save]').onclick=async evClick=>{
+      const btn=evClick.currentTarget;U.setBusy(btn,true);
+      try{
+        const payload={ID_EVENTO:e.ID_EVENTO||'',NOME:U.$('#evNome',m).value.trim(),SUBTITULO:U.$('#evSub',m).value.trim(),DATA:U.$('#evData',m).value,HORARIO:U.$('#evHorario',m).value.trim(),LOCAL:U.$('#evLocal',m).value.trim(),MODO_PADRAO:U.$('#evModo',m).value,BANNER_URL:U.$('#evBanner',m).value.trim(),OBSERVACOES:U.$('#evObs',m).value.trim()};
+        if(!payload.NOME)throw new Error('Informe o nome do evento.');
+        const r=await A.call('saveEvent',payload,45000);state.eventId=r.event.ID_EVENTO;
+        try{localStorage.setItem('sgces_selected_event',state.eventId);}catch(err){}
+        m.remove();await bootstrap();U.toast('Evento salvo.','success');
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+  function renderConvidados(){
+    const c=U.$('[data-section="convidados"]');if(requireEvent(c,'Convidados'))return;
+    const guests=state.data.guests||[];
+    c.innerHTML=heading('Convidados','',`<button class="btn" data-import>Importar Excel</button><button class="btn btn-primary" data-add>Adicionar convidado</button>`)+`
+      <div class="card">
+        <div class="section-actions"><input id="guestSearch" class="search-input" placeholder="Buscar por nome, posto ou mesa" style="max-width:520px"><span class="muted small">${guests.length} registro(s)</span></div>
+        <div id="guestTable"></div>
+      </div>`;
+    c.querySelector('[data-add]').onclick=()=>guestModal();
+    c.querySelector('[data-import]').onclick=()=>importModal();
+    const search=U.$('#guestSearch',c);search.addEventListener('input',()=>renderGuestRows(search.value));
+    renderGuestRows('');
+  }
+
+  function renderGuestRows(q){
+    const root=U.$('#guestTable'); if(!root)return;
+    const n=U.normalize(q);
+    let rows=(state.data.guests||[])
+      .filter(g=>!n||U.normalize([g.NOME_COMPLETO,g.NOME_GUERRA,g.POSTO_GRAD,g.CARGO,g.OM_ORGAO,tableFor(g.MESA_ID)?.NOME].join(' ')).includes(n))
+      .slice().sort(U.byPrecedence);
+    root.innerHTML=rows.length?`<div class="table-wrap"><table><thead><tr><th>Ord.</th><th>Convidado</th><th>Mesa</th><th>RSVP</th><th>Chegada</th><th></th></tr></thead><tbody>${rows.map(g=>{
+      const titular=g.ID_TITULAR?guestById(g.ID_TITULAR):null;
+      const nomeCompleto=[g.POSTO_GRAD,g.NOME_COMPLETO].filter(Boolean).join(' ');
+      const titularTxt=titular?`<div class="small muted" style="margin-top:4px">Titular: ${U.esc([titular.POSTO_GRAD,titular.NOME_COMPLETO].filter(Boolean).join(' '))}</div>`:'';
+      const badges=[U.yes(g.ANFITRIAO)?'<span class="badge success">ANFITRIÃO</span>':'',U.yes(g.NOMINATA)?'<span class="badge info">NOMINATA</span>':''].filter(Boolean).join(' ');
+      return `<tr>
+        <td><strong>${U.esc(g.ORDEM_PRECEDENCIA||'—')}</strong></td>
+        <td><strong>${U.esc(nomeCompleto||g.NOME_COMPLETO||'')}</strong>${titularTxt}${badges?`<div style="margin-top:4px">${badges}</div>`:''}</td>
+        <td>${U.esc(tableFor(g.MESA_ID)?.NOME||'—')}</td>
+        <td>${U.badgeStatus(g.RSVP)}</td><td>${U.badgeStatus(g.CHECKIN)}</td>
+        <td class="nowrap"><button class="btn btn-sm" data-reorder-g="${U.esc(g.ID_CONVIDADO)}">Reordenar</button> ${g.MESA_ID?`<button class="btn btn-sm" data-swap-g="${U.esc(g.ID_CONVIDADO)}">Trocar mesa</button>`:''} <button class="btn btn-sm" data-edit-g="${U.esc(g.ID_CONVIDADO)}">Editar</button> <button class="btn btn-sm btn-danger" data-del-g="${U.esc(g.ID_CONVIDADO)}">Excluir</button></td>
+      </tr>`;
+    }).join('')}</tbody></table></div>`:'<p class="muted">Nenhum convidado encontrado.</p>';
+    root.querySelectorAll('[data-reorder-g]').forEach(b=>b.onclick=()=>reorderGuestModal(guestById(b.dataset.reorderG)));
+    root.querySelectorAll('[data-swap-g]').forEach(b=>b.onclick=()=>swapTableModal(guestById(b.dataset.swapG)));
+    root.querySelectorAll('[data-edit-g]').forEach(b=>b.onclick=()=>guestModal(guestById(b.dataset.editG)));
+    root.querySelectorAll('[data-del-g]').forEach(b=>b.onclick=()=>{const g=guestById(b.dataset.delG);if(confirm(`Excluir ${g.NOME_COMPLETO}?`))runBusy(async()=>{await A.call('deleteGuest',{guestId:g.ID_CONVIDADO});await loadEvent(false);renderConvidados();U.toast('Convidado excluído.','success');});});
+  }
+
+  function guestPositionOptions(g){
+    return (state.data.guests||[]).slice().sort(U.byPrecedence)
+      .filter(x=>String(x.ID_CONVIDADO)!==String(g&&g.ID_CONVIDADO))
+      .map(x=>`<option value="${U.esc(x.ID_CONVIDADO)}">${U.esc((x.ORDEM_PRECEDENCIA?x.ORDEM_PRECEDENCIA+' • ':'')+U.displayName(x))}</option>`).join('');
+  }
+
+  function swapTableModal(g){
+    if(!g||!g.MESA_ID){U.toast('Este convidado ainda não está em uma mesa.','error');return;}
+    const currentTable=tableFor(g.MESA_ID),targets=(state.data.tables||[]).filter(t=>String(t.ID_MESA)!==String(g.MESA_ID));
+    if(!targets.length){U.toast('Não há outra mesa disponível para troca.','error');return;}
+    const opts=targets.map(t=>`<option value="${U.esc(t.ID_MESA)}">${U.esc(t.NOME)} (${U.num(t.OCUPACAO)}/${U.num(t.CAPACIDADE)})</option>`).join('');
+    const m=U.modal('Trocar de mesa',`<p><strong>${U.esc(U.displayName(g))}</strong></p><p class="muted">Mesa atual: <strong>${U.esc(currentTable?.NOME||'—')}</strong>. Escolha a mesa de destino e a pessoa que virá para a mesa atual. A troca funciona mesmo quando a mesa de destino está cheia, desde que os dois lados respeitem suas capacidades.</p><div class="form-grid"><div class="field"><label>Mesa de destino</label><select id="swapTable">${opts}</select></div><div class="field"><label>Trocar com</label><select id="swapGuest"></select></div></div><div class="small muted" id="swapInfo" style="margin-top:10px"></div>`,`<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Confirmar troca</button>`);
+    const tableSel=U.$('#swapTable',m),guestSel=U.$('#swapGuest',m),info=U.$('#swapInfo',m);
+    function refresh(){const tid=tableSel.value,t=tableFor(tid),people=(state.data.guests||[]).filter(x=>String(x.MESA_ID)===String(tid)&&U.normalize(x.RSVP)!=='nao comparecera').sort(U.byPrecedence);guestSel.innerHTML=people.length?people.map(x=>`<option value="${U.esc(x.ID_CONVIDADO)}">${U.esc(U.displayName(x))}</option>`).join(''):'<option value="">Nenhum convidado nesta mesa</option>';info.textContent=t?`${people.length}/${U.num(t.CAPACIDADE)} pessoas em ${t.NOME}. Se o convidado escolhido for titular, o grupo diretamente vinculado acompanha a troca.`:'';}
+    tableSel.onchange=refresh;refresh();
+    m.querySelector('[data-save]').onclick=async ev=>{const b=ev.currentTarget,other=guestSel.value;if(!other){U.toast('Escolha com quem fazer a troca.','error');return;}U.setBusy(b,true);try{await A.call('swapGuestTables',{guestId:g.ID_CONVIDADO,otherGuestId:other},65000);m.remove();await loadEvent(false);renderConvidados();U.toast('Troca de mesas concluída.','success');}catch(err){U.toast(err.message,'error');}finally{U.setBusy(b,false);}};
+  }
+
+  function reorderGuestModal(g){
+    if(!g)return;
+    const opts=guestPositionOptions(g);
+    if(!opts){U.toast('Não há outra pessoa para usar como referência.','error');return;}
+    const m=U.modal('Reordenar convidado',`
+      <p><strong>${U.esc(U.displayName(g))}</strong></p>
+      <p class="muted">A ordem é própria deste evento. Ao mover um titular, os acompanhantes diretamente vinculados a ele acompanham o bloco.</p>
+      <div class="form-grid">
+        ${selectField('Posição','rSide',['ANTES','DEPOIS'],'DEPOIS')}
+        <div class="field"><label>Antes ou depois de quem?</label><select id="rAnchor">${opts}</select></div>
+      </div>`,
+      `<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Reordenar</button>`);
+    m.querySelector('[data-save]').onclick=async ev=>{
+      const btn=ev.currentTarget;U.setBusy(btn,true);
+      try{
+        await A.call('reorderGuest',{guestId:g.ID_CONVIDADO,anchorGuestId:U.$('#rAnchor',m).value,side:U.$('#rSide',m).value});
+        m.remove();await loadEvent(false);renderConvidados();U.toast('Ordem de precedência atualizada.','success');
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+  function guestModal(g){
+    g=g||{};
+    const tableOptions=['<option value="">Sem mesa</option>'].concat((state.data.tables||[]).map(t=>`<option value="${U.esc(t.ID_MESA)}" ${String(t.ID_MESA)===String(g.MESA_ID)?'selected':''}>${U.esc(t.NOME)} (${U.num(t.OCUPACAO)}/${U.num(t.CAPACIDADE)})</option>`)).join('');
+    const titularOptions=['<option value="">Sem vínculo / titular</option>'].concat((state.data.guests||[]).slice().sort(U.byPrecedence).filter(x=>String(x.ID_CONVIDADO)!==String(g.ID_CONVIDADO)).map(x=>`<option value="${U.esc(x.ID_CONVIDADO)}" ${String(x.ID_CONVIDADO)===String(g.ID_TITULAR)?'selected':''}>${U.esc([x.POSTO_GRAD,x.NOME_COMPLETO].filter(Boolean).join(' '))}</option>`)).join('');
+    const posOptions='<option value="FINAL">Manter posição / final da lista</option><option value="ANTES">Inserir antes de...</option><option value="DEPOIS">Inserir depois de...</option>';
+    const anchorOptions='<option value="">Selecione a pessoa de referência</option>'+guestPositionOptions(g);
+    const photoSrc=U.driveImage(g.FOTO_URL||'');
+    const m=U.modal(g.ID_CONVIDADO?'Editar convidado':'Adicionar convidado',`
+      <div class="form-grid-3">
+        <div class="field"><label>Posto / Graduação</label><input id="gPosto" list="sgcesPostos" value="${U.esc(g.POSTO_GRAD||'')}"><datalist id="sgcesPostos">${(state.postos||[]).map(p=>`<option value="${U.esc(p.POSTO_ABREVIADO||'')}">${U.esc(p.POSTO_EXTENSO||'')}</option>`).join('')}</datalist></div>
+        <div class="field" style="grid-column:span 2"><label>Nome completo</label><input id="gNome" value="${U.esc(g.NOME_COMPLETO||'')}"></div>
+        ${field('Nome de guerra','gGuerra',g.NOME_GUERRA)}${field('Cargo','gCargo',g.CARGO)}${field('OM / Órgão','gOm',g.OM_ORGAO)}
+        ${selectField('Sexo','gSexo',['','MASCULINO','FEMININO'],g.SEXO||'')}${field('Vocativo','gVoc',g.VOCATIVO)}${field('E-mail','gEmail',g.EMAIL,'email')}
+        ${field('Telefone','gTel',g.TELEFONE)}${selectField('Tipo','gTipo',['TITULAR','ACOMPANHANTE','CONVIDADO'],g.TIPO||'TITULAR')}${selectField('Nominata','gNom',['NAO','SIM'],g.NOMINATA||'NAO')}
+        ${selectField('Nível','gNivel',['CONVIDADO','AUTORIDADE'],g.NIVEL||'CONVIDADO')}${selectField('Anfitrião','gHost',['NAO','SIM'],g.ANFITRIAO||'NAO')}${selectField('RSVP','gRsvp',['NÃO COMPARECERÁ','CONFIRMADO','PENDENTE'],g.RSVP||'PENDENTE')}
+        <div class="field"><label>Mesa</label><select id="gMesa">${tableOptions}</select></div>
+        <div class="field"><label>Grupo / titular</label><select id="gTit">${titularOptions}</select></div>
+        <div class="field"><label>Posição no evento</label><select id="gPlace">${posOptions}</select></div>
+        ${g.ID_TITULAR?`<div class="field" style="grid-column:1/-1"><label class="check-row"><input id="gDetach" type="checkbox"> Desmembrar deste grupo</label><div class="small muted">A pessoa passa a ser titular independente e poderá ficar em outra mesa.</div></div>`:''}
+        <div class="field" style="grid-column:1/-1"><label>Pessoa de referência</label><select id="gAnchor" disabled>${anchorOptions}</select></div>
+        <div class="field" style="grid-column:1/-1"><label>Foto para identificação</label>
+          <div class="photo-upload-box">
+            <div class="photo-preview" id="gPhotoPreview">${photoSrc?`<img src="${U.esc(photoSrc)}" alt="Foto">`:'SEM FOTO'}</div>
+            <div>${g.ID_CONVIDADO?`<iframe class="upload-frame" title="Enviar foto" src="${U.esc(A.uploaderUrl('foto',g.ID_CONVIDADO))}"></iframe>`:`<div class="small muted" style="padding:10px 0">Salve o cadastro e abra novamente para inserir a foto.</div>`}</div>
+          </div>
+        </div>
+        ${!g.ID_CONVIDADO?'<div class="field" style="grid-column:span 2"><label>Acompanhante (opcional)</label><input id="gAcomp" placeholder="Nome completo do acompanhante"></div><div class="field"><label>Sexo acompanhante</label><select id="gAcompSexo"><option></option><option>MASCULINO</option><option>FEMININO</option></select></div>':''}
+        <div class="field" style="grid-column:1/-1"><label>Observação da recepção</label><textarea id="gObs">${U.esc(g.OBS_RECEPCAO||'')}</textarea></div>
+      </div>`,
+      `<button class="btn" data-close>Cancelar</button>${g.ID_CONVIDADO&&g.MESA_ID?'<button class="btn" data-swap-table>Trocar de mesa</button>':''}<button class="btn btn-primary" data-save>Salvar</button>`);
+    const place=U.$('#gPlace',m),anchor=U.$('#gAnchor',m);
+    place.onchange=()=>{anchor.disabled=!['ANTES','DEPOIS'].includes(place.value);if(anchor.disabled)anchor.value='';};
+    const swapBtn=m.querySelector('[data-swap-table]');if(swapBtn)swapBtn.onclick=()=>swapTableModal(g);
+    m.querySelector('[data-save]').onclick=async ev=>{
+      const btn=ev.currentTarget;U.setBusy(btn,true);
+      try{
+        const p={ID_CONVIDADO:g.ID_CONVIDADO||'',ID_PESSOA:g.ID_PESSOA||'',eventId:state.eventId,
+          postoGrad:U.$('#gPosto',m).value.trim(),nomeCompleto:U.$('#gNome',m).value.trim(),nomeGuerra:U.$('#gGuerra',m).value.trim(),
+          cargo:U.$('#gCargo',m).value.trim(),omOrgao:U.$('#gOm',m).value.trim(),sexo:U.$('#gSexo',m).value,vocativo:U.$('#gVoc',m).value.trim(),
+          email:U.$('#gEmail',m).value.trim(),telefone:U.$('#gTel',m).value.trim(),tipo:U.$('#gTipo',m).value,
+          nominata:U.$('#gNom',m).value,nivel:U.$('#gNivel',m).value,anfitriao:U.$('#gHost',m).value,rsvp:U.$('#gRsvp',m).value,
+          mesaId:U.$('#gMesa',m).value,idTitular:U.$('#gTit',m).value,obsRecepcao:U.$('#gObs',m).value.trim(),
+          placementSide:place.value,placementAnchorId:anchor.value};
+        if(!g.ID_CONVIDADO){p.acompanhanteNome=U.$('#gAcomp',m).value.trim();p.acompanhanteSexo=U.$('#gAcompSexo',m).value;}
+        if(g.ID_TITULAR&&U.$('#gDetach',m)?.checked){p.idTitular='';p.tipo='TITULAR';p.desmembrarGrupo='SIM';}
+        if(!p.nomeCompleto)throw new Error('Informe o nome completo.');
+        if(['ANTES','DEPOIS'].includes(place.value)&&!anchor.value)throw new Error('Escolha a pessoa de referência.');
+        await A.call('saveGuest',p,55000);
+        m.remove();await loadEvent(false);renderConvidados();U.toast('Convidado salvo.','success');
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+
+  function ensureXlsxLib(){
+    if(window.XLSX)return Promise.resolve(window.XLSX);
+    return new Promise((resolve,reject)=>{
+      const existing=document.querySelector('script[data-sgces-xlsx]');
+      if(existing){existing.addEventListener('load',()=>resolve(window.XLSX));existing.addEventListener('error',()=>reject(new Error('Não foi possível carregar o leitor de Excel.')));return;}
+      const s=document.createElement('script');s.dataset.sgcesXlsx='1';s.src='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+      s.onload=()=>window.XLSX?resolve(window.XLSX):reject(new Error('Leitor de Excel indisponível.'));
+      s.onerror=()=>reject(new Error('Não foi possível carregar o leitor de Excel.'));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function parseSpreadsheetFile(file){
+    const name=String(file&&file.name||'').toLowerCase();
+    if(name.endsWith('.csv')){
+      const txt=await file.text();
+      return parseImport(txt);
+    }
+    const XLSX=await ensureXlsxLib();
+    const buf=await file.arrayBuffer();
+    const wb=XLSX.read(buf,{type:'array'});
+    if(!wb.SheetNames||!wb.SheetNames.length)throw new Error('O arquivo não possui planilhas.');
+    const matrix=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:'',raw:false});
+    if(!matrix.length)return[];
+    const tsv=matrix.map(row=>(row||[]).map(v=>String(v==null?'':v).replace(/\t/g,' ').replace(/\r?\n/g,' ')).join('\t')).join('\n');
+    return parseImport(tsv);
+  }
+
+  function importModal(){
+    const m=U.modal('Importar convidados',`
+      <div class="field"><label>Arquivo Excel ou CSV</label><input id="impFile" type="file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></div>
+      <div class="small muted" style="margin-top:6px">A primeira aba do arquivo será importada. NOME_COMPLETO é o único campo obrigatório.</div>
+      <details style="margin-top:14px"><summary style="cursor:pointer;font-weight:700">Ou colar dados</summary>
+        <div class="field" style="margin-top:10px"><textarea id="impText" style="min-height:190px" placeholder="POSTO_GRAD&#9;NOME_COMPLETO&#9;NOME_GUERRA&#9;..."></textarea></div>
+      </details>
+      <div id="impStatus" class="small muted" style="margin-top:10px"></div>`,
+      `<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-import-now>Importar</button>`);
+    m.querySelector('[data-import-now]').onclick=async ev=>{
+      const btn=ev.currentTarget;U.setBusy(btn,true,'Importando');
+      try{
+        const file=U.$('#impFile',m).files&&U.$('#impFile',m).files[0];
+        let rows=[];
+        if(file)rows=await parseSpreadsheetFile(file);
+        else rows=parseImport(U.$('#impText',m).value);
+        if(!rows.length)throw new Error('Nenhuma linha válida encontrada.');
+        let total=0;
+        const batchSize=100;
+        for(let i=0;i<rows.length;i+=batchSize){
+          const part=rows.slice(i,i+batchSize);
+          U.$('#impStatus',m).textContent=`Importando ${Math.min(i+part.length,rows.length)} de ${rows.length}...`;
+          let r;
+          try{
+            r=await A.callBridge('importGuests',{eventId:state.eventId,rows:part},90000);
+          }catch(bridgeErr){
+            // Contingência para navegadores que bloqueiem o iframe do Apps Script.
+            let local=0;
+            for(let j=0;j<part.length;j+=10){
+              const small=await A.call('importGuests',{eventId:state.eventId,rows:part.slice(j,j+10)},65000);
+              local+=U.num(small.imported);
+            }
+            r={imported:local};
+          }
+          total+=U.num(r.imported);
+        }
+        m.remove();await loadEvent(false);renderConvidados();U.toast(`${total} convidado(s) importado(s).`,'success');
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+  function parseImport(text){
+    const lines=String(text||'').split(/\r?\n/).filter(line=>String(line).trim());
+    if(!lines.length)return[];
+    const splitLine=(line,delim)=>{
+      const out=[];let cur='',quoted=false;
+      for(let i=0;i<line.length;i++){
+        const ch=line[i];
+        if(ch==='"'){
+          if(quoted&&line[i+1]==='"'){cur+='"';i++;}
+          else quoted=!quoted;
+        }else if(ch===delim&&!quoted){out.push(cur);cur='';}
+        else cur+=ch;
+      }
+      out.push(cur);return out;
+    };
+    const delims=['\t',';',','];let headerIndex=-1,delim='\t',h=[];
+    for(let li=0;li<Math.min(lines.length,12)&&headerIndex<0;li++){
+      for(const d of delims){
+        const cells=splitLine(lines[li],d);
+        const norm=cells.map(x=>U.normalize(x).replace(/[^a-z0-9]/g,''));
+        if(norm.includes('nomecompleto')||norm.includes('nome')){headerIndex=li;delim=d;h=norm;break;}
+      }
+    }
+    if(headerIndex<0)return[];
+    const pick=(obj,names)=>{for(const n of names){const idx=h.indexOf(n);if(idx>=0)return String(obj[idx]??'').trim();}return'';};
+    return lines.slice(headerIndex+1).map((line,idx)=>({r:splitLine(line,delim),idx})).filter(x=>x.r.some(v=>String(v).trim())).map(x=>{
+      const r=x.r,mesaTxt=pick(r,['mesa','numeromesa']);
+      const mesa=(state.data.tables||[]).find(t=>String(t.NUMERO)===String(mesaTxt)||U.normalize(t.NOME)===U.normalize(mesaTxt));
+      const tipo=(pick(r,['tipo'])||'TITULAR').toUpperCase();
+      const nivel=String(pick(r,['nivel','nivelinteresse'])||'CONVIDADO').toUpperCase()==='AUTORIDADE'?'AUTORIDADE':'CONVIDADO';
+      return {__idx:x.idx,postoGrad:pick(r,['postograd','posto','postograduacao']),nomeCompleto:pick(r,['nomecompleto','nome']),nomeGuerra:pick(r,['nomeguerra']),
+        tipo,titularNome:pick(r,['titulargrupo','titular','grupotitular']),cargo:pick(r,['cargo','funcao']),omOrgao:pick(r,['omorgao','om','orgao']),
+        sexo:pick(r,['sexo']),rsvp:pick(r,['rsvp','status'])||'PENDENTE',mesaId:mesa?mesa.ID_MESA:'',
+        nominata:/^(sim|s|1|true)$/i.test(pick(r,['nominata','autoridadeinteresse']))?'SIM':'NAO',nivel,
+        anfitriao:/^(sim|s|1|true)$/i.test(pick(r,['anfitriao','host']))?'SIM':'NAO',
+        email:pick(r,['email']),telefone:pick(r,['telefone','celular']),fotoUrl:pick(r,['fotourl','foto']),
+        obsRecepcao:pick(r,['obsrecepcao','observacao','obs']),acompanhanteNome:pick(r,['acompanhante','nomeacompanhante'])};
+    }).filter(x=>x.nomeCompleto);
+  }
+
+  function renderMesas(){
+    const c=U.$('[data-section="mesas"]');if(requireEvent(c,'Mesas'))return;
+    const tables=state.data.tables||[],e=state.data.event||{};
+    const planned=tables.filter(t=>U.normalize(t.TIPO_ALOCACAO)==='planejada');
+    const host=guestById(e.ANFITRIAO_ID);
+    const startId=e.MESA_INICIAL_AUTORIDADES||'';
+    const startOptions='<option value="">Primeira mesa planejada</option>'+planned.map(t=>`<option value="${U.esc(t.ID_MESA)}" ${String(t.ID_MESA)===String(startId)?'selected':''}>${U.esc(t.NOME)}</option>`).join('');
+    c.innerHTML=heading('Mesas','',`<button class="btn btn-primary" data-add>Adicionar mesa</button>`)+`
+      <div class="card" style="margin-bottom:16px">
+        <div class="section-actions">
+          <div><h3 style="margin:0">Distribuição automática de autoridades</h3><div class="small muted" style="margin-top:4px">${host?`Anfitrião: ${U.esc(U.displayName(host))}`:'Defina o anfitrião em Convidados.'}</div></div>
+          <div class="actions"><button class="btn btn-primary" data-save-plan>Aplicar</button></div>
+        </div>
+        <div class="form-grid-3" style="margin-top:12px">
+          ${selectField('Automática','authAuto',['NAO','SIM'],e.AUTO_AUTORIDADES||'NAO')}
+          <div class="field"><label>Começar pela mesa</label><select id="authStart">${startOptions}</select></div>
+          ${selectField('Usar composição padrão','authIca',['SIM','NAO'],e.SEGUIR_ICA_AUTORIDADES||'SIM')}
+        </div>
+      </div>
+      <div class="card">${tables.length?`<div class="table-wrap"><table><thead><tr><th>Mesa</th><th>Formato</th><th>Uso</th><th>Ocupação</th><th>Observação</th><th></th></tr></thead><tbody>${tables.map(t=>{
+        const tags=[allocationLabel(t.TIPO_ALOCACAO),U.yes(t.MESA_AUTORIDADES)?'AUTORIDADES':''].filter(Boolean).join(' • ');
+        return `<tr>
+          <td><strong>${U.esc(t.NOME)}</strong>${U.yes(t.PRINCIPAL)?'<div><span class="badge info">PRINCIPAL</span></div>':''}</td>
+          <td>${U.esc(t.FORMATO)}</td>
+          <td>${U.esc(tags)}</td>
+          <td>${U.num(t.OCUPACAO)}/${U.num(t.CAPACIDADE)}</td>
+          <td class="small muted" style="max-width:260px;white-space:normal">${U.esc(t.OBS||'—')}</td>
+          <td><div class="actions"><button class="btn btn-sm" data-edit="${U.esc(t.ID_MESA)}">Editar</button><button class="btn btn-sm btn-danger" data-del="${U.esc(t.ID_MESA)}">Excluir</button></div></td>
+        </tr>`;
+      }).join('')}</tbody></table></div>`:'<p class="muted">Nenhuma mesa criada.</p>'}</div>`;
+    c.querySelector('[data-add]').onclick=()=>tableModal();
+    c.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>tableModal(tableById(b.dataset.edit)));
+    c.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{const t=tableById(b.dataset.del);if(confirm(`Excluir ${t.NOME}? Os convidados ficarão sem mesa.`))runBusy(async()=>{await A.call('deleteTable',{tableId:t.ID_MESA},55000);await loadEvent();});});
+    c.querySelector('[data-save-plan]').onclick=()=>runBusy(async()=>{
+      const enabled=U.$('#authAuto',c).value,startTableId=U.$('#authStart',c).value,useIca=U.$('#authIca',c).value;
+      const r=await A.call('saveAuthorityPlan',{eventId:state.eventId,enabled,startTableId,useIca},70000);
+      await loadEvent();
+      if(U.yes(enabled))U.toast(`${r.usedTables||0} mesa(s) destinadas às autoridades.`,'success');else U.toast('Distribuição automática desativada.','success');
+    },'Distribuindo');
+  }
+
+  function tableModal(t){
+    t=t||{};
+    const guestOpts=['<option value="">—</option>'].concat((state.data.guests||[]).slice().sort(U.byPrecedence).map(g=>`<option value="${U.esc(g.ID_CONVIDADO)}">${U.esc(U.displayName(g))}</option>`)).join('');
+    const currentType=String(t.TIPO_ALOCACAO||'PLANEJADA').toUpperCase();
+    const typeOptions=[
+      ['PLANEJADA','PLANEJADA'],
+      ['RESERVA','DISPONÍVEL PARA RESERVA'],
+      ['LIVRE','LIVRE'],
+      ['RESERVADA','RESERVADA / BLOQUEADA']
+    ];
+    if(U.normalize(currentType)==='hibrido')typeOptions.push(['HÍBRIDO','HÍBRIDO']);
+    const m=U.modal(t.ID_MESA?'Editar mesa':'Adicionar mesa',`
+      <div class="form-grid-3">
+        ${field('Número','mNum',t.NUMERO,'number')}${field('Nome','mNome',t.NOME)}${field('Capacidade','mCap',t.CAPACIDADE||8,'number')}
+        ${selectField('Formato','mFormato',['REDONDA','RETANGULAR','U'],t.FORMATO||'REDONDA')}
+        ${selectValueField('Uso da mesa','mTipo',typeOptions,currentType)}
+        ${selectField('Mesa de autoridades','mAut',['NAO','SIM'],t.MESA_AUTORIDADES||'NAO')}
+        ${selectField('Mesa principal','mPrincipal',['NAO','SIM'],t.PRINCIPAL||'NAO')}
+        ${selectField('Composição padrão','mIca',['NAO','SIM'],t.USA_ICA||'NAO')}
+        ${selectField('Composição','mComp',['DESACOMPANHADOS','CASAIS'],t.COMPOSICAO||'DESACOMPANHADOS')}
+        <div id="rectFields" style="display:contents">
+          ${selectField('Usar cabeceiras','mCab',['NAO','SIM'],t.CABECEIRAS||'NAO')}
+          ${selectField('Anfitrião é maior precedência','mHostHigh',['SIM','NAO'],t.ANFITRIAO_MAIOR_PRECEDENCIA||'SIM')}
+        </div>
+        <div id="uFields" style="display:contents">
+          ${field('Cadeiras na cabeceira','mUHead',t.U_CABECEIRA_QTD||5,'number')}
+          ${selectField('Cadeiras internas','mUInside',['NAO','SIM'],t.U_CADEIRAS_INTERNAS||'NAO')}
+        </div>
+        <div class="field"><label>Anfitrião</label><select id="mHost">${guestOpts}</select></div>
+        <div class="field"><label>Homenageado</label><select id="mHon">${guestOpts}</select></div>
+        ${field('Rotação no croqui','mRot',t.ROTACAO||0,'number')}
+        <div class="field" style="grid-column:1/-1"><label>Observações</label><textarea id="mObs">${U.esc(t.OBS||'')}</textarea></div>
+      </div>`,
+      `<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Salvar</button>`);
+    U.$('#mHost',m).value=t.ANFITRIAO_ID||'';U.$('#mHon',m).value=t.HOMENAGEADO_ID||'';
+    const format=U.$('#mFormato',m),syncFields=()=>{
+      const f=format.value;
+      U.$('#uFields',m).style.display=f==='U'?'contents':'none';
+      U.$('#rectFields',m).style.display=f==='RETANGULAR'?'contents':'none';
+    };
+    format.onchange=syncFields;syncFields();
+    m.querySelector('[data-save]').onclick=async ev=>{
+      const btn=ev.currentTarget;U.setBusy(btn,true);
+      try{
+        const p={ID_MESA:t.ID_MESA||'',eventId:state.eventId,numero:U.$('#mNum',m).value,nome:U.$('#mNome',m).value.trim(),
+          capacidade:U.$('#mCap',m).value,formato:format.value,tipoAlocacao:U.$('#mTipo',m).value,mesaAutoridades:U.$('#mAut',m).value,
+          principal:U.$('#mPrincipal',m).value,usaIca:U.$('#mIca',m).value,composicao:U.$('#mComp',m).value,
+          cabeceiras:U.$('#mCab',m)?U.$('#mCab',m).value:'NAO',anfitriaoMaiorPrecedencia:U.$('#mHostHigh',m)?U.$('#mHostHigh',m).value:'SIM',
+          uCabeceiraQtd:U.$('#mUHead',m)?U.$('#mUHead',m).value:5,uCadeirasInternas:U.$('#mUInside',m)?U.$('#mUInside',m).value:'NAO',
+          anfitriaoId:U.$('#mHost',m).value,homenageadoId:U.$('#mHon',m).value,rotacao:U.$('#mRot',m).value,obs:U.$('#mObs',m).value.trim()};
+        if(!p.nome)p.nome='Mesa '+(p.numero||'');
+        if(!p.capacidade||Number(p.capacidade)<1)throw new Error('Capacidade inválida.');
+        if(p.formato==='U'&&Number(p.uCabeceiraQtd)<1)throw new Error('Informe ao menos uma cadeira na cabeceira.');
+        const saved=await A.call('saveTable',p,60000);if(saved&&saved.ID_MESA){const i=(state.data.tables||[]).findIndex(x=>String(x.ID_MESA)===String(saved.ID_MESA));if(i>=0)state.data.tables[i]=Object.assign({},state.data.tables[i],saved);else state.data.tables.push(saved);}m.remove();renderView(state.view);await loadEvent(false);renderView(state.view);U.toast('Mesa salva.','success');
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+  function croquiEditorTables_(tables){
+    const seen={};
+    return (tables||[]).map((src,idx)=>{
+      const t=Object.assign({},src),x=U.num(t.X,50),y=U.num(t.Y,50),key=(Math.round(x*10)/10)+'|'+(Math.round(y*10)/10);
+      const n=seen[key]||0;seen[key]=n+1;
+      if(n>0){
+        const ring=Math.ceil(n/4),slot=(n-1)%4,dx=[6,0,-6,0][slot]*ring,dy=[0,6,0,-6][slot]*ring;
+        t.X=Math.max(4,Math.min(96,x+dx));t.Y=Math.max(4,Math.min(96,y+dy));
+      }
+      return t;
+    });
+  }
+
+  function renderCroqui(){
+    const c=U.$('[data-section="croqui"]');if(requireEvent(c,'Croqui'))return;
+    const e=state.data.event||{};
+    c.innerHTML=heading('Croqui','',`<button class="btn btn-primary" data-save-layout>Salvar croqui</button>`)+`
+      <div class="card" style="margin-bottom:16px">
+        <div class="section-actions">
+          <div style="flex:1;min-width:280px"><div class="field"><label>Imagem do salão</label><iframe class="upload-frame" title="Enviar imagem do croqui" src="${U.esc(A.uploaderUrl('croqui',state.eventId))}"></iframe></div></div>
+          <div class="actions" style="align-self:flex-end"><button class="btn" data-clear-bg>Remover imagem</button></div>
+        </div>
+        <details style="margin-top:10px"><summary class="small" style="cursor:pointer;font-weight:700">Usar imagem por URL</summary><div class="section-actions" style="margin-top:10px"><div style="flex:1"><div class="field"><input id="croquiUrl" value="${U.esc(e.CROQUI_URL||'')}" placeholder="URL da imagem"></div></div><button class="btn" data-save-bg>Aplicar</button></div></details>
+      </div>
+      <div class="card">
+        <div class="floor-toolbar" style="justify-content:space-between">
+          <span class="small muted">Arraste as mesas e use o ponto azul para redimensionar.</span>
+          <div class="floor-zoom-controls"><button class="btn btn-sm" data-zoom-out title="Diminuir">−</button><button class="btn btn-sm" data-zoom-reset>100%</button><button class="btn btn-sm" data-zoom-in title="Ampliar">+</button></div>
+        </div>
+        <div class="floor-wrap" id="croquiWrap"><div id="editorFloor" class="floor"></div></div>
+      </div>`;
+    const floor=U.$('#editorFloor',c),wrap=U.$('#croquiWrap',c);
+    U.renderFloor(floor,croquiEditorTables_(state.data.tables||[]),{editor:true,backgroundUrl:e.CROQUI_URL});
+    enableFloorEditing(floor);
+    const pz=U.enablePanZoom(wrap,floor);
+    c.querySelector('[data-zoom-in]').onclick=()=>pz&&pz.zoomIn();
+    c.querySelector('[data-zoom-out]').onclick=()=>pz&&pz.zoomOut();
+    c.querySelector('[data-zoom-reset]').onclick=()=>pz&&pz.reset();
+    c.querySelector('[data-save-layout]').onclick=()=>saveFloorLayout(floor);
+    c.querySelector('[data-save-bg]').onclick=async()=>{await runBusy(async()=>{const r=await A.call('saveEvent',{ID_EVENTO:state.eventId,CROQUI_URL:U.$('#croquiUrl',c).value.trim()});state.data.event=r.event;renderCroqui();U.toast('Imagem atualizada.','success');});};
+    c.querySelector('[data-clear-bg]').onclick=async()=>{await runBusy(async()=>{const r=await A.call('saveEvent',{ID_EVENTO:state.eventId,CROQUI_URL:''});state.data.event=r.event;renderCroqui();U.toast('Imagem removida.','success');});};
+  }
+
+  function enableFloorEditing(floor){
+    floor.querySelectorAll('.floor-table').forEach(el=>{
+      let move=null,resize=null;
+      el.addEventListener('pointerdown',e=>{
+        if(e.target.classList.contains('resize-handle'))return;
+        e.preventDefault();el.setPointerCapture(e.pointerId);move={x:e.clientX,y:e.clientY,left:parseFloat(el.style.left),top:parseFloat(el.style.top)};el.classList.add('dragging');
+      });
+      el.addEventListener('pointermove',e=>{if(!move)return;const r=floor.getBoundingClientRect();const dx=(e.clientX-move.x)/r.width*100,dy=(e.clientY-move.y)/r.height*100;el.style.left=Math.max(2,Math.min(98,move.left+dx))+'%';el.style.top=Math.max(2,Math.min(98,move.top+dy))+'%';});
+      const endMove=()=>{move=null;el.classList.remove('dragging');}; el.addEventListener('pointerup',endMove);el.addEventListener('pointercancel',endMove);
+      const h=el.querySelector('.resize-handle'); if(!h)return;
+      h.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();h.setPointerCapture(e.pointerId);const fr=floor.getBoundingClientRect(),er=el.getBoundingClientRect();resize={x:e.clientX,y:e.clientY,w:er.width,h:er.height,fw:fr.width,fh:fr.height,shape:el.dataset.shape};});
+      h.addEventListener('pointermove',e=>{if(!resize)return;e.preventDefault();e.stopPropagation();let newW=Math.max(46,resize.w+(e.clientX-resize.x));let newH=Math.max(34,resize.h+(e.clientY-resize.y));if(resize.shape==='REDONDA'){const d=Math.max(46,Math.max(newW,newH));newW=d;newH=d;}el.style.width=Math.min(55,newW/resize.fw*100)+'%';el.style.height=Math.min(70,newH/resize.fh*100)+'%';});
+      const endResize=e=>{if(e){e.preventDefault();e.stopPropagation();}resize=null;};h.addEventListener('pointerup',endResize);h.addEventListener('pointercancel',endResize);
+    });
+  }
+  async function saveFloorLayout(floor){
+    const current=new Map((state.data.tables||[]).map(t=>[String(t.ID_MESA),t]));
+    const all=Array.from(floor.querySelectorAll('.floor-table')).map(el=>({
+      id:el.dataset.id,
+      x:parseFloat(el.style.left),y:parseFloat(el.style.top),w:parseFloat(el.style.width),h:parseFloat(el.style.height),rotacao:Number(el.dataset.rot||0)
+    }));
+    const diff=(a,b)=>Math.abs(Number(a||0)-Number(b||0))>0.0005;
+    const tables=all.filter(x=>{const t=current.get(String(x.id));return !t||diff(x.x,t.X)||diff(x.y,t.Y)||diff(x.w,t.W)||diff(x.h,t.H)||diff(x.rotacao,t.ROTACAO);});
+    if(!tables.length){U.toast('Nenhuma alteração no croqui.','info');return;}
+    await runBusy(async()=>{
+      await A.call('saveLayout',{tables:tables},65000);
+      const byId=new Map(tables.map(x=>[String(x.id),x]));
+      (state.data.tables||[]).forEach(t=>{const x=byId.get(String(t.ID_MESA));if(x){t.X=x.x;t.Y=x.y;t.W=x.w;t.H=x.h;t.ROTACAO=x.rotacao;}});
+      U.toast('Croqui salvo.','success');
+    });
+  }
+
+  function principalCerimonialTable(){
+    const tables=plannedCerimonialTables();
+    const explicit=tables.find(x=>U.yes(x.PRINCIPAL));
+    if(explicit)return explicit;
+    const active=(state.data.guests||[]).filter(g=>U.normalize(g.RSVP)!=='nao comparecera'&&g.MESA_ID).slice().sort(U.byPrecedence);
+    const top=active.find(g=>U.normalize(g.NIVEL)==='autoridade')||active[0]||null;
+    if(!top)return null;
+    return tables.find(x=>String(x.ID_MESA)===String(top.MESA_ID))||tableById(top.MESA_ID)||null;
+  }
+
+  function majorGuestForTable(table,guests){
+    const list=(guests||state.data.guests||[]).filter(g=>String(g.MESA_ID)===String(table&&table.ID_MESA)&&U.normalize(g.RSVP)!=='nao comparecera').slice().sort(U.byPrecedence);
+    return list.find(g=>U.normalize(g.NIVEL)==='autoridade')||list[0]||null;
+  }
+
+  function directionToPrincipal(table){
+    const principal=principalCerimonialTable();
+    if(!principal||!table||String(principal.ID_MESA)===String(table.ID_MESA)) return '';
+    const dx=U.num(principal.X)-U.num(table.X),dy=U.num(principal.Y)-U.num(table.Y);
+    const ang=Math.atan2(dy,dx)*180/Math.PI;
+    if(ang>=-22.5&&ang<22.5) return '→';
+    if(ang>=22.5&&ang<67.5) return '↘';
+    if(ang>=67.5&&ang<112.5) return '↓';
+    if(ang>=112.5&&ang<157.5) return '↙';
+    if(ang>=157.5||ang<-157.5) return '←';
+    if(ang>=-157.5&&ang<-112.5) return '↖';
+    if(ang>=-112.5&&ang<-67.5) return '↑';
+    return '↗';
+  }
+
+  function tableOrientationInfo(table,guests){
+    if(!table)return{major:null,dir:'',isPrincipal:false,text:''};
+    const principal=principalCerimonialTable(),major=majorGuestForTable(table,guests),isPrincipal=!!principal&&String(principal.ID_MESA)===String(table.ID_MESA),dir=isPrincipal?'':directionToPrincipal(table);
+    const name=major?[major.POSTO_GRAD,major.NOME_GUERRA||major.NOME_COMPLETO].filter(Boolean).join(' '):'';
+    const text=isPrincipal?(name?`Maior precedência: ${name} • maior autoridade do evento nesta mesa`:'Maior autoridade do evento nesta mesa'):(name?`Maior precedência: ${name}${dir?` • ${dir} maior autoridade do evento`:''}`:(dir?`${dir} maior autoridade do evento`:''));
+    return{major,dir,isPrincipal,text};
+  }
+
+  function orientationInfoHtml(table,guests){
+    const o=tableOrientationInfo(table,guests);if(!o.text)return'';
+    const icon=o.isPrincipal?'★':o.dir;
+    return `<div class="orientation-info"><span class="orientation-arrow ${o.isPrincipal?'orientation-star':''}">${U.esc(icon)}</span><span>${U.esc(o.text.replace(/^Maior precedência:\s*/,'Maior precedência: '))}</span></div>`;
+  }
+
+  function plannedCerimonialTables(){
+    const all=state.data.tables||[],planned=all.filter(t=>U.normalize(t.TIPO_ALOCACAO)==='planejada');
+    return planned.length?planned:all;
+  }
+
+  function rotateOverviewPoint_(table,pos){
+    const deg=U.num(table.ROTACAO,0);if(!deg)return pos;
+    const cx=U.num(table.X,50),cy=U.num(table.Y,50),rad=deg*Math.PI/180;
+    // O croqui é 16:9: converte percentuais para o mesmo espaço físico antes de girar.
+    const dx=(pos.x-cx)*16/100,dy=(pos.y-cy)*9/100;
+    const rx=dx*Math.cos(rad)-dy*Math.sin(rad),ry=dx*Math.sin(rad)+dy*Math.cos(rad);
+    return{x:cx+rx*100/16,y:cy+ry*100/9};
+  }
+
+  function overviewSeatPosition(table,code,total,opts){
+    opts=opts||{};
+    const format=String(table.FORMATO||'REDONDA').toUpperCase(),x=U.num(table.X,50),y=U.num(table.Y,50);
+    const floorW=Math.max(1,U.num(opts.floorW,1600)),floorH=Math.max(1,U.num(opts.floorH,900)),scale=Math.max(.35,U.num(opts.scale,1));
+    const cardW=Math.max(16,U.num(opts.cardW,58)),cardH=Math.max(16,U.num(opts.cardH,21)),gap=Math.max(1,U.num(opts.gap,3));
+    const ratio=floorW/floorH;
+    const w=U.num(table.W,format==='RETANGULAR'?18:10),h=format==='REDONDA'?w*ratio:U.num(table.H,format==='RETANGULAR'?8:10);
+    const tw=w/100*floorW,th=h/100*floorH,cx=x/100*floorW,cy=y/100*floorH;
+    const baseCardW=cardW/scale,baseCardH=cardH/scale,baseGap=gap/scale;
+    let px=cx,py=cy;
+
+    if(format==='REDONDA'){
+      const i=U.num(String(code).replace('R',''),0),a=(-90)+(360*i/Math.max(1,total)),rad=a*Math.PI/180;
+      const tableRadius=tw/2;
+      // O cartão fica praticamente encostado no círculo. A distância considera
+      // a própria profundidade do cartão em cada ângulo, evitando folga excessiva.
+      const radialHalf=Math.abs(Math.cos(rad))*baseCardW/2+Math.abs(Math.sin(rad))*baseCardH/2;
+      const d=tableRadius+radialHalf+baseGap;
+      px=cx+Math.cos(rad)*d;py=cy+Math.sin(rad)*d;
+    }else if(format==='U'){
+      const n=Math.max(1,U.num(String(code).replace('U',''),1)),baseCount=Math.max(1,Math.min(total,U.num(table.U_CABECEIRA_QTD,5)));
+      if(n<=baseCount){
+        const side=Math.ceil((n-1)/2),dir=n===1?0:(n%2===0?1:-1),maxSide=Math.max(1,Math.ceil((baseCount-1)/2));
+        const inset=Math.max(baseCardW/2+baseGap,8/scale),step=Math.max(1,(tw/2-inset)/maxSide);
+        px=cx+dir*side*step;py=cy+th/2+baseCardH/2+baseGap;
+      }else{
+        const k=n-baseCount,internal=U.yes(table.U_CADEIRAS_INTERNAS),per=internal?4:2,level=Math.floor((k-1)/per),slot=(k-1)%per,levels=Math.max(1,Math.ceil((total-baseCount)/per));
+        const yInset=Math.max(baseCardH/2+baseGap,8/scale),usableH=Math.max(1,th-2*yInset);
+        py=cy+th/2-yInset-(level+.5)*(usableH/levels);
+        if(internal){
+          const outside=tw/2+baseCardW/2+baseGap,inside=Math.max(baseCardW/2+baseGap,tw/2-baseCardW/2-baseGap);
+          const xs=[cx+outside,cx-outside,cx+inside,cx-inside];px=xs[slot];
+        }else px=slot===0?cx+tw/2+baseCardW/2+baseGap:cx-tw/2-baseCardW/2-baseGap;
+      }
+    }else if(code==='L'){
+      px=cx-tw/2-baseCardW/2-baseGap;py=cy;
+    }else if(code==='R'){
+      px=cx+tw/2+baseCardW/2+baseGap;py=cy;
+    }else{
+      const heads=U.yes(table.CABECEIRAS),side=total-(heads?2:0),top=Math.ceil(side/2),bottom=Math.floor(side/2);
+      if(String(code).startsWith('T')){
+        const i=U.num(String(code).slice(1),0),inset=Math.max(baseCardW/2+baseGap,8/scale),left=cx-tw/2+inset,right=cx+tw/2-inset;
+        px=top<=1?cx:left+i*((right-left)/(top-1));py=cy-th/2-baseCardH/2-baseGap;
+      }else if(String(code).startsWith('B')){
+        const i=U.num(String(code).slice(1),0),inset=Math.max(baseCardW/2+baseGap,8/scale),left=cx-tw/2+inset,right=cx+tw/2-inset;
+        px=bottom<=1?cx:left+i*((right-left)/(bottom-1));py=cy+th/2+baseCardH/2+baseGap;
+      }else{px=cx;py=cy-th/2-baseCardH/2-baseGap;}
+    }
+    return rotateOverviewPoint_(table,{x:px/floorW*100,y:py/floorH*100});
+  }
+
+  let overviewPopoverEl=null,overviewPopoverHideTimer=null,overviewPopoverPinned=false;
+
+  function closeCerimonialOverviewPopover(force){
+    if(overviewPopoverHideTimer){clearTimeout(overviewPopoverHideTimer);overviewPopoverHideTimer=null;}
+    if(!force&&overviewPopoverPinned)return;
+    if(overviewPopoverEl){try{overviewPopoverEl.remove();}catch(err){}overviewPopoverEl=null;}
+    overviewPopoverPinned=false;
+  }
+
+  function scheduleCloseCerimonialOverviewPopover(){
+    if(overviewPopoverPinned)return;
+    if(overviewPopoverHideTimer)clearTimeout(overviewPopoverHideTimer);
+    overviewPopoverHideTimer=setTimeout(()=>closeCerimonialOverviewPopover(true),180);
+  }
+
+  function positionCerimonialOverviewPopover(pop,anchor){
+    if(!pop||!anchor)return;
+    const ar=anchor.getBoundingClientRect(),pw=pop.offsetWidth||700,ph=pop.offsetHeight||520,margin=12;
+    let left=ar.right+12,top=ar.top-28;
+    if(left+pw>window.innerWidth-margin)left=ar.left-pw-12;
+    if(left<margin)left=Math.max(margin,(window.innerWidth-pw)/2);
+    if(top+ph>window.innerHeight-margin)top=window.innerHeight-ph-margin;
+    if(top<margin)top=margin;
+    pop.style.left=Math.round(left)+'px';pop.style.top=Math.round(top)+'px';
+  }
+
+  function showCerimonialOverviewPopover(table,anchor,pinned){
+    if(!table||!anchor)return;
+    if(overviewPopoverHideTimer){clearTimeout(overviewPopoverHideTimer);overviewPopoverHideTimer=null;}
+    closeCerimonialOverviewPopover(true);
+    overviewPopoverPinned=!!pinned;
+    const guests=(state.data.guests||[]).filter(g=>String(g.MESA_ID)===String(table.ID_MESA)&&U.normalize(g.RSVP)!=='nao comparecera').sort(U.byPrecedence);
+    const orientation=orientationInfoHtml(table,guests);
+    const pop=document.createElement('div');pop.className='overview-table-popover';pop.style.visibility='hidden';
+    pop.innerHTML=`<div class="overview-popover-head"><div><h4>${U.esc(table.NOME)} • ${U.esc(table.FORMATO)}</h4><div class="small muted">${guests.length}/${U.num(table.CAPACIDADE)} pessoas — ${overviewPopoverPinned?'popup fixado':'passe para consultar; clique para fixar'}</div>${orientation}</div><div class="overview-popover-actions"><button class="btn btn-sm" data-open-detail>Abrir detalhe</button><button class="btn btn-sm" data-close-pop aria-label="Fechar">×</button></div></div><div class="overview-popup-stage"></div>`;
+    document.body.appendChild(pop);overviewPopoverEl=pop;
+    const stage=pop.querySelector('.overview-popup-stage');
+    if(guests.length)U.renderSeating(stage,table,guests,{});else stage.innerHTML='<div class="overview-popup-empty">Nenhuma pessoa posicionada nesta mesa.</div>';
+    pop.querySelector('[data-close-pop]').onclick=()=>closeCerimonialOverviewPopover(true);
+    pop.querySelector('[data-open-detail]').onclick=()=>{closeCerimonialOverviewPopover(true);state.selectedCerimonialTable=table.ID_MESA;state.manualSeatGuestId='';renderCerimonial();setTimeout(()=>U.$('#seatingStage')?.scrollIntoView({behavior:'smooth',block:'center'}),30);};
+    pop.addEventListener('mouseenter',()=>{if(overviewPopoverHideTimer){clearTimeout(overviewPopoverHideTimer);overviewPopoverHideTimer=null;}});
+    pop.addEventListener('mouseleave',()=>scheduleCloseCerimonialOverviewPopover());
+    pop.style.visibility='visible';positionCerimonialOverviewPopover(pop,anchor);
+  }
+
+  function renderCerimonialOverview(root,tables){
+    if(!root)return;
+    closeCerimonialOverviewPopover(true);
+    const e=state.data.event||{},bg=U.driveImage(e.CROQUI_URL||'');
+    root.innerHTML=`<div class="floor-toolbar"><div class="floor-zoom-controls"><button class="btn btn-sm" data-ov-out>−</button><button class="btn btn-sm" data-ov-reset>100%</button><button class="btn btn-sm" data-ov-in>+</button></div><span class="floor-pan-hint">Passe o mouse ou clique na mesa para abrir a disposição completa.</span></div><div class="cerimonial-overview-wrap"><div class="cerimonial-overview-floor" id="cerimonialOverviewFloor"></div></div>`;
+    const wrap=root.querySelector('.cerimonial-overview-wrap'),floor=root.querySelector('#cerimonialOverviewFloor');
+    if(bg){floor.style.backgroundImage=`url("${String(bg).replace(/"/g,'%22')}")`;floor.style.backgroundSize='contain';floor.style.backgroundPosition='center';floor.style.backgroundRepeat='no-repeat';}
+    const activeGuests=(state.data.guests||[]).filter(g=>U.normalize(g.RSVP)!=='nao comparecera');
+    const groups=[];
+
+    tables.forEach(t=>{
+      const format=String(t.FORMATO||'REDONDA').toUpperCase(),shape=document.createElement('div'),w=U.num(t.W,format==='RETANGULAR'?18:10),ratio=(floor.clientWidth||1600)/(floor.clientHeight||900),h=format==='REDONDA'?w*ratio:U.num(t.H,format==='RETANGULAR'?8:10);
+      shape.className='overview-table-shape '+(format==='REDONDA'?'round':format==='U'?'u':'rect')+' clickable';
+      shape.style.left=U.num(t.X,50)+'%';shape.style.top=U.num(t.Y,50)+'%';shape.style.width=w+'%';shape.style.height=h+'%';shape.style.transform=`translate(-50%,-50%) rotate(${U.num(t.ROTACAO,0)}deg)`;
+      const at=activeGuests.filter(g=>String(g.MESA_ID)===String(t.ID_MESA)).sort(U.byPrecedence),unseated=at.filter(g=>!g.ASSENTO).length;
+      const orient=tableOrientationInfo(t,at),rot=U.num(t.ROTACAO,0),orientIcon=orient.isPrincipal?'★':orient.dir,orientMajor=orient.major?[orient.major.POSTO_GRAD,orient.major.NOME_GUERRA||orient.major.NOME_COMPLETO].filter(Boolean).join(' '):'';
+      shape.innerHTML=`<span class="overview-table-name">${U.esc(t.NOME)}<span class="overview-table-meta">${at.length}/${U.num(t.CAPACIDADE)}${unseated?` • ${unseated} sem lugar`:''}</span></span>`;
+      shape.title=`${t.NOME} — ${at.length}/${U.num(t.CAPACIDADE)} pessoas.${orient.text?' '+orient.text+'.':''} Passe o mouse ou clique para ver a disposição completa.`;
+      let hoverTimer=null;
+      shape.addEventListener('mouseenter',()=>{if(hoverTimer)clearTimeout(hoverTimer);hoverTimer=setTimeout(()=>{if(!overviewPopoverPinned)showCerimonialOverviewPopover(t,shape,false);},130);});
+      shape.addEventListener('mouseleave',()=>{if(hoverTimer){clearTimeout(hoverTimer);hoverTimer=null;}scheduleCloseCerimonialOverviewPopover();});
+      shape.addEventListener('click',ev=>{ev.stopPropagation();showCerimonialOverviewPopover(t,shape,true);});
+      floor.appendChild(shape);
+
+      const major=at.find(g=>U.normalize(g.NIVEL)==='autoridade')||at[0]||null,total=Math.max(1,U.num(t.CAPACIDADE),at.length),cards=[];
+      at.filter(g=>g.ASSENTO).forEach(g=>{
+        const code=String(g.ASSENTO),orientation=U.seatOrientation(t,code,total),el=document.createElement('div');
+        const host=String(g.ID_CONVIDADO)===String(t.ANFITRIAO_ID||e.ANFITRIAO_ID||''),rank1=major&&String(g.ID_CONVIDADO)===String(major.ID_CONVIDADO);
+        const label=[g.POSTO_GRAD,g.NOME_GUERRA||g.NOME_COMPLETO].filter(Boolean).join(' ');
+        el.className='overview-inline-seat '+orientation+(host?' host':'')+(rank1?' rank1':'');
+        el.dataset.orientation=orientation;el.dataset.label=label;el.dataset.code=code;el.dataset.total=String(total);el.dataset.priority=host?'0':rank1?'1':'2';el.dataset.tableRot=String(U.num(t.ROTACAO,0));el.title=label;
+        el.innerHTML=`<span class="overview-inline-seat-text">${U.esc(label)}</span>`;
+        floor.appendChild(el);cards.push(el);
+      });
+      groups.push({table:t,shape,cards,w,format,priority:(U.yes(t.PRINCIPAL)?0:1)});
+    });
+
+    const rectsOverlap=(a,b,gap)=>!(a.right+gap<=b.left||b.right+gap<=a.left||a.bottom+gap<=b.top||b.bottom+gap<=a.top);
+    const expandedRect=(r,pad)=>({left:r.left-pad,top:r.top-pad,right:r.right+pad,bottom:r.bottom+pad});
+    let lastScale=-1;
+
+    const measureCanvas=document.createElement('canvas'),measureCtx=measureCanvas.getContext('2d');
+    function measuredLabelWidth(el,scale){
+      const label=String(el.dataset.label||'');
+      const px=Math.max(8.1,Math.min(10,8.1+(scale-1)*.7));
+      if(measureCtx){measureCtx.font=`800 ${px}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;return Math.ceil(measureCtx.measureText(label).width+14);}
+      return Math.ceil(label.length*px*.62+14);
+    }
+
+    function styleCardForWidth(el,labelLength,scale){
+      const inv=1/Math.max(.001,scale),vertical=el.dataset.orientation==='vertical',rot=U.num(el.dataset.tableRot,0);
+      if(vertical)labelLength=Math.max(labelLength,measuredLabelWidth(el,scale));
+      el.style.setProperty('--overview-seat-label-length',labelLength+'px');
+      if(vertical){
+        el.style.width=Math.max(20,Math.min(25,20+(scale-1)*1.6))+'px';
+        el.style.height=labelLength+'px';
+      }else{
+        el.style.width=labelLength+'px';
+        el.style.height=Math.max(19,Math.min(23,19+(scale-1)*1.25))+'px';
+      }
+      el.style.fontSize=Math.max(8.1,Math.min(10,8.1+(scale-1)*.7))+'px';
+      el.style.transform=`translate(-50%,-50%) rotate(${rot}deg) scale(${inv})`;
+    }
+
+    function positionCard(el,group,scale){
+      const cardW=parseFloat(el.style.width)||58,cardH=parseFloat(el.style.height)||21;
+      const p=overviewSeatPosition(group.table,el.dataset.code,U.num(el.dataset.total,1),{floorW:floor.clientWidth||1600,floorH:floor.clientHeight||900,scale,cardW,cardH,gap:3});
+      el.style.left=p.x+'%';el.style.top=p.y+'%';
+    }
+
+    function candidateRects(group,width,scale){
+      group.cards.forEach(el=>{styleCardForWidth(el,width,scale);positionCard(el,group,scale);});
+      return group.cards.map(el=>expandedRect(el.getBoundingClientRect(),1.5));
+    }
+
+    function updateRoundShapes(){
+      const ratio=(floor.clientWidth||1600)/(floor.clientHeight||900);
+      groups.forEach(g=>{if(g.format==='REDONDA')g.shape.style.height=(g.w*ratio)+'%';});
+    }
+
+    function updateInlineCompositions(scale,force){
+      if(!force&&Math.abs(scale-lastScale)<.015)return;
+      lastScale=scale;updateRoundShapes();
+      // Regra única para REDONDA, RETANGULAR e U: mostrar o máximo possível sem sobreposição.
+      // O nome cresce progressivamente com o zoom; no mínimo, usa ellipsis em cartão curto.
+      const target=Math.max(88,Math.min(190,112+(scale-1)*58));
+      const minWidth=42;
+      const widths=[];
+      for(let w=target;w>=minWidth;w-=8)widths.push(Math.round(w));
+      if(widths[widths.length-1]!==minWidth)widths.push(minWidth);
+      groups.forEach(g=>g.cards.forEach(el=>{el.classList.remove('visible');el.style.visibility='hidden';el.style.opacity='0';}));
+      const accepted=[];
+      const ordered=groups.slice().sort((a,b)=>a.priority-b.priority||U.num(a.table.Y)-U.num(b.table.Y)||U.num(a.table.X)-U.num(b.table.X));
+
+      ordered.forEach(group=>{
+        if(!group.cards.length)return;
+        // Regra geral para qualquer formato: cada cartão tenta ocupar o maior espaço
+        // disponível sem tocar em outro cartão. Isso permite que U e RETANGULAR usem
+        // nomes muito mais completos quando existe espaço, em vez de herdar a menor
+        // largura necessária por outro lugar da mesma mesa.
+        const localAccepted=[];
+        const cards=group.cards.slice().sort((a,b)=>U.num(a.dataset.priority,2)-U.num(b.dataset.priority,2));
+        cards.forEach(el=>{
+          let fitted=null,rect=null;
+          const attempts=el.dataset.orientation==='vertical'?[Math.max(88,measuredLabelWidth(el,scale))]:widths;
+          for(const width of attempts){
+            styleCardForWidth(el,width,scale);positionCard(el,group,scale);
+            const r=expandedRect(el.getBoundingClientRect(),1.5);
+            const bad=accepted.some(ar=>rectsOverlap(r,ar,0))||localAccepted.some(ar=>rectsOverlap(r,ar,0));
+            if(!bad){fitted=width;rect=r;break;}
+          }
+          if(fitted!==null){
+            styleCardForWidth(el,fitted,scale);positionCard(el,group,scale);
+            el.style.visibility='visible';el.style.opacity='1';el.classList.add('visible');
+            accepted.push(rect);localAccepted.push(rect);
+          }
+        });
+      });
+    }
+
+    wrap.addEventListener('click',ev=>{if(!ev.target.closest('.overview-table-shape'))closeCerimonialOverviewPopover(true);});
+    const ctl=U.enablePanZoom(wrap,floor,{onChange:({scale})=>{
+      if(overviewPopoverEl&&!overviewPopoverPinned)closeCerimonialOverviewPopover(true);
+      requestAnimationFrame(()=>updateInlineCompositions(scale,false));
+    }});
+    requestAnimationFrame(()=>updateInlineCompositions(ctl.getScale(),true));
+    if(typeof ResizeObserver!=='undefined'){
+      const ro=new ResizeObserver(()=>requestAnimationFrame(()=>updateInlineCompositions(ctl.getScale(),true)));
+      ro.observe(wrap);
+    }
+    root.querySelector('[data-ov-in]').onclick=()=>{closeCerimonialOverviewPopover(true);ctl.zoomIn();};
+    root.querySelector('[data-ov-out]').onclick=()=>{closeCerimonialOverviewPopover(true);ctl.zoomOut();};
+    root.querySelector('[data-ov-reset]').onclick=()=>{closeCerimonialOverviewPopover(true);ctl.reset();};
+  }
+
+  function tableMembersModal(table){
+    const current=new Set((state.data.guests||[]).filter(g=>String(g.MESA_ID)===String(table.ID_MESA)&&U.normalize(g.RSVP)!=='nao comparecera').map(g=>String(g.ID_CONVIDADO)));
+    const guests=(state.data.guests||[]).filter(g=>U.normalize(g.RSVP)!=='nao comparecera').slice().sort(U.byPrecedence);
+    const m=U.modal('Selecionar pessoas da mesa',`<p class="muted">Marque exatamente quem deverá compor <strong>${U.esc(table.NOME)}</strong>. Capacidade: ${U.num(table.CAPACIDADE)}. Quem for retirado desta composição ficará sem mesa.</p><div class="field"><input id="memberSearch" class="search-input" placeholder="Buscar nome, posto ou mesa"></div><div class="small muted" id="memberCount" style="margin:8px 0"></div><div class="member-list" id="memberList"></div>`,`<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Salvar composição manual</button>`);
+    const list=U.$('#memberList',m),count=U.$('#memberCount',m),search=U.$('#memberSearch',m);
+    function draw(){const q=U.normalize(search.value),visible=guests.filter(g=>!q||U.normalize([g.POSTO_GRAD,g.NOME_COMPLETO,g.NOME_GUERRA,tableFor(g.MESA_ID)?.NOME].join(' ')).includes(q));list.innerHTML=visible.map(g=>`<label class="member-row"><input type="checkbox" data-member="${U.esc(g.ID_CONVIDADO)}" ${current.has(String(g.ID_CONVIDADO))?'checked':''}><span><strong>${U.esc(U.displayName(g))}</strong><span class="small muted" style="display:block">${U.esc(tableFor(g.MESA_ID)?.NOME||'Sem mesa')}</span></span><span class="small muted">${U.esc(g.RSVP||'')}</span></label>`).join('');list.querySelectorAll('[data-member]').forEach(ch=>ch.onchange=()=>{if(ch.checked)current.add(String(ch.dataset.member));else current.delete(String(ch.dataset.member));refreshCount();});refreshCount();}
+    function refreshCount(){count.textContent=`${current.size}/${U.num(table.CAPACIDADE)} pessoa(s) selecionada(s)`;count.style.color=current.size>U.num(table.CAPACIDADE)?'var(--danger)':'';}
+    search.oninput=draw;draw();
+    m.querySelector('[data-save]').onclick=async ev=>{const b=ev.currentTarget;if(current.size>U.num(table.CAPACIDADE)){U.toast('A seleção excede a capacidade da mesa.','error');return;}U.setBusy(b,true);try{await A.call('setTableMembers',{eventId:state.eventId,tableId:table.ID_MESA,guestIds:Array.from(current)},65000);m.remove();state.manualSeatGuestId='';await loadEvent(false);renderCerimonial();U.toast('Composição manual da mesa atualizada.','success');}catch(err){U.toast(err.message,'error');}finally{U.setBusy(b,false);}};
+  }
+
+  async function moveManualSeat(table,guestId,seat){
+    await runBusy(async()=>{await A.call('moveTableSeat',{tableId:table.ID_MESA,guestId,targetSeat:seat},55000);state.manualSeatGuestId='';await loadEvent(false);renderCerimonial();U.toast(seat?'Lugar atualizado.':'Convidado retirado do assento.','success');},'Salvando lugar');
+  }
+
+  function renderCerimonial(){
+    const c=U.$('[data-section="cerimonial"]');if(requireEvent(c,'Cerimonial'))return;
+    const tables=plannedCerimonialTables();
+    if(!state.selectedCerimonialTable&&tables.length)state.selectedCerimonialTable=tables[0].ID_MESA;
+    if(state.selectedCerimonialTable&&!tables.some(x=>String(x.ID_MESA)===String(state.selectedCerimonialTable)))state.selectedCerimonialTable=tables[0]?.ID_MESA||'';
+    const t=tableById(state.selectedCerimonialTable),seated=t?(state.data.guests||[]).filter(g=>String(g.MESA_ID)===String(t.ID_MESA)&&U.normalize(g.RSVP)!=='nao comparecera').sort(U.byPrecedence):[];
+    const info=t?orientationInfoHtml(t,seated):'';
+    const autoOn=U.yes((state.data.event||{}).AUTO_AUTORIDADES);
+    const headerActions=`<div class="cerimonial-header-actions"><div class="cerimonial-action-cluster"><button class="btn" data-auth-config>Distribuição automática</button>${autoOn?'<button class="btn" data-redistribute>Redistribuir agora</button>':''}</div><div class="cerimonial-action-cluster"><button class="btn" data-print-layout>Imprimir</button></div></div>`;
+    c.innerHTML=heading('Cerimonial','Distribuição visual das mesas e dos lugares.',headerActions)+`<div class="card overview-card"><div class="section-actions"><div><h3 style="margin:0">Visão geral do croqui</h3><div class="small muted">Consulta opcional das mesas planejadas e dos lugares já definidos.</div></div><div class="actions"><button class="btn btn-sm ${state.cerimonialOverviewOpen?'btn-soft':''}" data-toggle-overview>${state.cerimonialOverviewOpen?'Ocultar visão geral':'Mostrar visão geral'}</button></div></div>${state.cerimonialOverviewOpen?'<div id="cerimonialOverview"></div>':''}</div><div class="cerimonial-grid"><div class="card"><h3>Mesas planejadas</h3><div class="cerimonial-table-list">${tables.length?tables.map(x=>`<button class="btn ${String(x.ID_MESA)===String(state.selectedCerimonialTable)?'btn-soft':''}" style="width:100%;margin-bottom:7px;justify-content:flex-start;white-space:normal;text-align:left" data-ct="${U.esc(x.ID_MESA)}">${U.esc(x.NOME)} • ${U.esc(x.FORMATO)} <span class="badge ${U.yes(x.USA_ICA)?'info':''}" style="margin-left:auto">Padrão ${U.yes(x.USA_ICA)?'SIM':'NÃO'}</span></button>`).join(''):'<p class="muted">Nenhuma mesa planejada.</p>'}</div></div><div class="card">${t?`<div class="section-actions"><div><h3 style="margin:0">${U.esc(t.NOME)}</h3><div class="small muted">${seated.length}/${U.num(t.CAPACIDADE)} pessoas • ${U.esc(t.FORMATO)}</div>${info}</div><div class="actions"><button class="btn btn-sm" data-toggle-standard>Composição padrão: ${U.yes(t.USA_ICA)?'SIM':'NÃO'}</button><button class="btn btn-sm" data-edit-table>Editar mesa</button></div></div><div class="cerimonial-action-groups"><div class="cerimonial-action-row"><div class="cerimonial-action-buttons"><button class="btn" data-members>Selecionar pessoas</button>${U.yes(t.USA_ICA)?'<button class="btn btn-primary" data-compose>Aplicar composição padrão</button>':''}<button class="btn" data-clear>Limpar assentos</button></div></div><div class="cerimonial-action-row"><div class="cerimonial-action-buttons"><button class="btn ${state.manualSeatMode?'btn-soft':''}" data-manual>${state.manualSeatMode?'Encerrar edição de lugares':'Editar lugares manualmente'}</button>${state.manualSeatGuestId?'<button class="btn btn-danger" data-unseat>Retirar selecionado do assento</button>':''}</div></div></div>${state.manualSeatMode?'<div class="manual-seat-hint">Arraste um nome para outro assento. Em celular ou tablet, toque primeiro no nome e depois no assento desejado. Se o destino estiver ocupado, os dois trocam de lugar.</div>':''}<div class="seating-stage" id="seatingStage"></div><div id="unseatedTray"></div>`:'<p class="muted">Selecione uma mesa.</p>'}</div></div>`;
+    if(state.cerimonialOverviewOpen)renderCerimonialOverview(U.$('#cerimonialOverview',c),tables);
+    c.querySelector('[data-toggle-overview]')?.addEventListener('click',()=>{closeCerimonialOverviewPopover(true);state.cerimonialOverviewOpen=!state.cerimonialOverviewOpen;renderCerimonial();});
+    c.querySelectorAll('[data-ct]').forEach(b=>b.onclick=()=>{closeCerimonialOverviewPopover(true);state.selectedCerimonialTable=b.dataset.ct;state.manualSeatGuestId='';renderCerimonial();});
+    c.querySelector('[data-auth-config]').onclick=()=>showView('mesas');
+    const redistribute=c.querySelector('[data-redistribute]');if(redistribute)redistribute.onclick=()=>runBusy(async()=>{const r=await A.call('redistributeAuthorities',{eventId:state.eventId},70000);await loadEvent(false);renderCerimonial();U.toast(`${r.usedTables||0} mesa(s) destinadas às autoridades.`,'success');},'Distribuindo');
+    c.querySelector('[data-print-layout]').onclick=()=>printCerimonialLayouts();
+    if(t){
+      const renderDetail=()=>U.renderSeating(U.$('#seatingStage',c),t,seated,{editor:state.manualSeatMode,selectedGuestId:state.manualSeatGuestId,onSelectGuest:id=>{state.manualSeatGuestId=String(state.manualSeatGuestId)===String(id)?'':id;renderCerimonial();},onSeatTarget:(id,seat)=>moveManualSeat(t,id,seat)});
+      renderDetail();
+      const unseated=seated.filter(g=>!g.ASSENTO),tray=U.$('#unseatedTray',c);
+      if(state.manualSeatMode&&unseated.length){tray.innerHTML=`<div class="small muted" style="margin-top:10px">Sem assento definido:</div><div class="unseated-tray">${unseated.map(g=>`<button class="unseated-chip ${String(state.manualSeatGuestId)===String(g.ID_CONVIDADO)?'selected':''}" draggable="true" data-unseated="${U.esc(g.ID_CONVIDADO)}">${U.esc(U.displayName(g))}</button>`).join('')}</div>`;tray.querySelectorAll('[data-unseated]').forEach(ch=>{ch.onclick=()=>{state.manualSeatGuestId=ch.dataset.unseated;renderCerimonial();};ch.addEventListener('dragstart',ev=>{try{ev.dataTransfer.setData('text/plain',ch.dataset.unseated);ev.dataTransfer.effectAllowed='move';}catch(e){}});});}
+      c.querySelector('[data-edit-table]').onclick=()=>tableModal(t);
+      c.querySelector('[data-members]').onclick=()=>tableMembersModal(t);
+      c.querySelector('[data-manual]').onclick=()=>{state.manualSeatMode=!state.manualSeatMode;state.manualSeatGuestId='';renderCerimonial();};
+      c.querySelector('[data-toggle-standard]').onclick=()=>runBusy(async()=>{await A.call('saveTable',{ID_MESA:t.ID_MESA,eventId:state.eventId,usaIca:U.yes(t.USA_ICA)?'NAO':'SIM'},55000);await loadEvent(false);renderCerimonial();U.toast('Configuração de composição padrão atualizada.','success');});
+      const compose=c.querySelector('[data-compose]');if(compose)compose.onclick=()=>runBusy(async()=>{await A.call('composeTable',{tableId:t.ID_MESA},65000);state.manualSeatGuestId='';await loadEvent(false);renderCerimonial();U.toast('Mesa composta. Você pode ajustar manualmente qualquer lugar.','success');});
+      c.querySelector('[data-clear]').onclick=()=>runBusy(async()=>{await A.call('clearTableSeats',{tableId:t.ID_MESA},55000);state.manualSeatGuestId='';await loadEvent(false);renderCerimonial();});
+      const unseat=c.querySelector('[data-unseat]');if(unseat)unseat.onclick=()=>moveManualSeat(t,state.manualSeatGuestId,'');
+    }
+  }
+
+  function printCerimonialLayouts(){
+    const tables=plannedCerimonialTables();
+    if(!tables.length){U.toast('Não há mesas planejadas para imprimir.','error');return;}
+    const eventName=(state.data.event&&state.data.event.NOME)||'Evento';
+    const css=Array.from(document.querySelectorAll('style')).map(s=>s.textContent).join('\n');
+    const pages=tables.map(table=>{
+      const guests=(state.data.guests||[]).filter(g=>String(g.MESA_ID)===String(table.ID_MESA)&&U.normalize(g.RSVP)!=='nao comparecera').sort(U.byPrecedence);
+      const holder=document.createElement('div');U.renderSeating(holder,table,guests);
+      const canvas=holder.querySelector('.seating-canvas'),orient=tableOrientationInfo(table,guests),orientLine=orient.text?`<div class="print-orientation">${U.esc(orient.isPrincipal?'★':'')} ${U.esc(orient.isPrincipal?'':orient.dir)} ${U.esc(orient.text)}</div>`:'';
+      return `<section class="print-page"><div class="print-head"><h1>${U.esc(eventName)}</h1><h2>${U.esc(table.NOME||('Mesa '+table.NUMERO))}</h2><div>${guests.length}/${U.num(table.CAPACIDADE)} pessoas</div>${orientLine}</div><div class="print-stage"><div class="print-inner">${canvas.outerHTML}</div></div></section>`;
+    }).join('');
+    const w=window.open('','_blank');
+    if(!w){U.toast('O navegador bloqueou a janela de impressão.','error');return;}
+    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${U.esc(eventName)} — Composição das mesas</title><style>${css}\n@page{size:A4 landscape;margin:10mm}body{background:#fff;color:#111827;margin:0;font-family:Arial,sans-serif}.print-page{break-after:page;page-break-after:always;height:185mm;overflow:hidden}.print-page:last-child{break-after:auto;page-break-after:auto}.print-head{text-align:center;margin:0 0 4mm}.print-head h1{font-size:15pt;margin:0 0 2mm}.print-head h2{font-size:13pt;margin:0 0 1mm}.print-head div{font-size:9pt;color:#64748b}.print-head .print-orientation{margin-top:2mm;font-size:10pt;font-weight:700;color:#173f74}.print-stage{height:156mm;width:100%;overflow:hidden;display:flex;align-items:flex-start;justify-content:center}.print-inner{position:relative}.seating-canvas{margin:0}.seat{box-shadow:none}.table-shape{print-color-adjust:exact;-webkit-print-color-adjust:exact}</style></head><body>${pages}<script>window.addEventListener('load',()=>{document.querySelectorAll('.print-stage').forEach(stage=>{const inner=stage.querySelector('.print-inner'),canvas=inner.querySelector('.seating-canvas');if(!canvas)return;const sw=stage.clientWidth,sh=stage.clientHeight,cw=parseFloat(canvas.style.width)||canvas.offsetWidth,ch=parseFloat(canvas.style.height)||canvas.offsetHeight,scale=Math.min(sw/cw,sh/ch,1);inner.style.width=(cw*scale)+'px';inner.style.height=(ch*scale)+'px';canvas.style.transform='scale('+scale+')';canvas.style.transformOrigin='top left';});setTimeout(()=>window.print(),250);});<\/script></body></html>`);
+    w.document.close();
+  }
+
+  function renderNominata(){
+    const c=U.$('[data-section="nominata"]');if(requireEvent(c,'Nominata'))return;
+    c.innerHTML=heading('Nominata','')+
+      `<div class="card"><div style="display:flex;align-items:center;gap:10px"><span class="spinner"></span><span class="muted">Carregando Nominata...</span></div></div>`;
+    loadNominataView(c);
+  }
+
+  async function loadNominataView(c){
+    try{
+      const data=await A.call('nominataData',{eventId:state.eventId});
+      if(state.view!=='nominata' || !document.body.contains(c))return;
+      drawNominataView(c,data);
+    }catch(err){c.innerHTML=heading('Nominata','Não foi possível carregar.')+`<div class="card"><p class="danger-text">${U.esc(err.message||String(err))}</p></div>`;}
+  }
+
+  function drawNominataView(c,data){
+    const items=data.items||[], selected=data.selected||[];
+    c.innerHTML=heading('Nominata','',
+      `<button class="btn" data-add-nom>Adicionar à Nominata</button><button class="btn" data-add-msg>Adicionar mensagem</button><button class="btn btn-primary" data-print>Imprimir Nominata</button>`)+`
+      <div class="card">
+        <div class="section-actions"><div><h3 style="margin:0">Ordem de leitura</h3><div class="small muted">${selected.length} autoridade(s) selecionada(s).</div></div></div>
+        ${items.length?`<div style="display:grid;gap:8px;margin-top:12px">${items.map(it=>{
+          if(it.TIPO_ITEM==='MENSAGEM'){
+            const ref=selected.find(g=>String(g.ID_CONVIDADO)===String(it.ANCHOR_REF));
+            return `<div class="nom-item message"><div class="section-actions"><div><strong>${U.esc(String(it.TEXTO||'').toUpperCase())}</strong></div><div class="actions"><button class="btn btn-sm" data-edit-msg="${U.esc(it.ID_ITEM)}">Editar</button><button class="btn btn-sm btn-danger" data-del-msg="${U.esc(it.ID_ITEM)}">Excluir</button></div></div></div>`;
+          }
+          const g=it.GUEST||{};
+          const presente=String(g.CHECKIN||'').toUpperCase()==='PRESENTE';
+          return `<div class="nom-item"><div class="section-actions"><div><strong>${U.esc(nominataText(g))}</strong></div><div class="actions">${U.badgeStatus(g.CHECKIN)} <button class="btn btn-sm ${presente?'':'btn-success'}" data-check-nom="${U.esc(g.ID_CONVIDADO)}">${presente?'Desfazer chegada':'Confirmar chegada'}</button> <button class="btn btn-sm btn-danger" data-remove-nom="${U.esc(g.ID_CONVIDADO)}">Remover</button></div></div></div>`;
+        }).join('')}</div>`:'<p class="muted">A Nominata está vazia.</p>'}
+      </div>`;
+
+    c.querySelector('[data-add-nom]').onclick=()=>nominataSelectModal(data,c);
+    c.querySelector('[data-add-msg]').onclick=()=>nominataMessageModal(data,null,c);
+    c.querySelector('[data-print]').onclick=()=>printNominata(data);
+    c.querySelectorAll('[data-remove-nom]').forEach(b=>b.onclick=()=>runBusy(async()=>{await A.call('setNominataGuest',{eventId:state.eventId,guestId:b.dataset.removeNom,selected:false});await loadEvent(false);await loadNominataView(c);}));
+    c.querySelectorAll('[data-check-nom]').forEach(b=>b.onclick=()=>{const g=guestById(b.dataset.checkNom);runBusy(async()=>{await A.call('checkIn',{guestId:g.ID_CONVIDADO,present:String(g.CHECKIN).toUpperCase()!=='PRESENTE'});await loadEvent(false);await loadNominataView(c);});});
+    c.querySelectorAll('[data-edit-msg]').forEach(b=>b.onclick=()=>nominataMessageModal(data,(data.messages||[]).find(x=>String(x.ID_ITEM)===String(b.dataset.editMsg)),c));
+    c.querySelectorAll('[data-del-msg]').forEach(b=>b.onclick=()=>{if(confirm('Excluir esta mensagem?'))runBusy(async()=>{await A.call('deleteNominataMessage',{id:b.dataset.delMsg});await loadNominataView(c);});});
+  }
+
+  function nominataSelectModal(data,c){
+    const cand=(data.candidates||[]).slice().sort(U.byPrecedence);
+    const m=U.modal('Adicionar à Nominata',`
+      <div class="field"><label>Buscar</label><input id="nomSearch" class="search-input" placeholder="Nome, posto, cargo ou OM"></div>
+      <div id="nomCandidates" style="max-height:420px;overflow:auto;margin-top:12px"></div>`,
+      `<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Adicionar selecionados</button>`);
+    const draw=()=>{
+      const q=U.normalize(U.$('#nomSearch',m).value);
+      const rows=cand.filter(g=>!q||U.normalize([g.POSTO_GRAD,g.NOME_COMPLETO,g.NOME_GUERRA,g.CARGO,g.OM_ORGAO].join(' ')).includes(q));
+      U.$('#nomCandidates',m).innerHTML=rows.length?rows.map(g=>`<label class="nominata-item" style="grid-template-columns:auto 1fr;margin-bottom:7px;cursor:pointer"><input type="checkbox" data-nom-id="${U.esc(g.ID_CONVIDADO)}"><div><strong>${U.esc(nominataText(g))}</strong></div></label>`).join(''):'<p class="muted">Nenhum convidado disponível.</p>';
+    };
+    U.$('#nomSearch',m).oninput=draw;draw();
+    m.querySelector('[data-save]').onclick=async ev=>{
+      const ids=Array.from(m.querySelectorAll('[data-nom-id]:checked')).map(x=>x.dataset.nomId);
+      if(!ids.length){U.toast('Selecione ao menos uma pessoa.','error');return;}
+      const btn=ev.currentTarget;U.setBusy(btn,true);
+      try{await A.call('setNominataGuest',{eventId:state.eventId,guestIds:ids,selected:true});m.remove();await loadEvent(false);await loadNominataView(c);U.toast('Nominata atualizada.','success');}
+      catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+  function nominataMessageModal(data,msg,c){
+    msg=msg||{};
+    const selected=(data.selected||[]).slice().sort(U.byPrecedence);
+    const refs=['<option value="">Sem referência</option>'].concat(selected.map(g=>`<option value="${U.esc(g.ID_CONVIDADO)}" ${String(g.ID_CONVIDADO)===String(msg.ANCHOR_REF)?'selected':''}>${U.esc((g.ORDEM_PRECEDENCIA?g.ORDEM_PRECEDENCIA+' • ':'')+U.displayName(g))}</option>`)).join('');
+    const m=U.modal(msg.ID_ITEM?'Editar mensagem':'Adicionar mensagem',`
+      <div class="field"><label>Mensagem</label><textarea id="nomMsg" style="min-height:120px">${U.esc(msg.TEXTO||'')}</textarea></div>
+      <div class="form-grid" style="margin-top:12px">
+        ${selectField('Posição','nomSide',['ANTES','DEPOIS'],msg.ANCHOR_SIDE||'DEPOIS')}
+        <div class="field"><label>Autoridade de referência</label><select id="nomAnchor">${refs}</select></div>
+      </div>
+      <div class="small muted">A mensagem permanecerá nessa posição mesmo que a precedência das autoridades seja reordenada.</div>`,
+      `<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Salvar mensagem</button>`);
+    m.querySelector('[data-save]').onclick=async ev=>{
+      const btn=ev.currentTarget;U.setBusy(btn,true);
+      try{
+        const texto=U.$('#nomMsg',m).value.trim(); if(!texto)throw new Error('Informe a mensagem.');
+        if(selected.length && !U.$('#nomAnchor',m).value)throw new Error('Escolha a autoridade de referência.');
+        await A.call('saveNominataMessage',{id:msg.ID_ITEM||'',eventId:state.eventId,texto,anchorRef:U.$('#nomAnchor',m).value,anchorSide:U.$('#nomSide',m).value});
+        m.remove();await loadNominataView(c);U.toast('Mensagem salva.','success');
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(btn,false);}
+    };
+  }
+
+  function postoExtensoLocal(posto){
+    const ab=String(posto||'').trim();
+    if(!ab)return '';
+    const key=U.normalize(ab);
+    const found=(state.postos||[]).find(p=>U.normalize(p.POSTO_ABREVIADO||'')===key);
+    return String(found&&found.POSTO_EXTENSO||ab).trim();
+  }
+
+  function nominataText(g){
+    g=g||{};
+    const cargo=String(g.CARGO||'').trim();
+    // Usa o valor vindo da API e mantém um fallback local para a tabela POSTOS.
+    const posto=String(g.POSTO_EXTENSO||postoExtensoLocal(g.POSTO_GRAD)||g.POSTO_GRAD||'').trim();
+    const ident=[posto,g.NOME_COMPLETO].filter(Boolean).join(' ').trim();
+    return (cargo?cargo+', '+ident:ident).toUpperCase().replace(/[.\s]+$/,'')+'.';
+  }
+
+  function printNominata(data){
+    const event=data.event||state.data.event||{};
+    const selectedMap={};(data.selected||[]).forEach(g=>selectedMap[String(g.ID_CONVIDADO)]=g);
+    const itens=(data.items||[]).filter(it=>it.TIPO_ITEM==='MENSAGEM' || (it.GUEST && String(it.GUEST.CHECKIN).toUpperCase()==='PRESENTE'));
+    if(!itens.length){U.toast('Não há autoridades da Nominata com chegada confirmada para imprimir.','error');return;}
+    const linhas=itens.map(it=>{
+      if(it.TIPO_ITEM==='MENSAGEM')return `<li>${U.esc(String(it.TEXTO||'').toUpperCase())}</li>`;
+      const g=it.GUEST||{}, texto=nominataText(g);
+      const nome=String(g.NOME_COMPLETO||'').toUpperCase();
+      let html=U.esc(texto);
+      if(nome){const escapedNome=U.esc(nome);html=html.replace(escapedNome,`<strong>${escapedNome}</strong>`);}
+      return `<li>${html}</li>`;
+    }).join('');
+    const w=window.open('','_blank');
+    if(!w){U.toast('O navegador bloqueou a janela de impressão.','error');return;}
+    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Nominata - ${U.esc(event.NOME||'SGCES')}</title><style>
+      @page{size:A4;margin:25.4mm 25.4mm 25.4mm 15mm}body{font-family:Arial,sans-serif;font-size:12pt;color:#000;margin:0;line-height:1.15}
+      .head{text-align:center;line-height:1.15}.head p{margin:0}.head .last{margin-bottom:7mm}.subtitle{text-align:center;margin:0 0 9mm;font-size:11pt}
+      .intro{text-align:justify;margin:0 0 6mm}ul{margin:0;padding-left:7mm}li{margin:0 0 3.5mm 0;text-align:justify;padding-left:1mm}
+      .event{font-size:9pt;color:#555;margin-top:10mm;text-align:right}@media print{.event{display:none}}
+    </style></head><body>
+      <div class="head"><p>COMANDO DA AERONÁUTICA</p><p>Base Aérea de Brasília</p><p class="last">Cerimonial da Base Aérea de Brasília</p></div>
+      <p class="subtitle">Elementos para a montagem do Anexo à Locução na Capital Federal</p>
+      <p class="intro">A FORÇA AÉREA BRASILEIRA REGISTRA E AGRADECE A PRESENÇA DAS SEGUINTES AUTORIDADES:</p>
+      <ul>${linhas}</ul><div class="event">${U.esc(event.NOME||'')}</div>
+      <script>window.onload=()=>{window.print();};<\/script></body></html>`);
+    w.document.close();
+  }
+
+  function renderConteudos(){
+    const c=U.$('[data-section="conteudos"]');if(requireEvent(c,'Conteúdos'))return;
+    const cont=state.data.contents||[], sp=state.data.sponsors||[], e=state.data.event||{};
+    const qr=cont.find(x=>['qr checkin','qr_checkin'].includes(U.normalize(x.TIPO)));
+    c.innerHTML=heading('Conteúdos','',`<button class="btn" data-add-content>Adicionar conteúdo</button><button class="btn btn-primary" data-add-sponsor>Adicionar patrocinador</button>`)+`
+      <div class="grid grid-2">
+        <div class="card"><h3>Banner do evento</h3>${e.BANNER_URL?`<img src="${U.esc(U.driveImage(e.BANNER_URL))}" alt="Banner" style="width:100%;max-height:240px;object-fit:contain;border-radius:12px;background:#f8fafc;margin-bottom:10px">`:'<p class="muted">Nenhum banner.</p>'}<iframe class="upload-frame" style="height:82px" title="Enviar banner" src="${U.esc(A.uploaderUrl('banner',state.eventId))}"></iframe>${e.BANNER_URL?'<button class="btn btn-sm btn-danger" data-remove-banner>Remover banner</button>':''}</div>
+        <div class="card"><h3>QR de check-in</h3>${qr?`<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><img src="${U.esc(U.driveImage(qr.URL))}" alt="QR" style="width:120px;height:120px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#fff"><div><strong>${U.esc(qr.TITULO||'QR de check-in')}</strong><div style="margin-top:8px"><button class="btn btn-sm" data-ec="${U.esc(qr.ID_CONTEUDO)}">Editar</button> <button class="btn btn-sm btn-danger" data-dc="${U.esc(qr.ID_CONTEUDO)}">Excluir</button></div></div></div>`:'<div><p class="muted">Envie a imagem do QR que será exibida na TV.</p><button class="btn btn-sm" data-add-qr>Configurar QR</button></div>'}</div>
+      </div>
+      <div class="grid grid-2" style="margin-top:14px"><div class="card"><h3>Arquivos e informações</h3>${cont.filter(x=>!['qr checkin','qr_checkin'].includes(U.normalize(x.TIPO))).length?`<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Título</th><th>Visível</th><th></th></tr></thead><tbody>${cont.filter(x=>!['qr checkin','qr_checkin'].includes(U.normalize(x.TIPO))).map(x=>`<tr><td>${U.esc(x.TIPO)}</td><td><a href="${U.esc(x.URL)}" target="_blank">${U.esc(x.TITULO)}</a></td><td>${U.badgeStatus(x.VISIVEL)}</td><td><button class="btn btn-sm" data-ec="${U.esc(x.ID_CONTEUDO)}">Editar</button> <button class="btn btn-sm btn-danger" data-dc="${U.esc(x.ID_CONTEUDO)}">Excluir</button></td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Nenhum conteúdo.</p>'}</div>
+      <div class="card"><h3>Patrocinadores / apoiadores</h3>${sp.length?`<div class="sponsor-row">${sp.map(x=>`<div style="text-align:center"><img src="${U.esc(U.driveImage(x.LOGO_URL))}" alt="${U.esc(x.NOME)}"><div class="small">${U.esc(x.NOME)}</div><div><button class="btn btn-sm" data-es="${U.esc(x.ID_PATROCINADOR)}">Editar</button> <button class="btn btn-sm btn-danger" data-ds="${U.esc(x.ID_PATROCINADOR)}">Excluir</button></div></div>`).join('')}</div>`:'<p class="muted">Nenhum patrocinador.</p>'}</div></div>`;
+    c.querySelector('[data-add-content]').onclick=()=>contentModal();c.querySelector('[data-add-sponsor]').onclick=()=>sponsorModal();const aq=c.querySelector('[data-add-qr]');if(aq)aq.onclick=()=>contentModal({TIPO:'QR_CHECKIN',TITULO:'QR de check-in',VISIVEL:'SIM'});
+    c.querySelectorAll('[data-ec]').forEach(b=>b.onclick=()=>contentModal(cont.find(x=>x.ID_CONTEUDO===b.dataset.ec)));
+    c.querySelectorAll('[data-dc]').forEach(b=>b.onclick=()=>{if(confirm('Excluir conteúdo?'))runBusy(async()=>{await A.call('deleteContent',{id:b.dataset.dc});await loadEvent();});});
+    c.querySelectorAll('[data-es]').forEach(b=>b.onclick=()=>sponsorModal(sp.find(x=>x.ID_PATROCINADOR===b.dataset.es)));
+    c.querySelectorAll('[data-ds]').forEach(b=>b.onclick=()=>{if(confirm('Excluir patrocinador?'))runBusy(async()=>{await A.call('deleteSponsor',{id:b.dataset.ds});await loadEvent();});});
+    const rb=c.querySelector('[data-remove-banner]');if(rb)rb.onclick=()=>runBusy(async()=>{await A.call('saveEvent',{id:state.eventId,bannerUrl:''});await loadEvent();renderConteudos();});
+  }
+
+  function contentModal(x){
+    x=x||{};const currentType=x.TIPO||'ARQUIVO';
+    const m=U.modal(x.ID_CONTEUDO?'Editar conteúdo':'Adicionar conteúdo',`<div class="form-grid">${field('Título','cTit',x.TITULO)}${selectField('Tipo','cTipo',['CARDAPIO','PROGRAMA','HOMENAGEM','INFORMACOES','ARQUIVO','QR_CHECKIN'],currentType)}<div class="field" style="grid-column:1/-1"><label>Enviar arquivo</label><iframe id="contentUploader" class="upload-frame" style="height:82px" title="Enviar arquivo" src="${U.esc(A.uploaderUrl(currentType==='QR_CHECKIN'?'qr':'conteudo',state.eventId))}"></iframe></div><div class="field" style="grid-column:1/-1"><label>URL</label><input id="cUrl" value="${U.esc(x.URL||'')}" placeholder="Preenchida automaticamente após o envio"></div>${field('Ordem','cOrd',x.ORDEM||0,'number')}${selectField('Visível','cVis',['SIM','NAO'],x.VISIVEL||'SIM')}</div>`,`<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save>Salvar</button>`);
+    const typeSel=U.$('#cTipo',m),frame=U.$('#contentUploader',m);typeSel.onchange=()=>{frame.src=A.uploaderUrl(typeSel.value==='QR_CHECKIN'?'qr':'conteudo',state.eventId);};
+    m.querySelector('[data-save]').onclick=async e=>{const b=e.currentTarget;U.setBusy(b,true);try{await A.call('saveContent',{id:x.ID_CONTEUDO||'',eventId:state.eventId,titulo:U.$('#cTit',m).value.trim()||typeSel.value,tipo:typeSel.value,url:U.$('#cUrl',m).value.trim(),ordem:U.$('#cOrd',m).value,visivel:U.$('#cVis',m).value});m.remove();await loadEvent();renderConteudos();}catch(err){U.toast(err.message,'error');}finally{U.setBusy(b,false);}};
+  }
+  function sponsorModal(x){
+    x=x||{};
+    const existingLogo=String(x.LOGO_URL||'');
+    const previewHtml=existingLogo
+      ? `<img src="${U.esc(U.driveImage(existingLogo))}" alt="Logo atual" style="max-width:150px;max-height:72px;object-fit:contain"><span class="small" style="color:#047857;font-weight:800">Logo atual</span>`
+      : `<span class="small muted">Selecione a imagem e clique em Enviar.</span>`;
+    const m=U.modal(x.ID_PATROCINADOR?'Editar patrocinador':'Adicionar patrocinador',`
+      <div class="form-grid">
+        ${field('Nome','sNome',x.NOME)}
+        <div class="field" style="grid-column:1/-1">
+          <label>Logo do patrocinador</label>
+          <iframe class="upload-frame" style="height:82px" title="Enviar logo" src="${U.esc(A.uploaderUrl('logo',state.eventId))}"></iframe>
+          <input id="sLogo" type="hidden" value="${U.esc(existingLogo)}">
+          <div id="sLogoPreview" style="margin-top:8px;display:flex;align-items:center;gap:12px;min-height:28px">${previewHtml}</div>
+        </div>
+        <div class="field" style="grid-column:1/-1"><label>Site (opcional)</label><input id="sSite" value="${U.esc(x.URL_SITE||'')}"></div>
+        ${field('Ordem','sOrd',x.ORDEM||0,'number')}${selectField('Visível','sVis',['SIM','NAO'],x.VISIVEL||'SIM')}
+      </div>`,`<button class="btn" data-close>Cancelar</button><button class="btn btn-primary" data-save-sponsor>Salvar</button>`);
+    const saveBtn=m.querySelector('[data-save-sponsor]');
+    if(!existingLogo)saveBtn.disabled=true;
+    saveBtn.onclick=async e=>{
+      const b=e.currentTarget;U.setBusy(b,true);
+      try{
+        const logo=U.$('#sLogo',m).value.trim();
+        if(!logo)throw new Error('Envie a logo do patrocinador antes de salvar.');
+        await A.call('saveSponsor',{id:x.ID_PATROCINADOR||'',eventId:state.eventId,nome:U.$('#sNome',m).value.trim(),logoUrl:logo,urlSite:U.$('#sSite',m).value.trim(),ordem:U.$('#sOrd',m).value,visivel:U.$('#sVis',m).value});
+        m.remove();await loadEvent();renderConteudos();
+      }catch(err){U.toast(err.message,'error');}finally{U.setBusy(b,false);}
+    };
+  }
+
+  function renderAcessos(){
+    const c=U.$('[data-section="acessos"]');if(requireEvent(c,'Acessos'))return;
+    const base=location.href.replace(/[^\/]*([?#].*)?$/,'');
+    const evt='?evento='+encodeURIComponent(state.eventId);
+    const lookup=base+'convidado.html'+evt;
+    const reserve=base+'convidado.html'+evt+'&modo=reserva';
+    const urls=[
+      ['Recepção',base+'recepcao.html'+evt,'Interface operacional para localizar pessoas, confirmar chegada, acessar Nominata e croqui.'],
+      ['Portal do convidado',lookup,'Link para o convidado pesquisar o próprio nome, localizar a mesa e confirmar quem chegou no seu grupo.'],
+      ['Reserva de mesas',reserve,'Link para reserva de mesas.'],
+      ['Painel da TV',base+'tv.html'+evt,'Painel deste evento com croqui, ocupação e últimas chegadas.']
+    ];
+    c.innerHTML=heading('Acessos','Os links abaixo já estão vinculados ao evento em edição.')+`<div class="grid grid-2">${urls.map(([n,u,d])=>`<div class="card"><h3>${U.esc(n)}</h3><p class="muted">${U.esc(d)}</p><div class="field"><input readonly value="${U.esc(u)}"></div><div class="actions" style="margin-top:10px"><button class="btn" data-copy="${U.esc(u)}">Copiar link</button><a class="btn btn-primary" href="${U.esc(u)}" target="_blank">Abrir</a></div></div>`).join('')}</div>`;
+    c.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);U.toast('Link copiado.','success');}catch(e){U.toast('Não foi possível copiar automaticamente.','error');}});
+  }
+
+  function allocationLabel(v){
+    const k=U.normalize(v);
+    if(k==='planejada'||k==='fixo')return'PLANEJADA';
+    if(k==='reserva')return'RESERVA';
+    if(k==='livre')return'LIVRE';
+    if(k==='reservada')return'RESERVADA';
+    if(k==='hibrido')return'HÍBRIDO';
+    return String(v||'—');
+  }
+  function selectValueField(label,id,opts,value){
+    return `<div class="field"><label>${U.esc(label)}</label><select id="${id}">${opts.map(o=>`<option value="${U.esc(o[0])}" ${U.normalize(o[0])===U.normalize(value)?'selected':''}>${U.esc(o[1])}</option>`).join('')}</select></div>`;
+  }
+  function field(label,id,value,type,required){return `<div class="field"><label>${U.esc(label)}</label><input id="${id}" type="${type||'text'}" value="${U.esc(value||'')}" ${required?'required':''}></div>`;}
+  function selectField(label,id,opts,value){return `<div class="field"><label>${U.esc(label)}</label><select id="${id}">${opts.map(o=>`<option value="${U.esc(o)}" ${String(o)===String(value)?'selected':''}>${U.esc(o||'—')}</option>`).join('')}</select></div>`;}
+  function guestById(id){return (state.data.guests||[]).find(x=>String(x.ID_CONVIDADO)===String(id));}
+  function tableById(id){return (state.data.tables||[]).find(x=>String(x.ID_MESA)===String(id));}
+  function tableFor(id){return tableById(id);}
+  async function runBusy(fn,label){
+    const s=U.$('#syncStatus');if(s){s.innerHTML='<span class="spinner"></span> '+(label||'Atualizando');}
+    try{return await fn();}catch(err){console.error(err);U.toast(err.message||String(err),'error');}finally{if(s)s.textContent='Pronto';}
+  }
+})();
+
+</script>
+</body>
+</html>
