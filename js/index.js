@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', iniciarIndex);
 
 async function iniciarIndex() {
   try {
-    const dados = await apiObterDados();
+    const dados = await apiObterPublico();
     const config = dados.config || {};
 
     configurarBanner(config);

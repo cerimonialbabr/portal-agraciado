@@ -15,7 +15,7 @@ async function iniciarRegistro() {
   }
 
   try {
-    dadosRegistro = await apiObterDados();
+    dadosRegistro = await apiObterPublico();
     configurarBanner(dadosRegistro.config || {});
     document.querySelector('[data-banner]')?.classList.remove('oculto');
 
@@ -126,8 +126,7 @@ function mostrarConfirmacao(dataHora) {
 }
 
 function localizarHoraCheckin() {
-  const checkin = (dadosRegistro.checkins || []).find(item => texto(item.ID) === texto(agraciadoAtual.ID));
-  return checkin?.Hora || agraciadoAtual.Hora || agraciadoAtual.DataHora || '';
+  return agraciadoAtual.Hora || agraciadoAtual.DataHora || '';
 }
 
 function mostrarErro(mensagem) {

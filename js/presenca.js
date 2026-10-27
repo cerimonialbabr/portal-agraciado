@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', iniciarPresenca);
 
 async function iniciarPresenca() {
   try {
-    const dados = await apiObterDados();
+    const dados = await apiObterPublico();
     configurarBanner(dados.config || {});
     document.querySelector('[data-banner]')?.classList.remove('oculto');
 
